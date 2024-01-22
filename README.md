@@ -11,7 +11,7 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
 1. [Roadmap for the Cluster](#todo)
     - [ArgoCD](#todo)
     - [Vault](#vault)
-    - [Observability](#vault)
+    - [Observability](#todo)
     - [Central Research Repository](#central-research-repository)
 1. [Principles](#principles)
 1. [Concepts](#concepts)
@@ -28,6 +28,7 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
 1. [Getting Started](#getting-started)
 1. [Tasks](#tasks)
     - [Deploy ArgoCD](#deploy-argocd)
+    - [Deploy the App of Apps](#deploy-the-app-of-apps)
     - [Update ArgoCD](#update-argocd)
     - [Deploy a new version of the Central Research Repository to the production environment](#todo)
     - [...](#todo)
@@ -151,9 +152,22 @@ Argo CD will not use helm install to install charts. It will render the chart wi
 
 The first time we have to deploy the App of Apps manually, later we'll let Argo CD manage the root-app and synchronize it automatically:
 
-$ helm template root-app/ | kubectl apply -f -
+    $ helm template root-app/ | kubectl apply -f -
+    application.argoproj.io/root-app created
 
+### Update ArgoCD
 
+We previously installed Argo CD manually by running helm install from our local machine. This means that updates to Argo CD, like upgrading the chart version or changing the values.yaml, require us to execute the Helm CLI command from a local machine again. It's repetitive, error-prone and inconsistent with how we install other applications in our cluster.
+
+The solution is to let Argo CD manage Argo CD. To be more specific: We let the Argo CD controller watch for changes to the argo-cd helm chart in our repo (under charts/argo-cd), render the Helm chart, and apply the resulting manifests. It's done using kubectl and asynchronous, so it is safe for Kubernetes to restart the Argo CD Pods after it has been executed.
+
+To achieve this, we need to create an Application manifest that points to our Argo CD chart. We'll use the same chart version and values file as with our previous manual installation, so initially there won't be any changes made to the resources in the cluster.
+
+The application manifest can be found here: [charts/root-app/templates/argo-cd.yaml](charts/root-app/templates/argo-cd.yaml)
+
+Once the Argo CD application is green (synced) we're done. We can make changes to our Argo CD installation the same way we change other applications: by changing the files in the repo and pushing it to our Git repository.
+
+In order to update Argo CD just increase the version in [charts/argo-cd/Chart.yaml](charts/argo-cd/Chart.yaml).
 
 ### TODO
 

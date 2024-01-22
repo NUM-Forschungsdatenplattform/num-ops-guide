@@ -5,10 +5,10 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
 ## Table of Contents
 
 1. [Introduction](#introduction)
-1. [Roadmap for this Guide and Cluster ](#todo)
+1. [Roadmap for this Guide](#todo)
     - [Research and Gather Information](#todo)
     - [Outline Guide Content Structure](#todo)
-1. [Roadmap for the Cluster ](#todo)
+1. [Roadmap for the Cluster](#todo)
     - [ArgoCD](#todo)
     - [Vault](#vault)
     - [Observability](#vault)
@@ -123,7 +123,7 @@ Contributions are welcome! If you find issues, have suggestions, or want to cont
 
 ## License
 
-This project is licensed under the [??? License](LICENSE.md).
+This project is licensed under the [Apache License, Version 2.0](LICENSE).
 
 Happy NUM operations!
 

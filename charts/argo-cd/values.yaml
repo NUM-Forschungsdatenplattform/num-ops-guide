@@ -9,3 +9,4 @@ argo-cd:
     extraArgs:
       - --insecure
 
+      

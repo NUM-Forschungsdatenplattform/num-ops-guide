@@ -1,0 +1,5 @@
+global:
+  repoURL: https://github.com/NUM-Forschungsdatenplattform/num-ops-guide.git
+
+  namespaces:
+    argocd: ops-argocd

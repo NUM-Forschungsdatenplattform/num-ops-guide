@@ -3,16 +3,16 @@ kind: Application
 metadata:
   name: root-app
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: https://github.com/NUM-Forschungsdatenplattform/num-ops-guide.git
+    repoURL: {{ .Values.global.repoURL }}
     path: charts/root-app/
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: {{ .Values.global.namespaces.argocd }}
   syncPolicy:
     automated:
       selfHeal: true

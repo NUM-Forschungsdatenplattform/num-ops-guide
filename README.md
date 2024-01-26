@@ -141,6 +141,7 @@ We can then visit http://localhost:8080 to access it, which will show as a login
     $ kubectl get secret argocd-initial-admin-secret -n ops-argocd -o jsonpath="{.data.password}" | base64 -d
 
 Or
+
     $ argocd -n ops-argocd admin initial-password
 
 ### Deploy the App of Apps
@@ -153,7 +154,7 @@ Argo CD will not use helm install to install charts. It will render the chart wi
 
 The first time we have to deploy the App of Apps manually, later we'll let Argo CD manage the root-app and synchronize it automatically:
 
-    $ helm template root-app/ | kubectl apply -f -
+    $ helm template charts/root-app/ | kubectl apply -f -
     application.argoproj.io/root-app created
 
 ### Update ArgoCD

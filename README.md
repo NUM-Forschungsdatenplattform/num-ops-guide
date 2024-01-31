@@ -107,6 +107,10 @@ Loki is a horizontally scalable, multi-tenant log aggregation system inspired by
 
 Before diving into Kubernetes operations, make sure you have the necessary prerequisites installed. Consult the [official Kubernetes documentation](https://kubernetes.io/docs/setup/) for guidance on setting up `kubectl` for managing the Kubernetes cluster.
 
+For local developement you can use [colima](https://github.com/abiosoft/colima). 
+To startup a k8s cluster, that matches the current prod env simply run:
+
+    colima start --cpu 4 --memory 8 --arch x86_64 --kubernetes --kubernetes-version v1.24.6+k3s1
 
 ## Tasks
 
@@ -127,12 +131,11 @@ Before we install our chart, we need to generate a Helm chart lock file for it. 
 
 We have to do the initial installation manually from our local machine, later we set up Argo CD to manage itself (meaning that Argo CD will automatically detect any changes to the helm chart and synchronize it.
 
-    kubectl create namespace argo
-    helm install --namespace argo argo-cd charts/argo-cd/ 
+    helm install --create-namespace --namespace argo argo-cd charts/argo-cd/ 
 
 The Helm chart doesn't install an Ingress by default. To access the Web UI we have to port-forward to the argocd-server service on port 443:
 
-    kubectl port-forward --namespace argo  svc/argo-cd-argocd-server 8080:443
+    kubectl port-forward --namespace argo svc/argo-cd-argocd-server 8080:443
 
 We can then visit http://localhost:8080 to access it, which will show as a login form. The default username is `admin`. The password is auto-generated, we can get it with:
 

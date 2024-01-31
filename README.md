@@ -10,7 +10,6 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [Outline Guide Content Structure](#todo)
 1. [Roadmap for the Cluster](#todo)
     - [ArgoCD](#todo)
-    - [Vault](#vault)
     - [Observability](#todo)
     - [Central Research Repository](#central-research-repository)
 1. [Principles](#principles)
@@ -19,7 +18,6 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [Secrets management with HashiCorp Vault](#secrets-management-with-hashicorp-vault)
 1. [Components](#components)
     - [ArgoCD](#argocd)
-    - [Vault](#vault)
     - [Grafana](#grafana)
     - [Prometheus](#prometheus)
     - [Loki](#loki)
@@ -124,25 +122,25 @@ Using this approach, we have more flexibility in the future, by possibly includi
 
 Before we install our chart, we need to generate a Helm chart lock file for it. When installing a Helm chart, Argo CD checks the lock file for any dependencies and downloads them. Not having the lock file will result in an error.
 
-    $ helm repo add argo-cd https://argoproj.github.io/argo-helm
-    $ helm dep update charts/argo-cd/
+    helm repo add argo-cd https://argoproj.github.io/argo-helm
+    helm dep update charts/argo-cd/
 
 We have to do the initial installation manually from our local machine, later we set up Argo CD to manage itself (meaning that Argo CD will automatically detect any changes to the helm chart and synchronize it.
 
-    $ kubectl create namespace ops-argocd
-    $ helm install --namespace ops-argocd argo-cd charts/argo-cd/ 
+    kubectl create namespace argo
+    helm install --namespace argo argo-cd charts/argo-cd/ 
 
 The Helm chart doesn't install an Ingress by default. To access the Web UI we have to port-forward to the argocd-server service on port 443:
 
-    $ kubectl port-forward --namespace ops-argocd  svc/argo-cd-argocd-server 8080:443
+    kubectl port-forward --namespace argo  svc/argo-cd-argocd-server 8080:443
 
 We can then visit http://localhost:8080 to access it, which will show as a login form. The default username is `admin`. The password is auto-generated, we can get it with:
 
-    $ kubectl get secret argocd-initial-admin-secret -n ops-argocd -o jsonpath="{.data.password}" | base64 -d
+    kubectl get secret argocd-initial-admin-secret -n argo -o jsonpath="{.data.password}" | base64 -d
 
 Or
 
-    $ argocd -n ops-argocd admin initial-password
+    argocd -n argo admin initial-password
 
 ### Deploy the App of Apps
 
@@ -154,8 +152,7 @@ Argo CD will not use helm install to install charts. It will render the chart wi
 
 The first time we have to deploy the App of Apps manually, later we'll let Argo CD manage the root-app and synchronize it automatically:
 
-    $ helm template charts/root-app/ | kubectl apply -f -
-    application.argoproj.io/root-app created
+    helm template charts/root-app/ | kubectl apply -f -
 
 ### Update ArgoCD
 

@@ -13,6 +13,12 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Values.global.namespaces.argocd }}
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'    
   syncPolicy:
     automated:
       selfHeal: true

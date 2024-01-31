@@ -3,3 +3,4 @@ global:
 
   namespaces:
     argocd: argo
+    rdp-dev: rdp-dev

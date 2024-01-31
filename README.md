@@ -26,6 +26,7 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
 1. [Getting Started](#getting-started)
 1. [Tasks](#tasks)
     - [Deploy ArgoCD](#deploy-argocd)
+    - [Add your private ssh key to get access to private num-helm-charts](#add-your-private-ssh-key-to-get-access-to-private-num-helm-charts)
     - [Deploy the App of Apps](#deploy-the-app-of-apps)
     - [Update ArgoCD](#update-argocd)
     - [Deploy a new version of the Central Research Repository to the production environment](#todo)
@@ -144,6 +145,20 @@ We can then visit http://localhost:8080 to access it, which will show as a login
 Or
 
     argocd -n argo admin initial-password
+
+### Add your private ssh key to get access to private num-helm-charts
+
+    cp manifests/private-repo-example.yaml manifests/num-helm-charts-repo-secret.yaml 
+
+In `manifests/num-helm-charts-repo-secret.yaml` add your private ssh key.
+
+    kubectl apply -f manifests/num-helm-charts-repo-secret.yaml
+
+Check the `CONNECTION STATUS` of the `num-helm-charts-repo` in the ArgoCD UI (Settings -> Repositories)
+
+Be sure, that `manifests/num-helm-charts-repo-secret.yaml` is still ignored by git.
+
+
 
 ### Deploy the App of Apps
 

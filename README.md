@@ -136,7 +136,7 @@ We have to do the initial installation manually from our local machine, later we
 
 The Helm chart doesn't install an Ingress by default. To access the Web UI we have to port-forward to the argocd-server service on port 443:
 
-    kubectl port-forward --namespace argo svc/argo-cd-argocd-server 8080:443
+    kubectl port-forward --namespace argo --address='0.0.0.0' svc/argo-cd-argocd-server 8080:443
 
 We can then visit http://localhost:8080 to access it, which will show as a login form. The default username is `admin`. The password is auto-generated, we can get it with:
 

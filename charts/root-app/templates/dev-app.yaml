@@ -31,9 +31,9 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: {{ .Values.global.namespaces.dev }}-project
-  sources:
-  - chart: charts/num-portal
+  source:
     repoURL: {{ .Values.global.numHelmChartsRepoURL }}
+    path: charts/root-app/
     targetRevision: {{ .Values.global.numHelmChartsBranch }}
     helm:
       valueFiles:

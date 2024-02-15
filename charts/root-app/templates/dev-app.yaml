@@ -33,7 +33,7 @@ spec:
   project: {{ .Values.global.namespaces.dev }}-project
   source:
     repoURL: {{ .Values.global.numHelmChartsRepoURL }}
-    path: charts/root-app/
+    path: charts/num-portal
     targetRevision: {{ .Values.global.numHelmChartsBranch }}
     helm:
       valueFiles:

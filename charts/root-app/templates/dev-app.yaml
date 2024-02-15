@@ -40,7 +40,7 @@ spec:
     targetRevision: {{ .Values.global.numHelmChartsBranch }}
     helm:
       valueFiles:
-      - deployment-values/central-research-repository/development-values.yaml
+      - ../../deployment-values/central-research-repository/development-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Values.global.namespaces.argocd }}

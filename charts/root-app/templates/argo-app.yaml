@@ -6,7 +6,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: {{ .Values.global.namespaces.argocd }}-project
   source:
     repoURL: {{ .Values.global.repoURL }}
     path: charts/argo-cd

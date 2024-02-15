@@ -1,6 +1,8 @@
 global:
   repoURL: https://github.com/NUM-Forschungsdatenplattform/num-ops-guide.git
+  numHelmChartsRepoURL: https://github.com/NUM-Forschungsdatenplattform/num-helm-charts.git
+  numHelmChartsBranch: rdp-dev
 
   namespaces:
     argocd: argo
-    rdp-dev: rdp-dev
+    dev: dev

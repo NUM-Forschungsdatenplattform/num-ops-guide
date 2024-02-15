@@ -1,3 +1,24 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.global.namespaces.argocd }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: {{ .Values.global.namespaces.argocd }}-project
+  namespace: {{ .Values.global.namespaces.argocd }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: ArgoCD Project
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: '*'
+    server: https://kubernetes.default.svc
+---  
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,7 +28,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: {{ .Values.global.namespaces.argocd }}-project
   source:
     repoURL: {{ .Values.global.repoURL }}
     path: charts/root-app/

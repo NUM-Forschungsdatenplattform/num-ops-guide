@@ -1,7 +1,0 @@
-apiVersion: v2
-name: num-rdp
-version: 1.0.0
-dependencies:
-  - name: num-rdp
-    version: dfe0a6dfdf972aef7e845104c0a52a592a021ce9
-    repository: git@github.com:NUM-Forschungsdatenplattform/num-helm-charts.git

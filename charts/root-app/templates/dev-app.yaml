@@ -18,6 +18,9 @@ spec:
   destinations:
   - namespace: '*'
     server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+  - group: "*"
+    kind: "*"
 ---  
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -34,10 +37,7 @@ spec:
     targetRevision: {{ .Values.global.numHelmChartsBranch }}
     helm:
       valueFiles:
-      - $values/deployment-values/central-research-repository/development-values.yaml
-  - repoURL: {{ .Values.global.numHelmChartsRepoURL }}
-    targetRevision: {{ .Values.global.numHelmChartsBranch }}
-    ref: values
+      - deployment-values/central-research-repository/development-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Values.global.namespaces.argocd }}

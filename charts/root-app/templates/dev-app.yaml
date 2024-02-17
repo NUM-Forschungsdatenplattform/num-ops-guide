@@ -30,12 +30,12 @@ metadata:
 spec:
   project: {{ .Values.global.namespaces.dev }}-project
   source:
-    repoURL: {{ .Values.global.numHelmChartsRepoURL }}?ref={{ .Values.global.numHelmChartsBranch }}
-    path: HEAD
+    repoURL: {{ .Values.global.numHelmChartsRepoURL }}
     targetRevision: {{ .Values.global.numHelmChartsBranch }}
+    path: .
     helm:
       valueFiles:
-      - ../../deployment-values/central-research-repository/development-values.yaml
+      - deployment-values/central-research-repository/development-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Values.global.namespaces.argocd }}

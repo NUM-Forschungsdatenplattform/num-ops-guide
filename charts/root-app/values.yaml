@@ -1,6 +1,6 @@
 global:
   repoURL: https://github.com/NUM-Forschungsdatenplattform/num-ops-guide.git
-  numHelmChartsRepoURL: https://github.com/NUM-Forschungsdatenplattform/num-helm-charts.git
+  numHelmChartsRepoURL: git@github.com:NUM-Forschungsdatenplattform/num-helm-charts.git
   numHelmChartsBranch: rdp-dev
 
   namespaces:

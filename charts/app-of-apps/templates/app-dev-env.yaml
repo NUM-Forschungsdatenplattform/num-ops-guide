@@ -22,7 +22,7 @@ spec:
       - {{ .Values.projects.devEnv.helmValueFile }}
   destination:
     server: https://kubernetes.default.svc
-    namespace: {{ .Values.projects.devCluster.namespace }}
+    namespace: {{ .Values.projects.devEnv.namespace }}
   syncPolicy:
     automated:
       selfHeal: true

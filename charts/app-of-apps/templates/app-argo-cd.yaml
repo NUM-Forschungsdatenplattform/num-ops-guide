@@ -2,18 +2,20 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: argo-cd
-  namespace: {{ .Values.global.namespaces.argocd }}
+  namespace: {{ .Values.global.argoNamespace }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: {{ .Values.global.namespaces.argocd }}-project
+  project: {{ .Values.projects.devCluster.name }}
   source:
     repoURL: {{ .Values.global.repoURL }}
     path: charts/argo-cd
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
-    namespace: {{ .Values.global.namespaces.argocd }}
+    namespace: {{ .Values.global.argoNamespace }}
   syncPolicy:
     automated:
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

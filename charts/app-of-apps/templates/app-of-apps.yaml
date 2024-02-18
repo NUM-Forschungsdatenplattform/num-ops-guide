@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: "app of apps"
+  name: app-of-apps
   namespace: {{ .Values.global.argoNamespace }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -10,7 +10,7 @@ spec:
   project: {{ .Values.projects.devCluster.name }}
   source:
     repoURL: {{ .Values.global.repoURL }}
-    path: charts/root-app/
+    path: charts/app-of-apps/
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc

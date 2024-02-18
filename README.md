@@ -164,13 +164,13 @@ Be sure, that `manifests/num-helm-charts-repo-secret.yaml` is still ignored by g
 
 In general, when we want to add an application to Argo CD, we need to add an Application resource in our Kubernetes cluster. The resource needs to specify where to find manifests for our application.
 
-The `root-app` is a Helm chart that renders Application manifests. Initially it has to be added manually, but after that we can just commit Application manifests with Git, and they will be deployed automatically.
+The `app-of-apps` is a Helm chart that renders Application manifests. Initially it has to be added manually, but after that we can just commit Application manifests with Git, and they will be deployed automatically.
 
 Argo CD will not use helm install to install charts. It will render the chart with helm template and then apply the output with kubectl. This means we can't run helm list on a local machine to get all installed releases.
 
-The first time we have to deploy the App of Apps manually, later we'll let Argo CD manage the root-app and synchronize it automatically:
+The first time we have to deploy the App of Apps manually, later we'll let Argo CD manage the app-of-apps and synchronize it automatically:
 
-    helm template charts/root-app/ | kubectl apply -f -
+    helm template charts/app-of-apps/ | kubectl apply -f -
 
 ### Update ArgoCD
 
@@ -180,7 +180,7 @@ The solution is to let Argo CD manage Argo CD. To be more specific: We let the A
 
 To achieve this, we need to create an Application manifest that points to our Argo CD chart. We'll use the same chart version and values file as with our previous manual installation, so initially there won't be any changes made to the resources in the cluster.
 
-The application manifest can be found here: [charts/root-app/templates/argo-cd.yaml](charts/root-app/templates/argo-cd.yaml)
+The application manifest can be found here: [charts/app-of-apps/templates/argo-cd.yaml](charts/app-of-apps/templates/argo-cd.yaml)
 
 Once the Argo CD application is green (synced) we're done. We can make changes to our Argo CD installation the same way we change other applications: by changing the files in the repo and pushing it to our Git repository.
 

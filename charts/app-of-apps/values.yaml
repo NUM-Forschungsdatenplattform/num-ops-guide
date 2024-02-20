@@ -13,3 +13,8 @@ projects:
     name: dev-env
     namespace: dev
     helmValueFile: deployment-values/central-research-repository/development-values.yaml
+  opsEnv: 
+    description: NUM RDP Ops Environment
+    name: ops-env
+    namespace: ops
+    helmValueFile: deployment-values/central-research-repository/ops-values.yaml

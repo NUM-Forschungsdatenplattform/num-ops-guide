@@ -2,27 +2,27 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: {{ .Values.projects.opsEnv.namespace }}
+  name: {{ .Values.applications.opsEnv.namespace }}
 ---  
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ .Values.projects.opsEnv.name }}
+  name: {{ .Values.applications.opsEnv.name }}
   namespace: {{ .Values.global.argoNamespace }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: environments
+  project: {{ .Values.projects.devEnv.name }}
   source:
     repoURL: {{ .Values.global.numHelmChartsRepoURL }}
     targetRevision: {{ .Values.global.numHelmChartsBranch }}
     path: .
     helm:
       valueFiles:
-      - {{ .Values.projects.opsEnv.helmValueFile }}
+      - {{ .Values.applications.opsEnv.helmValueFile }}
   destination:
     server: https://kubernetes.default.svc
-    namespace: {{ .Values.projects.opsEnv.namespace }}
+    namespace: {{ .Values.applications.opsEnv.namespace }}
   syncPolicy:
     automated:
       selfHeal: true

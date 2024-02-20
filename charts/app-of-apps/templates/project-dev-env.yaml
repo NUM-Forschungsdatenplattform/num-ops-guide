@@ -2,12 +2,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: environments
+  name: {{ .Values.projects.devEnv.name }}
   namespace: {{ .Values.global.argoNamespace }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  description: NUM RDP Dev Environments
+  description: {{ .Values.projects.devEnv.description }}
   sourceRepos:
   - '*'
   destinations:

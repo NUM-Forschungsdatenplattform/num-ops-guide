@@ -158,8 +158,6 @@ Check the `CONNECTION STATUS` of the `num-helm-charts-repo` in the ArgoCD UI (Se
 
 Be sure, that `manifests/num-helm-charts-repo-secret.yaml` is still ignored by git.
 
-
-
 ### Deploy the App of Apps
 
 In general, when we want to add an application to Argo CD, we need to add an Application resource in our Kubernetes cluster. The resource needs to specify where to find manifests for our application.

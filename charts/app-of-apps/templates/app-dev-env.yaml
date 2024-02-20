@@ -19,7 +19,7 @@ spec:
     path: .
     helm:
       valueFiles:
-      - {{ .Values.projects.devEnv.helmValueFile }}
+      - {{ .Values.applications.devEnv.helmValueFile }}
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Values.applications.devEnv.namespace }}

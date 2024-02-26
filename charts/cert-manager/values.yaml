@@ -1,0 +1,4 @@
+cert-manager:
+  global:
+    installCRDs: true
+      

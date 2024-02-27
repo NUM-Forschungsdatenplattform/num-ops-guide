@@ -70,6 +70,18 @@ Establish a robust backup strategy for critical cluster components and persisten
 
 Enforce Role-Based Access Control (RBAC) to regulate access to cluster resources. Define granular permissions based on roles and responsibilities to enhance security. Regularly audit and review RBAC policies to ensure they align with organizational security requirements.
 
+### Handling Secrets
+
+Handling secrets, such as passwords, securely is crucial in any DevOps environment. Here's a guide on how to manage secrets effectively:
+
+#### Internal Services
+For internal services, we generate passwords dynamically using tools like Helm charts, which allows you to template our Kubernetes manifests.
+We use Sealed Secrets to encrypt sensitive data like passwords and store them as YAML files in your Git repository. Sealed Secrets leverages Kubernetes' native encryption mechanisms, ensuring that the secrets are encrypted both at rest and in transit.
+
+#### External Secrets
+For external secrets, especially those that are sensitive and cannot be stored in public repositories, it's important to use Kubernetes Secrets stored in a private company repository.
+Kubernetes Secrets provide a way to store sensitive information such as passwords, OAuth tokens, and SSH keys in your cluster.
+
 ### Automate Operational Tasks
 
 Automate repetitive operational tasks to reduce manual intervention and minimize the risk of human errors. Implement CI/CD pipelines for application deployments, use configuration management tools for cluster-wide configurations, and automate routine maintenance tasks.

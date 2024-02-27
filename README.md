@@ -82,6 +82,16 @@ We use Sealed Secrets to encrypt sensitive data like passwords and store them as
 For external secrets, especially those that are sensitive and cannot be stored in public repositories, it's important to use Kubernetes Secrets stored in a private company repository.
 Kubernetes Secrets provide a way to store sensitive information such as passwords, OAuth tokens, and SSH keys in your cluster.
 
+Here's a general workflow for managing external secrets securely:
+
+- Generate Secrets Locally: let Helm generate the passwords or other sensitive data locally using secure methods. Use the Kubernetes command-line tool (kubectl) to create secrets in the k8s cluster. 
+- Store Secrets in Private Repository: Store the Kubernetes manifest files containing the secrets in a private company repository. This ensures that only authorized personnel have access to the sensitive information.
+- Access Control: Implement strict access control measures to restrict access to the private repository. Only authorized individuals or teams should have the permissions to view or modify the secrets stored in the repository.
+- Secure Communication: Ensure that communication between your Kubernetes cluster and the private repository is encrypted and authenticated using secure protocols like HTTPS or SSH.
+- Regularly Rotate Secrets: Implement a policy for regularly rotating passwords and other sensitive information stored in Kubernetes Secrets. This helps mitigate the risk of unauthorized access due to compromised credentials.
+
+By following these best practices, we can effectively manage secrets in your DevOps environment while maintaining a high level of security and compliance.
+
 ### Automate Operational Tasks
 
 Automate repetitive operational tasks to reduce manual intervention and minimize the risk of human errors. Implement CI/CD pipelines for application deployments, use configuration management tools for cluster-wide configurations, and automate routine maintenance tasks.

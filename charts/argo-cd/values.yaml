@@ -25,9 +25,9 @@ argo-cd:
       annotations:
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-        cert-manager.io/cluster-issuer: letsencrypt-staging
+        cert-manager.io/cluster-issuer: letsencrypt-prod
       tls:
         - hosts:
           - argocd.rdp-dev.ingress.k8s.highmed.org
-          secretName: argocd-letsencrypt-staging-tls
+          secretName: argocd-letsencrypt-prod-tls
 

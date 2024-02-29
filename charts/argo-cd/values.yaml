@@ -4,7 +4,7 @@ argo-cd:
     logging:
       format: json
       # -- Set the global logging level. One of: `debug`, `info`, `warn` or `error`
-      level: debug
+      level: info
 
   configs:
     params:

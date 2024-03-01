@@ -1,0 +1,6 @@
+victoria-logs:
+  server:
+    persistentVolume:
+      enabled: true
+      storageClass: ssd
+      size: 10Gi

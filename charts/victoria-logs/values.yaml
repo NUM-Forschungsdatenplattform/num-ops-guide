@@ -1,4 +1,4 @@
-victoria-logs:
+victoria-logs-single:
   fluent-bit:
     enabled: true
   server:

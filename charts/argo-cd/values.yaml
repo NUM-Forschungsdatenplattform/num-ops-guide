@@ -22,6 +22,7 @@ argo-cd:
     ingress:
       enabled: true
       ingressClassName: nginx
+      hostname: argocd.rdp-dev.ingress.k8s.highmed.org
       annotations:
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/backend-protocol: "HTTP"

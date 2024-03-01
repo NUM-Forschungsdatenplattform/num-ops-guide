@@ -1,4 +1,6 @@
 victoria-logs:
+  fluent-bit:
+    enabled: true
   server:
     persistentVolume:
       enabled: true

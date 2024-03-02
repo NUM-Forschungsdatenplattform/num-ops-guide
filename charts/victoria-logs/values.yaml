@@ -18,19 +18,22 @@ victoria-logs-single:
     extraArgs:
       envflag.enable: "true"
       loggerFormat: json
-      httpAuth.username: "%{HTTP_AUTH_USERNAME}"
-      httpAuth.password: "%{HTTP_AUTH_PASSWORD}"
-    env:
-      - name: HTTP_AUTH_USERNAME
-        valueFrom:
-          secretKeyRef:
-            key:  username
-            name: http-auth-scecret
-      - name: HTTP_AUTH_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            key:  password
-            name: http-auth-scecret
+    #
+    # disable http-auth
+    #
+    #   httpAuth.username: "%{HTTP_AUTH_USERNAME}"
+    #   httpAuth.password: "%{HTTP_AUTH_PASSWORD}"
+    # env:
+    #   - name: HTTP_AUTH_USERNAME
+    #     valueFrom:
+    #       secretKeyRef:
+    #         key:  username
+    #         name: http-auth-scecret
+    #   - name: HTTP_AUTH_PASSWORD
+    #     valueFrom:
+    #       secretKeyRef:
+    #         key:  password
+    #         name: http-auth-scecret
     persistentVolume:
       enabled: true
       storageClass: ssd

@@ -35,6 +35,7 @@ victoria-logs-single:
         memory: 512Mi
     ingress:
       enabled: true
+      ingressClassName: nginx
       annotations:
         cert-manager.io/cluster-issuer: "letsencrypt-prod"
         nginx.ingress.kubernetes.io/auth-type: basic

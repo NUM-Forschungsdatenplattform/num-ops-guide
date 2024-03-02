@@ -36,7 +36,7 @@ victoria-logs-single:
     ingress:
       enabled: true
       annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-staging"
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
       pathType: Prefix
       hosts:
         - name: logs.rdp-dev.ingress.k8s.highmed.org
@@ -44,6 +44,6 @@ victoria-logs-single:
           port: http
 
       tls:
-        - secretName: victoria-logs-letsencrypt-staging-tls
+        - secretName: victoria-logs-letsencrypt-prod-tls
           hosts:
           - logs.rdp-dev.ingress.k8s.highmed.org

@@ -15,25 +15,10 @@ victoria-logs-single:
         mountPath: /var/lib/docker/containers
         readOnly: true
   server:
+    enabled: true
     extraArgs:
       envflag.enable: "true"
       loggerFormat: json
-    #
-    # disable http-auth
-    #
-    #   httpAuth.username: "%{HTTP_AUTH_USERNAME}"
-    #   httpAuth.password: "%{HTTP_AUTH_PASSWORD}"
-    # env:
-    #   - name: HTTP_AUTH_USERNAME
-    #     valueFrom:
-    #       secretKeyRef:
-    #         key:  username
-    #         name: http-auth-scecret
-    #   - name: HTTP_AUTH_PASSWORD
-    #     valueFrom:
-    #       secretKeyRef:
-    #         key:  password
-    #         name: http-auth-scecret
     persistentVolume:
       enabled: true
       storageClass: ssd
@@ -48,3 +33,17 @@ victoria-logs-single:
       requests:
         cpu: 500m
         memory: 512Mi
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-staging"
+      pathType: Prefix
+      hosts:
+        - name: logs.rdp-dev.ingress.k8s.highmed.org
+          path: /
+          port: http
+
+      tls:
+        - secretName: victoria-logs-letsencrypt-staging-tls
+          hosts:
+          - logs.rdp-dev.ingress.k8s.highmed.org

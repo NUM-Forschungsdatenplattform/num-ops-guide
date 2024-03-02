@@ -72,25 +72,16 @@ Enforce Role-Based Access Control (RBAC) to regulate access to cluster resources
 
 ### Handling Secrets
 
-Handling secrets, such as passwords, securely is crucial in any DevOps environment. Here's a guide on how to manage secrets effectively:
+Handling secrets, such as passwords or user names, securely is crucial in any DevOps environment. Here's a guide on how to manage secrets effectively:
 
 #### Internal Services
+
 For internal services, we generate passwords dynamically using tools like Helm charts, which allows you to template our Kubernetes manifests.
 We use Sealed Secrets to encrypt sensitive data like passwords and store them as YAML files in your Git repository. Sealed Secrets leverages Kubernetes' native encryption mechanisms, ensuring that the secrets are encrypted both at rest and in transit.
 
 #### External Secrets
-For external secrets, especially those that are sensitive and cannot be stored in public repositories, it's important to use Kubernetes Secrets stored in a private company repository.
-Kubernetes Secrets provide a way to store sensitive information such as passwords, OAuth tokens, and SSH keys in your cluster.
 
-Here's a general workflow for managing external secrets securely:
-
-- Generate Secrets Locally: let Helm generate the passwords or other sensitive data locally using secure methods. Use the Kubernetes command-line tool (kubectl) to create secrets in the k8s cluster. 
-- Store Secrets in Private Repository: Store the Kubernetes manifest files containing the secrets in a private company repository. This ensures that only authorized personnel have access to the sensitive information.
-- Access Control: Implement strict access control measures to restrict access to the private repository. Only authorized individuals or teams should have the permissions to view or modify the secrets stored in the repository.
-- Secure Communication: Ensure that communication between your Kubernetes cluster and the private repository is encrypted and authenticated using secure protocols like HTTPS or SSH.
-- Regularly Rotate Secrets: Implement a policy for regularly rotating passwords and other sensitive information stored in Kubernetes Secrets. This helps mitigate the risk of unauthorized access due to compromised credentials.
-
-By following these best practices, we can effectively manage secrets in your DevOps environment while maintaining a high level of security and compliance.
+For external secrets, especially those that are sensitive and cannot be stored in public repositories, it's important to use Kubernetes Secrets stored in a private repository with encryption at rest.
 
 ### Automate Operational Tasks
 
@@ -112,7 +103,9 @@ This guide covers the deployment and configuration of essential components for e
 
 ### ArgoCD
 
-ArgoCD is a declarative, GitOps continuous delivery tool for Kubernetes. It enables automated application deployments, rollbacks, and easy management of multiple environments.
+ArgoCD is a declarative, GitOps continuous delivery tool for Kubernetes.
+It enables automated application deployments, rollbacks, and easy management of multiple environments.
+For our dev cluster use [argocd](https://argocd.rdp-dev.ingress.k8s.highmed.org).
 
 ### Grafana
 
@@ -130,7 +123,7 @@ Loki is a horizontally scalable, multi-tenant log aggregation system inspired by
 
 Before diving into Kubernetes operations, make sure you have the necessary prerequisites installed. Consult the [official Kubernetes documentation](https://kubernetes.io/docs/setup/) for guidance on setting up `kubectl` for managing the Kubernetes cluster.
 
-For local developement you can use [colima](https://github.com/abiosoft/colima). 
+For local developement you can use [colima](https://github.com/abiosoft/colima).
 To startup a k8s cluster, that matches the current prod env simply run:
 
     colima start --cpu 4 --memory 8 --arch x86_64 --kubernetes --kubernetes-version v1.24.6+k3s1
@@ -154,7 +147,7 @@ Before we install our chart, we need to generate a Helm chart lock file for it. 
 
 We have to do the initial installation manually from our local machine, later we set up Argo CD to manage itself (meaning that Argo CD will automatically detect any changes to the helm chart and synchronize it.
 
-    helm install --create-namespace --namespace argo argo-cd charts/argo-cd/ 
+    helm install --create-namespace --namespace argo argo-cd charts/argo-cd/
 
 The Helm chart doesn't install an Ingress by default. To access the Web UI we have to port-forward to the argocd-server service on port 443:
 
@@ -170,7 +163,7 @@ Or
 
 ### Add your private ssh key to get access to private num-helm-charts
 
-    cp manifests/private-repo-example.yaml manifests/num-helm-charts-repo-secret.yaml 
+    cp manifests/private-repo-example.yaml manifests/num-helm-charts-repo-secret.yaml
 
 In `manifests/num-helm-charts-repo-secret.yaml` add your private ssh key.
 
@@ -197,8 +190,6 @@ The first time we have to deploy the App of Apps manually, later we'll let Argo 
 We previously installed Argo CD manually by running helm install from our local machine. This means that updates to Argo CD, like upgrading the chart version or changing the values.yaml, require us to execute the Helm CLI command from a local machine again. It's repetitive, error-prone and inconsistent with how we install other applications in our cluster.
 
 The solution is to let Argo CD manage Argo CD. To be more specific: We let the Argo CD controller watch for changes to the argo-cd helm chart in our repo (under charts/argo-cd), render the Helm chart, and apply the resulting manifests. It's done using kubectl and asynchronous, so it is safe for Kubernetes to restart the Argo CD Pods after it has been executed.
-
-To achieve this, we need to create an Application manifest that points to our Argo CD chart. We'll use the same chart version and values file as with our previous manual installation, so initially there won't be any changes made to the resources in the cluster.
 
 The application manifest can be found here: [charts/app-of-apps/templates/argo-cd.yaml](charts/app-of-apps/templates/argo-cd.yaml)
 

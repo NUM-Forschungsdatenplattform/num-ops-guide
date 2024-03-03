@@ -1,5 +1,5 @@
-export VL_USER=$(kubectl get secret http-auth-generated-secret -o jsonpath="{.data.username}" | base64 -d)
-export VL_PASSWD=$(kubectl get secret http-auth-generated-secret -o jsonpath="{.data.password}" | base64 -d)
+export VL_USER=$(kubectl get secret basic-auth-generated-secret -o jsonpath="{.data.username}" | base64 -d)
+export VL_PASSWD=$(kubectl get secret basic-auth-generated-secret -o jsonpath="{.data.password}" | base64 -d)
 
 echo user: "$VL_USER" password: "$VL_PASSWD"
 

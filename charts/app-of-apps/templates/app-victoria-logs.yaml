@@ -19,12 +19,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - RespectIgnoreDifferences=true
-  ignoreDifferences:
-    - name: basic-auth-generated-secret
-      namespace: victoria-logs
-      group: "core"
-      kind: "Secret"
-      jsonPointers:
-        - /data
-        - /metadata

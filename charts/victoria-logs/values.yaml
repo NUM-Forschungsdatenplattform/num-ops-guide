@@ -24,7 +24,7 @@ victoria-logs-single:
             Host {{ .Release.Name }}-victoria-logs-single-server
             port 9428
             compress gzip
-            uri /insert/jsonline?_stream_fields=stream,kubernetes_namespace_name,kubernetes_pod_name,kubernetes_container_name&_msg_field=log&_time_field=date
+            uri /insert/jsonline?_stream_fields=stream,k8s_ns,k8s_pod,k8s_container&_msg_field=log&_time_field=date
             format json_lines
             json_date_format iso8601
             header AccountID 0
@@ -43,7 +43,13 @@ victoria-logs-single:
             Wildcard            pod_name
             Operation lift
             Nested_under kubernetes
-            Add_prefix   kubernetes_
+            Add_prefix   k8s_
+        [FILTER]
+            Name modify
+            Match *
+            Rename k8s_pod_name k8s_pod
+            Rename k8s_namespace_name k8s_ns
+            Rename k8s_container_name k8s_container
 
   server:
     enabled: true

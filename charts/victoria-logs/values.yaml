@@ -14,6 +14,37 @@ victoria-logs-single:
       - name: varlibdockercontainers
         mountPath: /var/lib/docker/containers
         readOnly: true
+    config:
+      # -- Note that Host must be replaced to match your VictoriaLogs service name
+      # Default format is: {{release_name}}-victoria-logs-single-server
+      outputs: |
+        [OUTPUT]
+            Name http
+            Match kube.*
+            Host {{ .Release.Name }}-victoria-logs-single-server
+            port 9428
+            compress gzip
+            uri /insert/jsonline?_stream_fields=stream,kubernetes_namespace_name,kubernetes_pod_name,kubernetes_container_name&_msg_field=log&_time_field=date
+            format json_lines
+            json_date_format iso8601
+            header AccountID 0
+            header ProjectID 0
+      filters: |
+        [FILTER]
+            Name kubernetes
+            Match kube.*
+            Merge_Log On
+            Keep_Log On
+            K8S-Logging.Parser On
+            K8S-Logging.Exclude On
+        [FILTER]
+            Name                nest
+            Match               *
+            Wildcard            pod_name
+            Operation lift
+            Nested_under kubernetes
+            Add_prefix   kubernetes_
+
   server:
     enabled: true
     extraArgs:

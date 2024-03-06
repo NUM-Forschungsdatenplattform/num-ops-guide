@@ -29,6 +29,8 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [Add your private ssh key to get access to private num-helm-charts](#add-your-private-ssh-key-to-get-access-to-private-num-helm-charts)
     - [Deploy the App of Apps](#deploy-the-app-of-apps)
     - [Update ArgoCD](#update-argocd)
+    - [Securing Kubernetes Services with Let's Encrypt, Nginx Ingress Controller, and Cert-Manag(securing-kubernetes-services-with-let's-encrypt,-nginx-ingress-controller,-and-cert-manager)
+    - [Securing Kubernetes Services with Ingress-Nginx Controller and Basic Authentication](securing-kubernetes-services-with-ingress-nginx-controller-and-basic-authentication)
     - [Deploy a new version of the Central Research Repository to the production environment](#todo)
     - [...](#todo)
 1. [Contributing](#contributing)
@@ -197,7 +199,321 @@ Once the Argo CD application is green (synced) we're done. We can make changes t
 
 In order to update Argo CD just increase the version in [charts/argo-cd/Chart.yaml](charts/argo-cd/Chart.yaml).
 
-### TODO
+### Securing Kubernetes Services with Let's Encrypt, Nginx Ingress Controller, and Cert-Manager
+
+#### Introduction
+
+In today's landscape, securing our Kubernetes services is paramount. Let's Encrypt provides free SSL/TLS certificates, making HTTPS encryption accessible to everyone. Nginx Ingress Controller serves as a crucial component for routing traffic within our Kubernetes cluster. Cert-Manager automates the management and issuance of TLS certificates in Kubernetes. This section provides guidance on integrating Let's Encrypt, Nginx Ingress Controller, and Cert-Manager into our Kubernetes environment.
+
+#### Configuring Let's Encrypt Issuer
+
+Before we begin issuing certificates, we need to create an Issuer, which specifies the certificate authority from which signed x509 certificates can be obtained.
+The Let’s Encrypt certificate authority offers both a staging server for testing your certificate configuration, and a production server for rolling out verifiable TLS certificates.
+
+Let’s create a test ClusterIssuer to make sure the certificate provisioning mechanism is functioning correctly. A ClusterIssuer is not namespace-scoped and can be used by Certificate resources in any namespace.
+
+```yaml
+    apiVersion: cert-manager.io/v1
+    kind: ClusterIssuer
+    metadata:
+        name: letsencrypt-staging
+        namespace: cert-manager
+    spec:
+        acme:
+            # Email address used for ACME registration
+            email: admin@example.org
+            # The ACME server URL
+            server: https://acme-staging-v02.api.letsencrypt.org/directory
+            # Name of a secret used to store the ACME account private key
+            privateKeySecretRef:
+            name: letsencrypt-staging-issuer-account-key
+            # Add a single challenge solver, HTTP01 using nginx
+            solvers:
+            - http01:
+                ingress:
+                    ingressClassName: nginx
+```
+
+Here we specify that we’d like to create a ClusterIssuer called `letsencrypt-staging`, and use the Let’s Encrypt staging server. We’ll later use the production server to roll out our certificates, but the production server rate-limits requests made against it, so for testing purposes we should use the staging URL.
+
+We then specify an email address to register the certificate, and create a Kubernetes Secret called `letsencrypt-staging-issuer-account-key` to store the ACME account’s private key. We also use the HTTP-01 challenge mechanism. To learn more about these parameters, consult the official cert-manager documentation on Issuers.
+
+The ClusterIssuer for the production server is defined here: [letsencrypt-prod-cluster-issuer.yaml](charts/cert-manager/templates/letsencrypt-prod-cluster-issuer.yaml).
+
+#### Cert-Manager and Ingress
+
+To request TLS signed certificates we annotations to our Ingress resources and cert-manager will facilitate creating the Certificate resource for us. A small sub-component of cert-manager, ingress-shim, is responsible for this. Ingress-shim watches Ingress resources across our cluster. If it observes an Ingress with
+
+    annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-staging
+
+Ingress-shim  will ensure a Certificate resource with the name provided in the `tls.secretName` field and configured as described on the Ingress exists in the Ingress's namespace.
+
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+    name: victoria-logs-ingress
+    namespace: victoria-logs
+    annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-staging
+    spec:
+        ingressClassName: nginx
+        rules:
+        - host: logs.example.org
+            http:
+            paths:
+            - backend:
+                service:
+                    name: victoria-logs
+                    port:
+                    number: 9428
+                path: /
+                pathType: Prefix
+        tls:
+        - hosts:
+            - logs.example.org
+            secretName: victoria-logs-letsencrypt-staging-tls
+
+When the Certificate resource has conditions like
+
+    kubectl describe certificate victoria-logs-letsencrypt-prod-tls
+
+    ...
+
+    Conditions:
+        Last Transition Time:  2024-03-02T13:29:51Z
+        Message:               Certificate is up to date and has not expired
+        Observed Generation:   1
+        Reason:                Ready
+        Status:                True
+        Type:                  Ready
+
+    ...
+
+everything look fine and we can switch to the production issuer.
+
+#### Conclusion
+
+In conclusion, the integration of Let's Encrypt, Nginx Ingress Controller, and Cert-Manager offers a robust solution for securing Kubernetes services with SSL/TLS certificates. By following the steps outlined in this guide, we have established a reliable mechanism for automating the issuance and management of certificates within our Kubernetes environment.
+
+The configuration of Let's Encrypt Issuer, whether in a staging or production environment, ensures that our certificates are obtained securely and efficiently. Through the use of ClusterIssuers and Ingress annotations, we have streamlined the process of requesting and managing TLS certificates for our services.
+
+The ability to monitor the status of certificates using commands like `kubectl describe certificate` allows us to ensure that our certificates are up to date and valid, providing peace of mind regarding the security of our services.
+
+As we transition from testing with the staging server to the production environment, we can confidently deploy our applications knowing that they are protected by industry-standard encryption protocols. This approach not only enhances the security posture of our Kubernetes cluster but also simplifies the management of SSL/TLS certificates, ultimately contributing to a more resilient and secure infrastructure.
+
+#### Sources
+
+- [Annotated Ingress resource](https://cert-manager.io/docs/usage/ingress/)
+- [How to Set Up an Nginx Ingress with Cert-Manager on DigitalOcean Kubernetes](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nginx-ingress-with-cert-manager-on-digitalocean-kubernetes)
+
+
+### Securing Kubernetes Services with Ingress-Nginx Controller and Basic Authentication
+
+After setting up HTTPS for our Kubernetes Services it is file to use Basic Authentication to control access to them. I order to set up Basic Authentication we will do the following steps:
+
+- Create htpasswd file
+- Convert auth file into a sealed secret
+- Create an ingress tied to the basic-auth secret
+- Use curl to confirm authorization is required by the ingress
+- Use curl with the correct credentials to connect to the ingress
+
+#### Create htpasswd file
+
+For the htpasswd file file, we nedd a username and a password. We generate them by using this helm template
+
+    apiVersion: v1
+    kind: Secret
+    metadata:
+        name: basic-auth-generated-secret
+        annotations:
+            argocd.argoproj.io/sync-options: "Delete=false"
+    type: Opaque
+    data:
+        username: {{ printf "%s-%s" "u" (randAlphaNum 16) | b64enc | quote }}
+        password: {{ printf "%s-%s" "p" (randAlphaNum 32) | b64enc | quote }}
+
+When using argocd, each time, arrgocd syncs the status, new username and passwords are generated.
+So we backup the generated username and password in an generic `basic-auth-input` Secret.
+
+    export USERNAME=$(kubectl get secret basic-auth-generated-secret -o jsonpath="{.data.username}" | base64 -d)
+    export PASSWORD=$(kubectl get secret basic-auth-generated-secret -o jsonpath="{.data.password}" | base64 -d)
+
+    kubectl create secret generic basic-auth-input --from-literal=username="$USERNAME" --from-literal=password="$PASSWORD"
+
+    echo user: "$USERNAME" password: "$PASSWORD"
+
+To create the htpasswd file `auth`, we run
+
+    htpasswd -bc auth "$USERNAME" "$PASSWORD"
+
+#### Convert auth file into a sealed secret
+
+We do not want to leak the username in this public repo, so we create a sealed secret to store the auth file:
+
+    kubectl create secret generic basic-auth --from-file=auth -o yaml --dry-run=client | kubeseal -o yaml > basic-auth-sealed-secret.yaml
+
+And update our repo:
+
+    git add basic-auth-sealed-secret.yaml
+    git commit -m "modified basic-auth-sealed-secret.yaml"
+    git push
+
+After syncing with argo-cd, the sealed-secrets-controller decrypts the sealed-secret into the `basic-auth` secret.
+
+#### Create an ingress tied to the basic-auth secret
+
+To use the basic auth file, we need to annotate the ingress like:
+
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+    name: ingress-with-auth
+    annotations:
+        # type of authentication
+        nginx.ingress.kubernetes.io/auth-type: basic
+        # name of the secret that contains the user/password definitions
+        nginx.ingress.kubernetes.io/auth-secret: basic-auth
+        # message to display with an appropriate context why the authentication is required
+        nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+
+#### Use curl to confirm authorization is required by the ingress
+
+    curl -Lv logs.rdp-dev.ingress.k8s.highmed.org
+
+    *   Trying 134.76.15.219:80...
+    * Connected to logs.rdp-dev.ingress.k8s.highmed.org (134.76.15.219) port 80
+    > GET / HTTP/1.1
+    > Host: logs.rdp-dev.ingress.k8s.highmed.org
+    > User-Agent: curl/8.4.0
+    > Accept: */*
+    >
+    < HTTP/1.1 308 Permanent Redirect
+    < Date: Mon, 04 Mar 2024 09:53:50 GMT
+    < Content-Type: text/html
+    < Content-Length: 164
+    < Connection: keep-alive
+    < Location: https://logs.rdp-dev.ingress.k8s.highmed.org
+    <
+    * Ignoring the response-body
+    * Connection #0 to host logs.rdp-dev.ingress.k8s.highmed.org left intact
+    * Clear auth, redirects to port from 80 to 443
+    * Issue another request to this URL: 'https://logs.rdp-dev.ingress.k8s.highmed.org/'
+    *   Trying 134.76.15.219:443...
+    * Connected to logs.rdp-dev.ingress.k8s.highmed.org (134.76.15.219) port 443
+    * ALPN: curl offers h2,http/1.1
+    * (304) (OUT), TLS handshake, Client hello (1):
+    *  CAfile: /etc/ssl/cert.pem
+    *  CApath: none
+    * (304) (IN), TLS handshake, Server hello (2):
+    * TLSv1.2 (IN), TLS handshake, Certificate (11):
+    * TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+    * TLSv1.2 (IN), TLS handshake, Server finished (14):
+    * TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+    * TLSv1.2 (OUT), TLS change cipher, Change cipher spec (1):
+    * TLSv1.2 (OUT), TLS handshake, Finished (20):
+    * TLSv1.2 (IN), TLS change cipher, Change cipher spec (1):
+    * TLSv1.2 (IN), TLS handshake, Finished (20):
+    * SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+    * ALPN: server accepted h2
+    * Server certificate:
+    *  subject: CN=logs.rdp-dev.ingress.k8s.highmed.org
+    *  start date: Mar  2 12:29:50 2024 GMT
+    *  expire date: May 31 12:29:49 2024 GMT
+    *  subjectAltName: host "logs.rdp-dev.ingress.k8s.highmed.org" matched cert's "logs.rdp-dev.ingress.k8s.highmed.org"
+    *  issuer: C=US; O=Let's Encrypt; CN=R3
+    *  SSL certificate verify ok.
+    * using HTTP/2
+    * [HTTP/2] [1] OPENED stream for https://logs.rdp-dev.ingress.k8s.highmed.org/
+    * [HTTP/2] [1] [:method: GET]
+    * [HTTP/2] [1] [:scheme: https]
+    * [HTTP/2] [1] [:authority: logs.rdp-dev.ingress.k8s.highmed.org]
+    * [HTTP/2] [1] [:path: /]
+    * [HTTP/2] [1] [user-agent: curl/8.4.0]
+    * [HTTP/2] [1] [accept: */*]
+    > GET / HTTP/2
+    > Host: logs.rdp-dev.ingress.k8s.highmed.org
+    > User-Agent: curl/8.4.0
+    > Accept: */*
+    >
+    < HTTP/2 401
+    < date: Mon, 04 Mar 2024 09:53:51 GMT
+    < content-type: text/html
+    < content-length: 172
+    < www-authenticate: Basic realm="Authentication Required"
+    < strict-transport-security: max-age=15724800; includeSubDomains
+    <
+    <html>
+    <head><title>401 Authorization Required</title></head>
+    <body>
+    <center><h1>401 Authorization Required</h1></center>
+    <hr><center>nginx</center>
+    </body>
+    </html>
+    * Connection #1 to host logs.rdp-dev.ingress.k8s.highmed.org left intact
+
+#### Use curl with the correct credentials to connect to the ingress
+
+    export USERNAME=$(kubectl get secret basic-auth-input -o jsonpath="{.data.username}" | base64 -d)
+    export PASSWORD=$(kubectl get secret basic-auth-input -o jsonpath="{.data.password}" | base64 -d)
+
+    curl -vu "$USERNAME:$PASSWORD" https://logs.rdp-dev.ingress.k8s.highmed.org
+
+    *   Trying 134.76.15.219:443...
+    * Connected to logs.rdp-dev.ingress.k8s.highmed.org (134.76.15.219) port 443
+    * ALPN: curl offers h2,http/1.1
+    * (304) (OUT), TLS handshake, Client hello (1):
+    *  CAfile: /etc/ssl/cert.pem
+    *  CApath: none
+    * (304) (IN), TLS handshake, Server hello (2):
+    * TLSv1.2 (IN), TLS handshake, Certificate (11):
+    * TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+    * TLSv1.2 (IN), TLS handshake, Server finished (14):
+    * TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+    * TLSv1.2 (OUT), TLS change cipher, Change cipher spec (1):
+    * TLSv1.2 (OUT), TLS handshake, Finished (20):
+    * TLSv1.2 (IN), TLS change cipher, Change cipher spec (1):
+    * TLSv1.2 (IN), TLS handshake, Finished (20):
+    * SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+    * ALPN: server accepted h2
+    * Server certificate:
+    *  subject: CN=logs.rdp-dev.ingress.k8s.highmed.org
+    *  start date: Mar  2 12:29:50 2024 GMT
+    *  expire date: May 31 12:29:49 2024 GMT
+    *  subjectAltName: host "logs.rdp-dev.ingress.k8s.highmed.org" matched cert's "logs.rdp-dev.ingress.k8s.highmed.org"
+    *  issuer: C=US; O=Let's Encrypt; CN=R3
+    *  SSL certificate verify ok.
+    * using HTTP/2
+    * Server auth using Basic with user 'u-****************'
+    * [HTTP/2] [1] OPENED stream for https://logs.rdp-dev.ingress.k8s.highmed.org/
+    * [HTTP/2] [1] [:method: GET]
+    * [HTTP/2] [1] [:scheme: https]
+    * [HTTP/2] [1] [:authority: logs.rdp-dev.ingress.k8s.highmed.org]
+    * [HTTP/2] [1] [:path: /]
+    * [HTTP/2] [1] [authorization: Basic dS0qKioqKioqKioqKioqKioqCg==]
+    * [HTTP/2] [1] [user-agent: curl/8.4.0]
+    * [HTTP/2] [1] [accept: */*]
+    > GET / HTTP/2
+    > Host: logs.rdp-dev.ingress.k8s.highmed.org
+    > Authorization: Basic dS0qKioqKioqKioqKioqKioqCg==
+    > User-Agent: curl/8.4.0
+    > Accept: */*
+    >
+    < HTTP/2 200
+    < date: Mon, 04 Mar 2024 10:01:53 GMT
+    < content-type: text/html; charset=utf-8
+    < content-length: 365
+    < vary: Accept-Encoding
+    < x-server-hostname: victoria-logs-victoria-logs-single-server-0
+    < strict-transport-security: max-age=15724800; includeSubDomains
+    <
+    * Connection #0 to host logs.rdp-dev.ingress.k8s.highmed.org left intact
+    <h2>Single-node VictoriaLogs</h2></br>See docs at <a href='https://docs.victoriametrics.com/VictoriaLogs/'>https://docs.victoriametrics.com/VictoriaLogs/</a></br>Useful endpoints:</br><a href="select/vmui">select/vmui</a> - Web UI for VictoriaLogs<br/><a href="metrics">metrics</a> - available service metrics<br/><a href="flags">flags</a> - command-line flags<br/>
+
+#### Sources
+
+- [Basic Authentication](https://kubernetes.github.io/ingress-nginx/examples/auth/basic/)
+
 
 TODO
 

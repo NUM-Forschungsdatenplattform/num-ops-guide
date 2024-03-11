@@ -20,7 +20,7 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [ArgoCD](#argocd)
     - [Grafana](#grafana)
     - [Prometheus](#prometheus)
-    - [Loki](#loki)
+    - [VictoriaLogs](#victorialogs)
     - [Central Research Repository](#central-research-repository)
     - [...](#todo)
 1. [Getting Started](#getting-started)
@@ -29,8 +29,10 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [Add your private ssh key to get access to private num-helm-charts](#add-your-private-ssh-key-to-get-access-to-private-num-helm-charts)
     - [Deploy the App of Apps](#deploy-the-app-of-apps)
     - [Update ArgoCD](#update-argocd)
-    - [Securing Kubernetes Services with Let's Encrypt, Nginx Ingress Controller, and Cert-Manag(securing-kubernetes-services-with-let's-encrypt,-nginx-ingress-controller,-and-cert-manager)
+    - [Securing Kubernetes Services with Let's Encrypt, Nginx Ingress Controller, and Cert-Manager](securing-kubernetes-services-with-let's-encrypt,-nginx-ingress-controller,-and-cert-manager)
     - [Securing Kubernetes Services with Ingress-Nginx Controller and Basic Authentication](securing-kubernetes-services-with-ingress-nginx-controller-and-basic-authentication)
+    - [Using VictoriaLogs with Web UI](#using-victorialogs-with-web-ui)
+    - [Using VictoriaLogs from the command line](#using-victorialogs-from-the-command-line)
     - [Deploy a new version of the Central Research Repository to the production environment](#todo)
     - [...](#todo)
 1. [Contributing](#contributing)
@@ -117,9 +119,38 @@ Grafana is an open-source analytics and monitoring platform that integrates with
 
 Prometheus is an open-source monitoring and alerting toolkit designed for reliability and scalability. It scrapes and stores time-series data, making it a crucial component for monitoring Kubernetes clusters.
 
-### Loki
+### VictoriaLogs
 
-Loki is a horizontally scalable, multi-tenant log aggregation system inspired by Prometheus. It helps to collect, store, and search logs efficiently in a Kubernetes environment.
+VictoriaLogs is [open source](https://github.com/VictoriaMetrics/VictoriaMetrics/tree/master/app/victoria-logs) user-friendly database for logs
+from [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics/).
+
+VictoriaLogs provides the following key features:
+
+- VictoriaLogs can accept logs from popular log collectors. See [these docs](https://docs.victoriametrics.com/VictoriaLogs/data-ingestion/).
+- VictoriaLogs is much easier to set up and operate compared to Elasticsearch and Grafana Loki.
+  See [these docs](https://docs.victoriametrics.com/VictoriaLogs/QuickStart.html).
+- VictoriaLogs provides easy yet powerful query language with full-text search capabilities across
+  all the [log fields](https://docs.victoriametrics.com/VictoriaLogs/keyConcepts.html#data-model) -
+  see [LogsQL docs](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html).
+- VictoriaLogs can be seamlessly combined with good old Unix tools for log analysis such as `grep`, `less`, `sort`, `jq`, etc.
+  See [these docs](https://docs.victoriametrics.com/VictoriaLogs/querying/#command-line) for details.
+- VictoriaLogs capacity and performance scales linearly with the available resources (CPU, RAM, disk IO, disk space).
+  It runs smoothly on both Raspberry PI and a server with hundreds of CPU cores and terabytes of RAM.
+- VictoriaLogs can handle up to 30x bigger data volumes than Elasticsearch and Grafana Loki when running on the same hardware.
+  See [these docs](#benchmarks).
+- VictoriaLogs supports fast full-text search over high-cardinality [log fields](https://docs.victoriametrics.com/VictoriaLogs/keyConcepts.html#data-model)
+  such as `trace_id`, `user_id` and `ip`.
+- VictoriaLogs supports multitenancy - see [these docs](#multitenancy).
+- VictoriaLogs supports out-of-order logs' ingestion aka backfilling.
+- VictoriaLogs provides a simple web UI for querying logs - see [these docs](https://docs.victoriametrics.com/VictoriaLogs/querying/#web-ui).
+
+VictoriaLogs is at the Preview stage now. It is ready for evaluation in production and verifying the claims given above.
+It isn't recommended to migrate from existing logging solutions to VictoriaLogs Preview in general cases yet.
+See the [Roadmap](https://docs.victoriametrics.com/VictoriaLogs/Roadmap.html) for details.
+
+See also:
+- [Using VictoriaLogs with Web UI](#using-victorialogs-with-web-ui)
+- [Using VictoriaLogs from the command line](#using-victorialogs-from-the-command-line)
 
 ## Getting Started
 
@@ -185,7 +216,9 @@ Argo CD will not use helm install to install charts. It will render the chart wi
 
 The first time we have to deploy the App of Apps manually, later we'll let Argo CD manage the app-of-apps and synchronize it automatically:
 
-    helm template charts/app-of-apps/ | kubectl apply -f -
+```sh
+helm template charts/app-of-apps/ | kubectl apply -f -
+```
 
 ### Update ArgoCD
 
@@ -213,25 +246,25 @@ The Let’s Encrypt certificate authority offers both a staging server for testi
 Let’s create a test ClusterIssuer to make sure the certificate provisioning mechanism is functioning correctly. A ClusterIssuer is not namespace-scoped and can be used by Certificate resources in any namespace.
 
 ```yaml
-    apiVersion: cert-manager.io/v1
-    kind: ClusterIssuer
-    metadata:
-        name: letsencrypt-staging
-        namespace: cert-manager
-    spec:
-        acme:
-            # Email address used for ACME registration
-            email: admin@example.org
-            # The ACME server URL
-            server: https://acme-staging-v02.api.letsencrypt.org/directory
-            # Name of a secret used to store the ACME account private key
-            privateKeySecretRef:
-            name: letsencrypt-staging-issuer-account-key
-            # Add a single challenge solver, HTTP01 using nginx
-            solvers:
-            - http01:
-                ingress:
-                    ingressClassName: nginx
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+    name: letsencrypt-staging
+    namespace: cert-manager
+spec:
+    acme:
+        # Email address used for ACME registration
+        email: admin@example.org
+        # The ACME server URL
+        server: https://acme-staging-v02.api.letsencrypt.org/directory
+        # Name of a secret used to store the ACME account private key
+        privateKeySecretRef:
+        name: letsencrypt-staging-issuer-account-key
+        # Add a single challenge solver, HTTP01 using nginx
+        solvers:
+        - http01:
+            ingress:
+                ingressClassName: nginx
 ```
 
 Here we specify that we’d like to create a ClusterIssuer called `letsencrypt-staging`, and use the Let’s Encrypt staging server. We’ll later use the production server to roll out our certificates, but the production server rate-limits requests made against it, so for testing purposes we should use the staging URL.
@@ -244,35 +277,39 @@ The ClusterIssuer for the production server is defined here: [letsencrypt-prod-c
 
 To request TLS signed certificates we annotations to our Ingress resources and cert-manager will facilitate creating the Certificate resource for us. A small sub-component of cert-manager, ingress-shim, is responsible for this. Ingress-shim watches Ingress resources across our cluster. If it observes an Ingress with
 
-    annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-staging
+```yaml
+annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+```
 
 Ingress-shim  will ensure a Certificate resource with the name provided in the `tls.secretName` field and configured as described on the Ingress exists in the Ingress's namespace.
 
-    apiVersion: networking.k8s.io/v1
-    kind: Ingress
-    metadata:
-    name: victoria-logs-ingress
-    namespace: victoria-logs
-    annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-staging
-    spec:
-        ingressClassName: nginx
-        rules:
-        - host: logs.example.org
-            http:
-            paths:
-            - backend:
-                service:
-                    name: victoria-logs
-                    port:
-                    number: 9428
-                path: /
-                pathType: Prefix
-        tls:
-        - hosts:
-            - logs.example.org
-            secretName: victoria-logs-letsencrypt-staging-tls
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+name: victoria-logs-ingress
+namespace: victoria-logs
+annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+spec:
+    ingressClassName: nginx
+    rules:
+    - host: logs.example.org
+        http:
+        paths:
+        - backend:
+            service:
+                name: victoria-logs
+                port:
+                number: 9428
+            path: /
+            pathType: Prefix
+    tls:
+    - hosts:
+        - logs.example.org
+        secretName: victoria-logs-letsencrypt-staging-tls
+```
 
 When the Certificate resource has conditions like
 
@@ -322,42 +359,52 @@ After setting up HTTPS for our Kubernetes Services it is file to use Basic Authe
 
 For the htpasswd file file, we nedd a username and a password. We generate them by using this helm template
 
-    apiVersion: v1
-    kind: Secret
-    metadata:
-        name: basic-auth-generated-secret
-        annotations:
-            argocd.argoproj.io/sync-options: "Delete=false"
-    type: Opaque
-    data:
-        username: {{ printf "%s-%s" "u" (randAlphaNum 16) | b64enc | quote }}
-        password: {{ printf "%s-%s" "p" (randAlphaNum 32) | b64enc | quote }}
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+    name: basic-auth-generated-secret
+    annotations:
+        argocd.argoproj.io/sync-options: "Delete=false"
+type: Opaque
+data:
+    username: {{ printf "%s-%s" "u" (randAlphaNum 16) | b64enc | quote }}
+    password: {{ printf "%s-%s" "p" (randAlphaNum 32) | b64enc | quote }}
+```
 
 When using argocd, each time, arrgocd syncs the status, new username and passwords are generated.
 So we backup the generated username and password in an generic `basic-auth-input` Secret.
 
-    export USERNAME=$(kubectl get secret basic-auth-generated-secret -o jsonpath="{.data.username}" | base64 -d)
-    export PASSWORD=$(kubectl get secret basic-auth-generated-secret -o jsonpath="{.data.password}" | base64 -d)
+```sh
+export USERNAME=$(kubectl get secret basic-auth-generated-secret -o jsonpath="{.data.username}" | base64 -d)
+export PASSWORD=$(kubectl get secret basic-auth-generated-secret -o jsonpath="{.data.password}" | base64 -d)
 
-    kubectl create secret generic basic-auth-input --from-literal=username="$USERNAME" --from-literal=password="$PASSWORD"
+kubectl create secret generic basic-auth-input --from-literal=username="$USERNAME" --from-literal=password="$PASSWORD"
 
-    echo user: "$USERNAME" password: "$PASSWORD"
+echo user: "$USERNAME" password: "$PASSWORD"
+```
 
 To create the htpasswd file `auth`, we run
 
-    htpasswd -bc auth "$USERNAME" "$PASSWORD"
+```sh
+htpasswd -bc auth "$USERNAME" "$PASSWORD"
+```
 
 #### Convert auth file into a sealed secret
 
 We do not want to leak the username in this public repo, so we create a sealed secret to store the auth file:
 
-    kubectl create secret generic basic-auth --from-file=auth -o yaml --dry-run=client | kubeseal -o yaml > basic-auth-sealed-secret.yaml
+```sh
+kubectl create secret generic basic-auth --from-file=auth -o yaml --dry-run=client | kubeseal -o yaml > basic-auth-sealed-secret.yaml
+ ```
 
 And update our repo:
 
-    git add basic-auth-sealed-secret.yaml
-    git commit -m "modified basic-auth-sealed-secret.yaml"
-    git push
+```sh
+git add basic-auth-sealed-secret.yaml
+git commit -m "modified basic-auth-sealed-secret.yaml"
+git push
+```
 
 After syncing with argo-cd, the sealed-secrets-controller decrypts the sealed-secret into the `basic-auth` secret.
 
@@ -365,158 +412,301 @@ After syncing with argo-cd, the sealed-secrets-controller decrypts the sealed-se
 
 To use the basic auth file, we need to annotate the ingress like:
 
-    apiVersion: networking.k8s.io/v1
-    kind: Ingress
-    metadata:
-    name: ingress-with-auth
-    annotations:
-        # type of authentication
-        nginx.ingress.kubernetes.io/auth-type: basic
-        # name of the secret that contains the user/password definitions
-        nginx.ingress.kubernetes.io/auth-secret: basic-auth
-        # message to display with an appropriate context why the authentication is required
-        nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+name: ingress-with-auth
+annotations:
+    # type of authentication
+    nginx.ingress.kubernetes.io/auth-type: basic
+    # name of the secret that contains the user/password definitions
+    nginx.ingress.kubernetes.io/auth-secret: basic-auth
+    # message to display with an appropriate context why the authentication is required
+    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+```
 
 #### Use curl to confirm authorization is required by the ingress
 
-    curl -Lv logs.rdp-dev.ingress.k8s.highmed.org
+```sh
+curl -Lv logs.rdp-dev.ingress.k8s.highmed.org
 
-    *   Trying 134.76.15.219:80...
-    * Connected to logs.rdp-dev.ingress.k8s.highmed.org (134.76.15.219) port 80
-    > GET / HTTP/1.1
-    > Host: logs.rdp-dev.ingress.k8s.highmed.org
-    > User-Agent: curl/8.4.0
-    > Accept: */*
-    >
-    < HTTP/1.1 308 Permanent Redirect
-    < Date: Mon, 04 Mar 2024 09:53:50 GMT
-    < Content-Type: text/html
-    < Content-Length: 164
-    < Connection: keep-alive
-    < Location: https://logs.rdp-dev.ingress.k8s.highmed.org
-    <
-    * Ignoring the response-body
-    * Connection #0 to host logs.rdp-dev.ingress.k8s.highmed.org left intact
-    * Clear auth, redirects to port from 80 to 443
-    * Issue another request to this URL: 'https://logs.rdp-dev.ingress.k8s.highmed.org/'
-    *   Trying 134.76.15.219:443...
-    * Connected to logs.rdp-dev.ingress.k8s.highmed.org (134.76.15.219) port 443
-    * ALPN: curl offers h2,http/1.1
-    * (304) (OUT), TLS handshake, Client hello (1):
-    *  CAfile: /etc/ssl/cert.pem
-    *  CApath: none
-    * (304) (IN), TLS handshake, Server hello (2):
-    * TLSv1.2 (IN), TLS handshake, Certificate (11):
-    * TLSv1.2 (IN), TLS handshake, Server key exchange (12):
-    * TLSv1.2 (IN), TLS handshake, Server finished (14):
-    * TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
-    * TLSv1.2 (OUT), TLS change cipher, Change cipher spec (1):
-    * TLSv1.2 (OUT), TLS handshake, Finished (20):
-    * TLSv1.2 (IN), TLS change cipher, Change cipher spec (1):
-    * TLSv1.2 (IN), TLS handshake, Finished (20):
-    * SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
-    * ALPN: server accepted h2
-    * Server certificate:
-    *  subject: CN=logs.rdp-dev.ingress.k8s.highmed.org
-    *  start date: Mar  2 12:29:50 2024 GMT
-    *  expire date: May 31 12:29:49 2024 GMT
-    *  subjectAltName: host "logs.rdp-dev.ingress.k8s.highmed.org" matched cert's "logs.rdp-dev.ingress.k8s.highmed.org"
-    *  issuer: C=US; O=Let's Encrypt; CN=R3
-    *  SSL certificate verify ok.
-    * using HTTP/2
-    * [HTTP/2] [1] OPENED stream for https://logs.rdp-dev.ingress.k8s.highmed.org/
-    * [HTTP/2] [1] [:method: GET]
-    * [HTTP/2] [1] [:scheme: https]
-    * [HTTP/2] [1] [:authority: logs.rdp-dev.ingress.k8s.highmed.org]
-    * [HTTP/2] [1] [:path: /]
-    * [HTTP/2] [1] [user-agent: curl/8.4.0]
-    * [HTTP/2] [1] [accept: */*]
-    > GET / HTTP/2
-    > Host: logs.rdp-dev.ingress.k8s.highmed.org
-    > User-Agent: curl/8.4.0
-    > Accept: */*
-    >
-    < HTTP/2 401
-    < date: Mon, 04 Mar 2024 09:53:51 GMT
-    < content-type: text/html
-    < content-length: 172
-    < www-authenticate: Basic realm="Authentication Required"
-    < strict-transport-security: max-age=15724800; includeSubDomains
-    <
-    <html>
-    <head><title>401 Authorization Required</title></head>
-    <body>
-    <center><h1>401 Authorization Required</h1></center>
-    <hr><center>nginx</center>
-    </body>
-    </html>
-    * Connection #1 to host logs.rdp-dev.ingress.k8s.highmed.org left intact
+*   Trying 134.76.15.219:80...
+* Connected to logs.rdp-dev.ingress.k8s.highmed.org (134.76.15.219) port 80
+> GET / HTTP/1.1
+> Host: logs.rdp-dev.ingress.k8s.highmed.org
+> User-Agent: curl/8.4.0
+> Accept: */*
+>
+< HTTP/1.1 308 Permanent Redirect
+< Date: Mon, 04 Mar 2024 09:53:50 GMT
+< Content-Type: text/html
+< Content-Length: 164
+< Connection: keep-alive
+< Location: https://logs.rdp-dev.ingress.k8s.highmed.org
+<
+* Ignoring the response-body
+* Connection #0 to host logs.rdp-dev.ingress.k8s.highmed.org left intact
+* Clear auth, redirects to port from 80 to 443
+* Issue another request to this URL: 'https://logs.rdp-dev.ingress.k8s.highmed.org/'
+*   Trying 134.76.15.219:443...
+* Connected to logs.rdp-dev.ingress.k8s.highmed.org (134.76.15.219) port 443
+* ALPN: curl offers h2,http/1.1
+* (304) (OUT), TLS handshake, Client hello (1):
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* (304) (IN), TLS handshake, Server hello (2):
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+* TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+* TLSv1.2 (IN), TLS handshake, Server finished (14):
+* TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+* TLSv1.2 (OUT), TLS change cipher, Change cipher spec (1):
+* TLSv1.2 (OUT), TLS handshake, Finished (20):
+* TLSv1.2 (IN), TLS change cipher, Change cipher spec (1):
+* TLSv1.2 (IN), TLS handshake, Finished (20):
+* SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: CN=logs.rdp-dev.ingress.k8s.highmed.org
+*  start date: Mar  2 12:29:50 2024 GMT
+*  expire date: May 31 12:29:49 2024 GMT
+*  subjectAltName: host "logs.rdp-dev.ingress.k8s.highmed.org" matched cert's "logs.rdp-dev.ingress.k8s.highmed.org"
+*  issuer: C=US; O=Let's Encrypt; CN=R3
+*  SSL certificate verify ok.
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://logs.rdp-dev.ingress.k8s.highmed.org/
+* [HTTP/2] [1] [:method: GET]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: logs.rdp-dev.ingress.k8s.highmed.org]
+* [HTTP/2] [1] [:path: /]
+* [HTTP/2] [1] [user-agent: curl/8.4.0]
+* [HTTP/2] [1] [accept: */*]
+> GET / HTTP/2
+> Host: logs.rdp-dev.ingress.k8s.highmed.org
+> User-Agent: curl/8.4.0
+> Accept: */*
+>
+< HTTP/2 401
+< date: Mon, 04 Mar 2024 09:53:51 GMT
+< content-type: text/html
+< content-length: 172
+< www-authenticate: Basic realm="Authentication Required"
+< strict-transport-security: max-age=15724800; includeSubDomains
+<
+<html>
+<head><title>401 Authorization Required</title></head>
+<body>
+<center><h1>401 Authorization Required</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+* Connection #1 to host logs.rdp-dev.ingress.k8s.highmed.org left intact
+```
 
 #### Use curl with the correct credentials to connect to the ingress
 
-    export USERNAME=$(kubectl get secret basic-auth-input -o jsonpath="{.data.username}" | base64 -d)
-    export PASSWORD=$(kubectl get secret basic-auth-input -o jsonpath="{.data.password}" | base64 -d)
+```sh
+export USERNAME=$(kubectl get secret basic-auth-input -o jsonpath="{.data.username}" | base64 -d)
+export PASSWORD=$(kubectl get secret basic-auth-input -o jsonpath="{.data.password}" | base64 -d)
 
-    curl -vu "$USERNAME:$PASSWORD" https://logs.rdp-dev.ingress.k8s.highmed.org
+curl -vu "$USERNAME:$PASSWORD" https://logs.rdp-dev.ingress.k8s.highmed.org
 
-    *   Trying 134.76.15.219:443...
-    * Connected to logs.rdp-dev.ingress.k8s.highmed.org (134.76.15.219) port 443
-    * ALPN: curl offers h2,http/1.1
-    * (304) (OUT), TLS handshake, Client hello (1):
-    *  CAfile: /etc/ssl/cert.pem
-    *  CApath: none
-    * (304) (IN), TLS handshake, Server hello (2):
-    * TLSv1.2 (IN), TLS handshake, Certificate (11):
-    * TLSv1.2 (IN), TLS handshake, Server key exchange (12):
-    * TLSv1.2 (IN), TLS handshake, Server finished (14):
-    * TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
-    * TLSv1.2 (OUT), TLS change cipher, Change cipher spec (1):
-    * TLSv1.2 (OUT), TLS handshake, Finished (20):
-    * TLSv1.2 (IN), TLS change cipher, Change cipher spec (1):
-    * TLSv1.2 (IN), TLS handshake, Finished (20):
-    * SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
-    * ALPN: server accepted h2
-    * Server certificate:
-    *  subject: CN=logs.rdp-dev.ingress.k8s.highmed.org
-    *  start date: Mar  2 12:29:50 2024 GMT
-    *  expire date: May 31 12:29:49 2024 GMT
-    *  subjectAltName: host "logs.rdp-dev.ingress.k8s.highmed.org" matched cert's "logs.rdp-dev.ingress.k8s.highmed.org"
-    *  issuer: C=US; O=Let's Encrypt; CN=R3
-    *  SSL certificate verify ok.
-    * using HTTP/2
-    * Server auth using Basic with user 'u-****************'
-    * [HTTP/2] [1] OPENED stream for https://logs.rdp-dev.ingress.k8s.highmed.org/
-    * [HTTP/2] [1] [:method: GET]
-    * [HTTP/2] [1] [:scheme: https]
-    * [HTTP/2] [1] [:authority: logs.rdp-dev.ingress.k8s.highmed.org]
-    * [HTTP/2] [1] [:path: /]
-    * [HTTP/2] [1] [authorization: Basic dS0qKioqKioqKioqKioqKioqCg==]
-    * [HTTP/2] [1] [user-agent: curl/8.4.0]
-    * [HTTP/2] [1] [accept: */*]
-    > GET / HTTP/2
-    > Host: logs.rdp-dev.ingress.k8s.highmed.org
-    > Authorization: Basic dS0qKioqKioqKioqKioqKioqCg==
-    > User-Agent: curl/8.4.0
-    > Accept: */*
-    >
-    < HTTP/2 200
-    < date: Mon, 04 Mar 2024 10:01:53 GMT
-    < content-type: text/html; charset=utf-8
-    < content-length: 365
-    < vary: Accept-Encoding
-    < x-server-hostname: victoria-logs-victoria-logs-single-server-0
-    < strict-transport-security: max-age=15724800; includeSubDomains
-    <
-    * Connection #0 to host logs.rdp-dev.ingress.k8s.highmed.org left intact
-    <h2>Single-node VictoriaLogs</h2></br>See docs at <a href='https://docs.victoriametrics.com/VictoriaLogs/'>https://docs.victoriametrics.com/VictoriaLogs/</a></br>Useful endpoints:</br><a href="select/vmui">select/vmui</a> - Web UI for VictoriaLogs<br/><a href="metrics">metrics</a> - available service metrics<br/><a href="flags">flags</a> - command-line flags<br/>
+*   Trying 134.76.15.219:443...
+* Connected to logs.rdp-dev.ingress.k8s.highmed.org (134.76.15.219) port 443
+* ALPN: curl offers h2,http/1.1
+* (304) (OUT), TLS handshake, Client hello (1):
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* (304) (IN), TLS handshake, Server hello (2):
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+* TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+* TLSv1.2 (IN), TLS handshake, Server finished (14):
+* TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+* TLSv1.2 (OUT), TLS change cipher, Change cipher spec (1):
+* TLSv1.2 (OUT), TLS handshake, Finished (20):
+* TLSv1.2 (IN), TLS change cipher, Change cipher spec (1):
+* TLSv1.2 (IN), TLS handshake, Finished (20):
+* SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: CN=logs.rdp-dev.ingress.k8s.highmed.org
+*  start date: Mar  2 12:29:50 2024 GMT
+*  expire date: May 31 12:29:49 2024 GMT
+*  subjectAltName: host "logs.rdp-dev.ingress.k8s.highmed.org" matched cert's "logs.rdp-dev.ingress.k8s.highmed.org"
+*  issuer: C=US; O=Let's Encrypt; CN=R3
+*  SSL certificate verify ok.
+* using HTTP/2
+* Server auth using Basic with user 'u-****************'
+* [HTTP/2] [1] OPENED stream for https://logs.rdp-dev.ingress.k8s.highmed.org/
+* [HTTP/2] [1] [:method: GET]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: logs.rdp-dev.ingress.k8s.highmed.org]
+* [HTTP/2] [1] [:path: /]
+* [HTTP/2] [1] [authorization: Basic dS0qKioqKioqKioqKioqKioqCg==]
+* [HTTP/2] [1] [user-agent: curl/8.4.0]
+* [HTTP/2] [1] [accept: */*]
+> GET / HTTP/2
+> Host: logs.rdp-dev.ingress.k8s.highmed.org
+> Authorization: Basic dS0qKioqKioqKioqKioqKioqCg==
+> User-Agent: curl/8.4.0
+> Accept: */*
+>
+< HTTP/2 200
+< date: Mon, 04 Mar 2024 10:01:53 GMT
+< content-type: text/html; charset=utf-8
+< content-length: 365
+< vary: Accept-Encoding
+< x-server-hostname: victoria-logs-victoria-logs-single-server-0
+< strict-transport-security: max-age=15724800; includeSubDomains
+<
+* Connection #0 to host logs.rdp-dev.ingress.k8s.highmed.org left intact
+<h2>Single-node VictoriaLogs</h2></br>See docs at <a href='https://docs.victoriametrics.com/VictoriaLogs/'>https://docs.victoriametrics.com/VictoriaLogs/</a></br>Useful endpoints:</br><a href="select/vmui">select/vmui</a> - Web UI for VictoriaLogs<br/><a href="metrics">metrics</a> - available service metrics<br/><a href="flags">flags</a> - command-line flags<br/>
+```
 
 #### Sources
 
 - [Basic Authentication](https://kubernetes.github.io/ingress-nginx/examples/auth/basic/)
 
+### Using VictoriaLogs with Web UI
 
-TODO
+VictoriaLogs provides a simple Web UI for logs querying and exploration at [vmui](https://logs.rdp-dev.ingress.k8s.highmed.org/select/vmui). The UI is basic auth protected and you need a valid username and password.
 
+```sh
+echo username: $(kubectl get secret basic-auth-input -n victoria-logs -o jsonpath="{.data.username}" | base64 -d)
+echo password: $(kubectl get secret basic-auth-input -n victoria-logs -o jsonpath="{.data.password}" | base64 -d)
+```
+
+After you log in enter a log query e.q. `_time:5m` and press the `Execute Query` button.
+
+There are three modes of displaying query results:
+- Group - results are displayed as a table with rows grouped by stream and fields for filtering.
+- Table - displays query results as a table.
+- JSON - displays raw JSON response from HTTP API.
+
+This is the first version that has minimal functionality. It comes with the following limitations:
+- The number of query results is always limited to 1000 lines. Iteratively add more specific filters to the query in order to get full response with less than 1000 lines.
+- Queries are always executed against tenant 0.
+
+These limitations will be removed in future versions.
+To get around the current limitations, you can use an alternative - the command line interface.
+
+See also:
+
+- [Key concepts](https://docs.victoriametrics.com/VictoriaLogs/keyConcepts.html).
+- [LogsQL docs](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html).
+
+### Using VictoriaLogs from the command line
+
+VictoriaLogs integrates well with `curl` and other command-line tools during querying because of the following features:
+
+- VictoriaLogs sends the matching log entries to the response stream as soon as they are found.
+  This allows forwarding the response stream to arbitrary [Unix pipes](https://en.wikipedia.org/wiki/Pipeline_(Unix)).
+- VictoriaLogs automatically adjusts query execution speed to the speed of the client, which reads the response stream.
+  For example, if the response stream is piped to `less` command, then the query is suspended
+  until the `less` command reads the next block from the response stream.
+- VictoriaLogs automatically cancels query execution when the client closes the response stream.
+  For example, if the query response is piped to `head` command, then VictoriaLogs stops executing the query
+  when the `head` command closes the response stream.
+
+These features allow executing queries at command-line interface, which potentially select billions of rows,
+without the risk of high resource usage (CPU, RAM, disk IO) at VictoriaLogs server.
+
+For example, the following query can return very big number of matching log entries (e.g. billions) if VictoriaLogs contains
+many log messages with the `error` [word](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html#word):
+
+```sh
+export USERNAME=$(kubectl get secret basic-auth-input -n victoria-logs -o jsonpath="{.data.username}" | base64 -d)
+export PASSWORD=$(kubectl get secret basic-auth-input -n victoria-logs -o jsonpath="{.data.password}" | base64 -d)
+export QUERY_URL="https://logs.rdp-dev.ingress.k8s.highmed.org/select/logsql/query"
+
+curl -u "$USERNAME:$PASSWORD" "$QUERY_URL" -d 'query=error'
+```
+
+If the command returns "never-ending" response, then just press `ctrl+C` at any time in order to cancel the query.
+VictoriaLogs notices that the response stream is closed, so it cancels the query and instantly stops consuming CPU, RAM and disk IO for this query.
+
+Then just use `head` command for investigating the returned log messages and narrowing down the query:
+
+```sh
+curl -u "$USERNAME:$PASSWORD" "$QUERY_URL" -d 'query=error' | head -10
+```
+
+The `head -10` command reads only the first 10 log messages from the response and then closes the response stream.
+This automatically cancels the query at VictoriaLogs side, so it stops consuming CPU, RAM and disk IO resources.
+
+Sometimes it may be more convenient to use `less` command instead of `head` during the investigation of the returned response:
+
+```sh
+curl -u "$USERNAME:$PASSWORD" "$QUERY_URL" -d 'query=error' | less
+```
+
+The `less` command reads the response stream on demand, when the user scrolls down the output.
+VictoriaLogs suspends query execution when `less` stops reading the response stream.
+It doesn't consume CPU and disk IO resources during this time. It resumes query execution
+when the `less` continues reading the response stream.
+
+Suppose that the initial investigation of the returned query results helped determining that the needed log messages contain
+`cannot open file` [phrase](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html#phrase-filter).
+Then the query can be narrowed down to `error AND "cannot open file"`
+(see [these docs](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html#logical-filter) about `AND` operator).
+Then run the updated command in order to continue the investigation:
+
+```sh
+curl -u "$USERNAME:$PASSWORD" "$QUERY_URL" -d 'query=error AND "cannot open file"' | head
+```
+
+Note that the `query` arg must be properly encoded with [percent encoding](https://en.wikipedia.org/wiki/URL_encoding) when passing it to `curl`
+or similar tools.
+
+The `pipe the query to "head" or "less" -> investigate the results -> refine the query` iteration
+can be repeated multiple times until the needed log messages are found.
+
+The returned VictoriaLogs query response can be post-processed with any combination of Unix commands,
+which are usually used for log analysis - `grep`, `jq`, `awk`, `sort`, `uniq`, `wc`, etc.
+
+For example, the following command uses `wc -l` Unix command for counting the number of log messages
+with the `error` [word](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html#word)
+received from [streams](https://docs.victoriametrics.com/VictoriaLogs/keyConcepts.html#stream-fields) with `app="nginx"` field
+during the last 5 minutes:
+
+```sh
+curl -u "$USERNAME:$PASSWORD" "$QUERY_URL" -d 'query=_stream:{app="nginx"} AND _time:5m AND error' | wc -l
+```
+
+See [these docs](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html#stream-filter) about `_stream` filter,
+[these docs](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html#time-filter) about `_time` filter
+and [these docs](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html#logical-filter) about `AND` operator.
+
+The following example shows how to sort query results by the [`_time` field](https://docs.victoriametrics.com/VictoriaLogs/keyConcepts.html#time-field):
+
+```sh
+curl -u "$USERNAME:$PASSWORD" "$QUERY_URL" -d 'query=error' | jq -r '._time + " " + ._msg' | sort | less
+```
+
+This command uses `jq` for extracting [`_time`](https://docs.victoriametrics.com/VictoriaLogs/keyConcepts.html#time-field)
+and [`_msg`](https://docs.victoriametrics.com/VictoriaLogs/keyConcepts.html#message-field) fields from the returned results,
+and piping them to `sort` command.
+
+Note that the `sort` command needs to read all the response stream before returning the sorted results. So the command above
+can take non-trivial amounts of time if the `query` returns too many results. The solution is to narrow down the `query`
+before sorting the results. See [these tips](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html#performance-tips)
+on how to narrow down query results.
+
+The following example calculates stats on the number of log messages received during the last 5 minutes
+grouped by `log.level` [field](https://docs.victoriametrics.com/VictoriaLogs/keyConcepts.html#data-model):
+
+```sh
+curl -u "$USERNAME:$PASSWORD" "$QUERY_URL" -d 'query=_time:5m log.level:*' | jq -r '."log.level"' | sort | uniq -c
+```
+
+The query selects all the log messages with non-empty `log.level` field via ["any value" filter](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html#any-value-filter),
+then pipes them to `jq` command, which extracts the `log.level` field value from the returned JSON stream, then the extracted `log.level` values
+are sorted with `sort` command and, finally, they are passed to `uniq -c` command for calculating the needed stats.
+
+See also:
+
+- [Key concepts](https://docs.victoriametrics.com/VictoriaLogs/keyConcepts.html).
+- [LogsQL docs](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html).
 ## Contributing
 
 Contributions are welcome! If you find issues, have suggestions, or want to contribute enhancements, please check our [contribution guidelines](CONTRIBUTING.md).

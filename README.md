@@ -254,6 +254,31 @@ kubectl create secret generic admin -n keycloak --from-literal=username="$USERNA
 echo Keycloak admin: "$USERNAME" password: "$PASSWORD"
 ```
 
+### Create admin Secret for ArgoCD
+
+After `the app-of-apps` is deployed, we need to create admin secret for ArgoCD.
+
+```sh
+export USERNAME=$(kubectl get secret generated-argocd-admin -n keycloak -o jsonpath="{.data.username}" | base64 -d)
+export PASSWORD=$(kubectl get secret generated-argocd-admin -n keycloak -o jsonpath="{.data.password}" | base64 -d)
+
+kubectl create secret generic argocd-admin -n keycloak --from-literal=username="$USERNAME" --from-literal=password="$PASSWORD"
+
+echo ArgoCD admin: "$USERNAME" password: "$PASSWORD"
+```
+
+### Create user Secret for ArgoCD
+
+After `the app-of-apps` is deployed, we need to create user secret for ArgoCD.
+
+```sh
+export USERNAME=$(kubectl get secret generated-argocd-user -n keycloak -o jsonpath="{.data.username}" | base64 -d)
+export PASSWORD=$(kubectl get secret generated-argocd-user -n keycloak -o jsonpath="{.data.password}" | base64 -d)
+
+kubectl create secret generic argocd-user -n keycloak --from-literal=username="$USERNAME" --from-literal=password="$PASSWORD"
+
+echo ArgoCD user: "$USERNAME" password: "$PASSWORD"
+```
 
 ### Securing Kubernetes Services with Let's Encrypt, Nginx Ingress Controller, and Cert-Manager
 

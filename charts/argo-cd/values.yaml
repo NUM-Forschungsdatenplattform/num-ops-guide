@@ -9,6 +9,21 @@ argo-cd:
   configs:
     params:
       server.insecure: true
+    secret:
+      extra:
+        oidc.keycloak.clientSecret: OZpRRU2AIhsFDGSblSxxEPd7dibqmcQX
+    rbac:
+      policy.csv: |
+        g, ArgoCDAdmins, role:admin
+        g, ArgoCDUser, role:readonly
+    cm:
+      url: https://argocd.dev.num-rdp.de
+      oidc.config: |
+        name: Keycloak
+        issuer: https://keycloak.dev.num-rdp.de/auth/realms/rdp-dev
+        clientID: argocd
+        clientSecret: $oidc.keycloak.clientSecret
+        requestedScopes: ["openid", "profile", "email", "groups"]
 
   dex:
     enabled: false

@@ -251,7 +251,7 @@ export PASSWORD=$(kubectl get secret generated-admin -n keycloak -o jsonpath="{.
 
 kubectl create secret generic admin -n keycloak --from-literal=username="$USERNAME" --from-literal=password="$PASSWORD"
 
-Keycloak admin: "$USERNAME" password: "$PASSWORD"
+echo Keycloak admin: "$USERNAME" password: "$PASSWORD"
 ```
 
 

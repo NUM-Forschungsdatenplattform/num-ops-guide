@@ -3,6 +3,7 @@ apiVersion: "acid.zalan.do/v1"
 metadata:
   name: database
 spec:
+  teamId: ops
   enableLogicalBackup: false
   postgresql:
     version: "12"

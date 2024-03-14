@@ -53,7 +53,7 @@ keycloak:
     annotations:
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-      cert-manager.io/cluster-issuer: "letsencrypt-staging"
+      cert-manager.io/cluster-issuer: "letsencrypt-prod"
     hostname: keycloak.dev.num-rdp.de
     rules:
       - host: keycloak.dev.num-rdp.de
@@ -63,4 +63,4 @@ keycloak:
     tls:
       - hosts:
           - keycloak.dev.num-rdp.de
-        secretName: keycloak-staging
+        secretName: keycloak-prod

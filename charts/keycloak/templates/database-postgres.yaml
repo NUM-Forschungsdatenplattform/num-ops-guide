@@ -1,0 +1,18 @@
+kind: "postgresql"
+apiVersion: "acid.zalan.do/v1"
+metadata:
+  name: database
+spec:
+  enableLogicalBackup: false
+  postgresql:
+    version: "12"
+  numberOfInstances: 1
+  users:
+    keycloak:
+      - superuser
+      - createdb
+  databases:
+    keycloak: keycloak
+  volume:
+    size: 1Gi
+    storageClass: ssd

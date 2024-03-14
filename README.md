@@ -220,6 +220,15 @@ The first time we have to deploy the App of Apps manually, later we'll let Argo 
 helm template charts/app-of-apps/ | kubectl apply -f -
 ```
 
+
+### How to add an app to the app-op-apps
+
+As an example, we add keycloak to the app-op-apps.
+
+Steps:
+- create helm chart for keycloak
+- add Aplik
+
 ### Update ArgoCD
 
 We previously installed Argo CD manually by running helm install from our local machine. This means that updates to Argo CD, like upgrading the chart version or changing the values.yaml, require us to execute the Helm CLI command from a local machine again. It's repetitive, error-prone and inconsistent with how we install other applications in our cluster.
@@ -231,6 +240,20 @@ The application manifest can be found here: [charts/app-of-apps/templates/argo-c
 Once the Argo CD application is green (synced) we're done. We can make changes to our Argo CD installation the same way we change other applications: by changing the files in the repo and pushing it to our Git repository.
 
 In order to update Argo CD just increase the version in [charts/argo-cd/Chart.yaml](charts/argo-cd/Chart.yaml).
+
+### Create admin Secret for Keycloak
+
+After `the app-of-apps` is deployed, we need to create admin secret for Keycloak.
+
+```sh
+export USERNAME=$(kubectl get secret generated-admin -n keycloak -o jsonpath="{.data.username}" | base64 -d)
+export PASSWORD=$(kubectl get secret generated-admin -n keycloak -o jsonpath="{.data.password}" | base64 -d)
+
+kubectl create secret generic admin -n keycloak --from-literal=username="$USERNAME" --from-literal=password="$PASSWORD"
+
+Keycloak admin: "$USERNAME" password: "$PASSWORD"
+```
+
 
 ### Securing Kubernetes Services with Let's Encrypt, Nginx Ingress Controller, and Cert-Manager
 

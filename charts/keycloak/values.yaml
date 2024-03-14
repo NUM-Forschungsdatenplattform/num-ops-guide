@@ -1,0 +1,66 @@
+keycloak:
+  postgresql:
+    # Disable PostgreSQL dependency
+    enabled: false
+  command:
+    - "/opt/keycloak/bin/kc.sh"
+    - "start"
+    - "--http-enabled=true"
+    - "--http-port=8080"
+    - "--hostname-strict=false"
+    - "--hostname-strict-https=false"
+  extraEnv: |
+    - name: JAVA_OPTS
+      value: >-
+        -XX:+UseContainerSupport
+        -XX:MaxRAMPercentage=50.0
+        -Djava.net.preferIPv4Stack=true
+        -Djava.awt.headless=true
+        -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless
+    - name: KEYCLOAK_ADMIN
+      valueFrom:
+        secretKeyRef:
+          key:  username
+          name: admin
+    - name: KEYCLOAK_ADMIN_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key:  password
+          name: admin
+    - name: DB_VENDOR
+      value: postgres
+    - name: DB_ADDR
+      value: database
+    - name: DB_PORT
+      value: "5432"
+    - name: DB_DATABASE
+      value: keycloak
+    - name: DB_USER_FILE
+      value: /secrets/db-creds/user
+    - name: DB_PASSWORD_FILE
+      value: /secrets/db-creds/password
+  extraVolumeMounts: |
+    - name: db-creds
+      mountPath: /secrets/db-creds
+      readOnly: true
+  extraVolumes: |
+    - name: db-creds
+      secret:
+        secretName: postgres.database.credentials.postgresql.acid.zalan.do
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    hostname: keycloak.dev.num-rdp.de
+    rules:
+      - host: keycloak.dev.num-rdp.de
+        paths:
+          - pathType: Prefix
+            path: /
+    tls:
+      - hosts:
+          - keycloak.dev.num-rdp.de
+        secretName: keycloak-staging

@@ -1,6 +1,6 @@
 argo-cd:
   global:
-    domain: argocd.rdp-dev.ingress.k8s.highmed.org
+    domain: argocd.dev.num-rdp.de
     logging:
       format: json
       # -- Set the global logging level. One of: `debug`, `info`, `warn` or `error`
@@ -22,12 +22,12 @@ argo-cd:
     ingress:
       enabled: true
       ingressClassName: nginx
-      hostname: argocd.rdp-dev.ingress.k8s.highmed.org
+      hostname: argocd.dev.num-rdp.de
       annotations:
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
         cert-manager.io/cluster-issuer: "letsencrypt-prod"
       extraTls:
         - hosts:
-          - argocd.rdp-dev.ingress.k8s.highmed.org
+          - argocd.dev.num-rdp.de
           secretName: argocd-letsencrypt-prod-tls

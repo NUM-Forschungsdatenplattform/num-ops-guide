@@ -5,36 +5,26 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
 ## Table of Contents
 
 1. [Introduction](#introduction)
-1. [Roadmap for this Guide](#todo)
-    - [Research and Gather Information](#todo)
-    - [Outline Guide Content Structure](#todo)
-1. [Roadmap for the Cluster](#todo)
-    - [ArgoCD](#todo)
-    - [Observability](#todo)
-    - [Central Research Repository](#central-research-repository)
 1. [Principles](#principles)
 1. [Concepts](#concepts)
     - [Environments: development, staging, pre-prod, production](#todo)
-    - [Secrets management with HashiCorp Vault](#secrets-management-with-hashicorp-vault)
 1. [Components](#components)
     - [ArgoCD](#argocd)
     - [Grafana](#grafana)
     - [Prometheus](#prometheus)
     - [VictoriaLogs](#victorialogs)
-    - [Central Research Repository](#central-research-repository)
-    - [...](#todo)
 1. [Getting Started](#getting-started)
 1. [Tasks](#tasks)
+    - [Run a test pod for debugging purpose](#run-a-test-pod-for-debugging-purpose)
     - [Deploy ArgoCD](#deploy-argocd)
     - [Add your private ssh key to get access to private num-helm-charts](#add-your-private-ssh-key-to-get-access-to-private-num-helm-charts)
     - [Deploy the App of Apps](#deploy-the-app-of-apps)
     - [Update ArgoCD](#update-argocd)
-    - [Securing Kubernetes Services with Let's Encrypt, Nginx Ingress Controller, and Cert-Manager](securing-kubernetes-services-with-let's-encrypt,-nginx-ingress-controller,-and-cert-manager)
-    - [Securing Kubernetes Services with Ingress-Nginx Controller and Basic Authentication](securing-kubernetes-services-with-ingress-nginx-controller-and-basic-authentication)
+    - [Securing Kubernetes Services with Let's Encrypt, Nginx Ingress Controller, and Cert-Manager](#securing-kubernetes-services-with-lets-encrypt-nginx-ingress-controller-and-cert-manager)
+    - [Securing Kubernetes Services with Ingress-Nginx Controller and Basic Authentication](#securing-kubernetes-services-with-ingress-nginx-controller-and-basic-authentication)
     - [Using VictoriaLogs with Web UI](#using-victorialogs-with-web-ui)
     - [Using VictoriaLogs from the command line](#using-victorialogs-from-the-command-line)
-    - [Deploy a new version of the Central Research Repository to the production environment](#todo)
-    - [...](#todo)
+    - [How to disable dsf-bpe on CODEX cluster](#how-to-disable-dsf-bpe-on-codex-cluster)
 1. [Contributing](#contributing)
 1. [License](#license)
 
@@ -165,6 +155,10 @@ To startup a k8s cluster, that matches the current prod env simply run:
 
 Follow the step-by-step instructions in the guide to deploy and configure each component. The guide is continually updated to include the latest best practices and improvements.
 
+### Run a test pod for debugging purpose
+
+    kubectl run -it --rm test --image=busybox --restart=Never -- sh
+
 ### Deploy ArgoCD
 
 We'll use Helm to install Argo CD with the community-maintained chart from argoproj/argo-helm. The Argo project doesn't provide an official Helm chart.
@@ -225,9 +219,30 @@ helm template charts/app-of-apps/ | kubectl apply -f -
 
 As an example, we add keycloak to the app-op-apps.
 
-Steps:
-- create helm chart for keycloak
-- add Aplik
+#### Create a helm chart for keycloak
+
+- create a helm chart for keycloak in the `charts` folder
+
+```yaml
+apiVersion: v2
+name: keycloak
+version: 22.0.4
+dependencies:
+  - name: keycloakx
+    alias: keycloak
+    version: 2.3.0
+    repository: https://codecentric.github.io/helm-charts
+```
+
+- use the `keycloak` version as chart version
+- change the defaut values in a `values.yaml` file
+- add other ressouces in a `templates` folder
+
+#### Add keycloak to the app-op-apps
+
+- in the `charts/app-of-apps/templates` folder copy an cluster app yaml e.g `app-cert-manager.yaml` to `app-keycloak.yaml`
+- in `app-keycloak.yaml` change any `cert-manager` to `keycloak`
+- add your changes to this repo and let ArgoCD do the work
 
 ### Update ArgoCD
 
@@ -755,6 +770,31 @@ See also:
 
 - [Key concepts](https://docs.victoriametrics.com/VictoriaLogs/keyConcepts.html).
 - [LogsQL docs](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html).
+
+
+### How to disable dsf-bpe on CODEX cluster
+
+- checkout the [num-helm-charts](https://github.com/NUM-Forschungsdatenplattform/num-helm-charts) repository
+- in `deployment-values/central-research-repository/development-values.yaml` change `dsfBpe.enabled` to `false`
+- in `Chart.yaml` increase `version` number, for example, from `0.4.241` to `0.4.242`
+- check your changes with `git diff`
+- commit your changes with `git commit -am "NUM-109: disable dsf-bpe on dev"`
+- push your changes with `git push`
+- deploy your changes with `helm upgrade --install -f deployment-values/central-research-repository/development-values.yaml num . -n central-research-repository-development`
+- check helm output to ensure that there were no errors during deployment. Look for any warnings or errors that might indicate issues with the deployment process.
+
+```sh
+Release "num" has been upgraded. Happy Helming!
+NAME: num
+LAST DEPLOYED: Fri Mar 15 15:49:45 2024
+NAMESPACE: central-research-repository-development
+STATUS: deployed
+REVISION: 103
+TEST SUITE: None
+```
+
+- Use `kubectl get pods -n central-research-repository-development` to monitor the status of the pods in the namespace where your application is deployed. Make sure that `dsf-bpe` pod was terminated.
+
 ## Contributing
 
 Contributions are welcome! If you find issues, have suggestions, or want to contribute enhancements, please check our [contribution guidelines](CONTRIBUTING.md).

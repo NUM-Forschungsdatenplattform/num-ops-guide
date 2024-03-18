@@ -24,7 +24,8 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [Securing Kubernetes Services with Ingress-Nginx Controller and Basic Authentication](#securing-kubernetes-services-with-ingress-nginx-controller-and-basic-authentication)
     - [Using VictoriaLogs with Web UI](#using-victorialogs-with-web-ui)
     - [Using VictoriaLogs from the command line](#using-victorialogs-from-the-command-line)
-    - [How to disable dsf-bpe on CODEX cluster](#how-to-disable-dsf-bpe-on-codex-cluster)
+    - [How to disable DEV dsf-bpe on CODEX cluster](#how-to-disable-dev-dsf-bpe-on-codex-cluster)
+    - [How to test DEV fhir-bridge on CODEX cluster](#how-to-test-dev-fhir-bridge-on-codex-cluster)
 1. [Contributing](#contributing)
 1. [License](#license)
 
@@ -772,7 +773,7 @@ See also:
 - [LogsQL docs](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html).
 
 
-### How to disable dsf-bpe on CODEX cluster
+### How to disable DEV dsf-bpe on CODEX cluster
 
 - checkout the [num-helm-charts](https://github.com/NUM-Forschungsdatenplattform/num-helm-charts) repository
 - in `deployment-values/central-research-repository/development-values.yaml` change `dsfBpe.enabled` to `false`
@@ -794,6 +795,45 @@ TEST SUITE: None
 ```
 
 - Use `kubectl get pods -n central-research-repository-development` to monitor the status of the pods in the namespace where your application is deployed. Make sure that `dsf-bpe` pod was terminated.
+
+### How to test DEV fhir-bridge on CODEX cluster
+
+To test a fhir-bridge we do the following steps:
+- count COMPOSITIONs in ehrbase
+- add one Observation to fhir-bridge
+- count COMPOSITIONs in ehrbase
+- compair the number of COMPOSITIONs in ehrbase. They must have increased
+
+If you like `Postman`, please use this [config](https://github.com/NUM-Forschungsdatenplattform/num-fhir-bridge/tree/main/config/postman).
+
+#### Count COMPOSITIONs in ehrbase
+
+- use `kubectl` or `k9s` to port-forward the ehrbase HTTP port to `localhost:8080`
+- get username and password for basic auth from the [deployment values in num-helm-charts](https://github.com/NUM-Forschungsdatenplattform/num-helm-charts/blob/main/deployment-values/central-transactional-repository/development-values.yaml) and export them to your ENV like `export USERNAME='karl'` and `export PASSWORD='leiser'`
+- use the this `curl` command:
+```
+curl -s \
+    -XPOST \
+    -u "$USERNAME:$PASSWORD" \
+    -H 'Content-Type: application/json' \
+    -d '{"q":"SELECT count(c) FROM EHR e CONTAINS COMPOSITION c"}' \
+    http://localhost:8080/ehrbase/rest/openehr/v1/query/aql \
+    | jq .rows[0][0]
+```
+
+#### Add one Observation to fhir-bridge
+
+- use `kubectl` or `k9s` to port-forward the ehrbase HTTP port to `localhost:8888`.
+- use the this `curl` command:
+```
+curl -s \
+    -XPOST \
+    -H 'Content-Type: application/json' \
+    -d @./test/fhir-bridge/provide-observation.json \
+    http://localhost:8888/fhir-bridge/fhir/Observation \
+    | jq .status
+```
+The curl output should be `"final"`.
 
 ## Contributing
 

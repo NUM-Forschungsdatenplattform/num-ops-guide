@@ -781,7 +781,10 @@ See also:
 - check your changes with `git diff`
 - commit your changes with `git commit -am "NUM-109: disable dsf-bpe on dev"`
 - push your changes with `git push`
-- deploy your changes with `helm upgrade --install -f deployment-values/central-research-repository/development-values.yaml num . -n central-research-repository-development`
+- set namespace with `kubens central-research-repository-development`
+- diff helm chart with current k8s state `helm template --is-upgrade num . -f deployment-values/central-research-repository/development-values.yaml --dry-run | kubectl diff -f -`
+- **CHECK THE DIFF**
+- deploy your changes with `helm upgrade --install -f deployment-values/central-research-repository/development-values.yaml num .`
 - check helm output to ensure that there were no errors during deployment. Look for any warnings or errors that might indicate issues with the deployment process.
 
 ```sh

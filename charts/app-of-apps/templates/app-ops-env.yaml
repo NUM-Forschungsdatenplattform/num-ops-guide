@@ -15,7 +15,7 @@ spec:
   project: {{ .Values.projects.devEnv.name }}
   source:
     repoURL: {{ .Values.global.numHelmChartsRepoURL }}
-    targetRevision: generated-secrets-new
+    targetRevision: main
     path: .
     helm:
       valueFiles:

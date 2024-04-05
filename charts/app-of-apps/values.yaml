@@ -20,4 +20,4 @@ applications:
   opsEnv: 
     name: ops-env
     namespace: ops
-    helmValueFile: deployment-values/central-research-repository/ops-values.yaml
+    helmValueFile: deployment-values/central-research-repository/development-values.yaml

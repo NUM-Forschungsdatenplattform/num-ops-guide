@@ -21,9 +21,9 @@ applications:
     name: ops-env
     namespace: ops
     helmValueFile: deployment-values/central-research-repository/ops-values.yaml
-    requirementsValuesFile: deployment-requirements/ops-requirements.yaml
+    requirementsValuesFile: deployment-requirements/central-research-repository/ops-requirements.yaml
   testEnv:
     name: test-env
     namespace: test
     helmValueFile: deployment-values/central-research-repository/test-values.yaml
-    requirementsValuesFile: deployment-requirements/test-requirements.yaml
+    requirementsValuesFile: deployment-requirements/central-research-repository/test-requirements.yaml

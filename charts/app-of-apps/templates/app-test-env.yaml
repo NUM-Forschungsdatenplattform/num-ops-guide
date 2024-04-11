@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: {{ .Values.applications.opsEnv.namespace }}
+  name: {{ .Values.applications.testEnv.namespace }}
 ---  
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ .Values.applications.opsEnv.name }}
+  name: {{ .Values.applications.testEnv.name }}
   namespace: {{ .Values.global.argoNamespace }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -15,15 +15,15 @@ spec:
   project: {{ .Values.projects.devEnv.name }}
   source:
     repoURL: {{ .Values.global.numHelmChartsRepoURL }}
-    targetRevision: ops-sealed-secrets
+    targetRevision: test
     path: .
     helm:
       valueFiles:
-      - {{ .Values.applications.opsEnv.helmValueFile }}
-      - {{ .Values.applications.opsEnv.requirementsValuesFile }}
+      - {{ .Values.applications.testEnv.helmValueFile }}
+      - {{ .Values.applications.testEnv.requirementsValuesFile }}
   destination:
     server: https://kubernetes.default.svc
-    namespace: {{ .Values.applications.opsEnv.namespace }}
+    namespace: {{ .Values.applications.testEnv.namespace }}
   syncPolicy:
     automated:
       selfHeal: true

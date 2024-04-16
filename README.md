@@ -20,7 +20,7 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [Add your private ssh key to get access to private num-helm-charts](#add-your-private-ssh-key-to-get-access-to-private-num-helm-charts)
     - [Deploy the App of Apps](#deploy-the-app-of-apps)
     - [Update ArgoCD](#update-argocd)
-    - [Securing Kubernetes Services with Let's Encrypt, Nginx Ingress Controller, and Cert-Manager](#securing-kubernetes-services-with-lets-encrypt-nginx-ingress-controller-and-cert-manager)
+    - [Securing Kubernetes Services with Let's Encrypt, Nginx Ingress Controller and Cert-Manager](#securing-kubernetes-services-with-lets-encrypt-nginx-ingress-controller-and-cert-manager)
     - [Securing Kubernetes Services with Ingress-Nginx Controller and Basic Authentication](#securing-kubernetes-services-with-ingress-nginx-controller-and-basic-authentication)
     - [Using VictoriaLogs with Web UI](#using-victorialogs-with-web-ui)
     - [Using VictoriaLogs from the command line](#using-victorialogs-from-the-command-line)
@@ -152,6 +152,38 @@ To startup a k8s cluster, that matches the current prod env simply run:
 
     colima start --cpu 4 --memory 8 --arch x86_64 --kubernetes --kubernetes-version v1.24.6+k3s1
 
+## Environments
+
+### Codex Cluster
+
+    - Cluster: codex-central
+
+### Codex Dev Environment
+
+    - Cluster: codex-central
+    - Namespace: central-research-repository-development
+
+#### Keycloak
+
+    - URL: https://keycloak.dev.num-codex.de/auth
+
+### Dev Cluster
+
+    - Cluster: dev (rdp-dev)
+    - DNS: *.dev.num-rdp.de has address 134.76.15.219
+    - ArgoCD: https://argocd.dev.num-rdp.de/applications
+
+### Dev Environment
+
+    - Cluster: dev (rdp-dev)
+    - Namespace: dev
+
+#### Keycloak
+
+    - URL: https://keycloak.dev.dev.num-rdp.de/auth
+    - HTTP Basic auth: see secret `keycloak-basic-auth-input`
+    - Keycloak Username/Password: see secret `dev-env-keycloak-admin`
+
 ## Tasks
 
 Follow the step-by-step instructions in the guide to deploy and configure each component. The guide is continually updated to include the latest best practices and improvements.
@@ -214,7 +246,6 @@ The first time we have to deploy the App of Apps manually, later we'll let Argo 
 ```sh
 helm template charts/app-of-apps/ | kubectl apply -f -
 ```
-
 
 ### How to add an app to the app-op-apps
 
@@ -296,7 +327,7 @@ kubectl create secret generic argocd-user -n keycloak --from-literal=username="$
 echo ArgoCD user: "$USERNAME" password: "$PASSWORD"
 ```
 
-### Securing Kubernetes Services with Let's Encrypt, Nginx Ingress Controller, and Cert-Manager
+### Securing Kubernetes Services with Let's Encrypt, Nginx Ingress Controller and Cert-Manager
 
 #### Introduction
 

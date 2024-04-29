@@ -869,6 +869,52 @@ curl -s \
 ```
 The curl output should be `"final"`.
 
+### How to dump dev keycloak db on CODEX cluster
+
+Describe the pod `num-keycloak-0` in  `central-research-repository-development` namespace.
+In the env-vars for the keycloak container you will find something like `KC_DB_URL_HOST: acid-keycloak-development.development-postgres-cluster`.
+So the database service is called `acid-keycloak-development` in the `development-postgres-cluster` namespace.
+Exec a shell for the pod `acid-keycloak-development-0` the run the commands
+
+```
+su postgres -
+psql
+\l
+\q
+cd /tmp
+pg_dump -d keycloak > keycloak_dump.sql
+gzip keycloak_dump.sql
+```
+
+Then copy `the keycloak_dump.sql` to your local machine:
+
+```
+kubectl cp development-postgres-cluster/acid-keycloak-development-0:/tmp/keycloak_dump.sql.gz Downloads/keycloak_dump.sql.gz
+```
+
+### How to import dump of dev keycloak db on dev cluster
+
+Then copy `the keycloak_dump.sql` to db pod:
+
+```
+kubectl cp keycloak_dump.sql.gz dev/num-portal-postgres-0:/tmp/keycloak_dump.sql.gz
+```
+
+In the db pod:
+
+```
+su postgres -
+psql
+\l
+drop database  keycloak;
+create database  keycloak;
+\q
+cd /tmp
+pg_dump -d keycloak > keycloak_dump-backup.sql
+gunzip keycloak_dump.sql.gz
+psql -d keycloak -f keycloak_dump.sql
+```
+
 ## Contributing
 
 Contributions are welcome! If you find issues, have suggestions, or want to contribute enhancements, please check our [contribution guidelines](CONTRIBUTING.md).

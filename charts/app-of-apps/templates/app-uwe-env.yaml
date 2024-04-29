@@ -12,7 +12,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: {{ .Values.projects.uweEnv.name }}
+  project: {{ .Values.projects.devEnv.name }}
   source:
     repoURL: {{ .Values.global.numHelmChartsRepoURL }}
     targetRevision: {{ .Values.global.numHelmChartsBranch }}

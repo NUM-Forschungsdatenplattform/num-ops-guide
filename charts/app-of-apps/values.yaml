@@ -8,19 +8,23 @@ projects:
   devCluster:
     description: NUM RDP Dev Cluster
     name: dev-cluster
-  devEnv: 
+  devEnv:
     description: NUM RDP Dev Environments
     name: dev-envs
 
 applications:
-  devEnv: 
+  devEnv:
     name: dev-env
     namespace: dev
     helmValueFile: deployment-values/central-research-repository/development-values.yaml
-  opsEnv: 
+  opsEnv:
     name: ops-env
     namespace: ops
     helmValueFile: deployment-values/central-research-repository/ops-values.yaml
+  uweEnv:
+    name: uwe
+    namespace: uwe
+    helmValueFile: deployment-values/central-research-repository/uwe-values.yaml
   testEnv:
     name: test-env
     namespace: test

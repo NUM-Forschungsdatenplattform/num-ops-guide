@@ -14,7 +14,7 @@ projects:
 
 applications:
   devEnv:
-    enabled: true
+    enabled: false
     namespace: dev
     helmValueFile: deployment-values/central-research-repository/development-values.yaml
   opsEnv:

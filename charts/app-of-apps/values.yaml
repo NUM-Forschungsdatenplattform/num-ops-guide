@@ -7,25 +7,25 @@ global:
 projects:
   devCluster:
     description: NUM RDP Dev Cluster
-    name: dev-cluster
+    name: Cluster
   devEnv:
     description: NUM RDP Dev Environments
-    name: dev-envs
+    name: Environments
 
 applications:
   devEnv:
-    name: dev-env
+    enabled: true
     namespace: dev
     helmValueFile: deployment-values/central-research-repository/development-values.yaml
   opsEnv:
-    name: ops-env
+    enabled: true
     namespace: ops
     helmValueFile: deployment-values/central-research-repository/ops-values.yaml
   uweEnv:
-    name: uwe
+    enabled: false
     namespace: uwe
     helmValueFile: deployment-values/central-research-repository/uwe-values.yaml
   testEnv:
-    name: test-env
+    enabled: true
     namespace: test
     helmValueFile: deployment-values/central-research-repository/test-values.yaml

@@ -13,18 +13,18 @@ projects:
     name: dev-envs
 
 applications:
-  # devEnv:
-  #   name: dev-env
-  #   namespace: dev
-  #   helmValueFile: deployment-values/central-research-repository/development-values.yaml
+  devEnv:
+    name: dev-env
+    namespace: dev
+    helmValueFile: deployment-values/central-research-repository/development-values.yaml
   opsEnv:
     name: ops-env
     namespace: ops
     helmValueFile: deployment-values/central-research-repository/ops-values.yaml
-  # uweEnv:
-  #   name: uwe
-  #   namespace: uwe
-  #   helmValueFile: deployment-values/central-research-repository/uwe-values.yaml
+  uweEnv:
+    name: uwe
+    namespace: uwe
+    helmValueFile: deployment-values/central-research-repository/uwe-values.yaml
   testEnv:
     name: test-env
     namespace: test

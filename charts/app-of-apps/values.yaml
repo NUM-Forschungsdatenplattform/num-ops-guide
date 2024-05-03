@@ -7,10 +7,10 @@ global:
 projects:
   devCluster:
     description: NUM RDP Dev Cluster
-    name: Cluster
+    name: dev-cluster
   devEnv:
     description: NUM RDP Dev Environments
-    name: Environments
+    name: dev-envs
 
 applications:
   devEnv:

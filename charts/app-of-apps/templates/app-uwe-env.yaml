@@ -1,28 +1,28 @@
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: {{ .Values.applications.uweEnv.namespace }}
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: {{ .Values.applications.uweEnv.name }}
-  namespace: {{ .Values.global.argoNamespace }}
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  project: {{ .Values.projects.devEnv.name }}
-  source:
-    repoURL: {{ .Values.global.numHelmChartsRepoURL }}
-    targetRevision: {{ .Values.global.numHelmChartsBranch }}
-    path: .
-    helm:
-      valueFiles:
-      - {{ .Values.applications.uweEnv.helmValueFile }}
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: {{ .Values.applications.uweEnv.namespace }}
-  syncPolicy:
-    automated:
-      selfHeal: true
+# ---
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: {{ .Values.applications.uweEnv.namespace }}
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: {{ .Values.applications.uweEnv.name }}
+#   namespace: {{ .Values.global.argoNamespace }}
+#   finalizers:
+#     - resources-finalizer.argocd.argoproj.io
+# spec:
+#   project: {{ .Values.projects.devEnv.name }}
+#   source:
+#     repoURL: {{ .Values.global.numHelmChartsRepoURL }}
+#     targetRevision: {{ .Values.global.numHelmChartsBranch }}
+#     path: .
+#     helm:
+#       valueFiles:
+#       - {{ .Values.applications.uweEnv.helmValueFile }}
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: {{ .Values.applications.uweEnv.namespace }}
+#   syncPolicy:
+#     automated:
+#       selfHeal: true

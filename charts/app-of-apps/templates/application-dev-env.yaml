@@ -1,4 +1,5 @@
 {{ $global := .Values.global }}
+{{ $devEnvName := .Values.projects.devEnv.name }}
 {{- range $k, $app := .Values.applications }}
 {{- if $app.enabled }}
 ---
@@ -15,7 +16,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: {{ $app.namespace }}
+  project: {{ $devEnvName }}
   source:
     repoURL: {{ $global.numHelmChartsRepoURL }}
     targetRevision: {{ $global.numHelmChartsBranch }}

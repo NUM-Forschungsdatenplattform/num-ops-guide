@@ -13,8 +13,12 @@ projects:
     name: environments
 
 applications:
-  devEnv:
+  developEnv:
     enabled: true
+    namespace: develop
+    helmValueFile: deployment-values/central-research-repository/develop-values.yaml
+  devEnv:
+    enabled: false
     namespace: dev
     helmValueFile: deployment-values/central-research-repository/development-values.yaml
   opsEnv:

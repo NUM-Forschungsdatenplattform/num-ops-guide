@@ -26,6 +26,7 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [Using VictoriaLogs from the command line](#using-victorialogs-from-the-command-line)
     - [How to disable DEV dsf-bpe on CODEX cluster](#how-to-disable-dev-dsf-bpe-on-codex-cluster)
     - [How to test DEV fhir-bridge on CODEX cluster](#how-to-test-dev-fhir-bridge-on-codex-cluster)
+    - [How to setup the develop environment](#how-to-setup-the-develop-environment)
 1. [Contributing](#contributing)
 1. [License](#license)
 
@@ -156,33 +157,33 @@ To startup a k8s cluster, that matches the current prod env simply run:
 
 ### Codex Cluster
 
-    - Cluster: codex-central
+- Cluster: codex-central
 
 ### Codex Dev Environment
 
-    - Cluster: codex-central
-    - Namespace: central-research-repository-development
+- Cluster: codex-central
+- Namespace: central-research-repository-development
 
-#### Keycloak
+#### Codex Keycloak
 
-    - URL: https://keycloak.dev.num-codex.de/auth
+- URL: https://keycloak.dev.num-codex.de/auth
 
 ### Dev Cluster
 
-    - Cluster: dev (rdp-dev)
-    - DNS: *.dev.num-rdp.de has address 134.76.15.219
-    - ArgoCD: https://argocd.dev.num-rdp.de/applications
+- Cluster: dev (rdp-dev)
+- DNS: *.dev.num-rdp.de has address 134.76.15.219
+- ArgoCD: https://argocd.dev.num-rdp.de/applications
 
 ### Dev Environment
 
-    - Cluster: dev (rdp-dev)
-    - Namespace: dev
+- Cluster: dev (rdp-dev)
+- Namespace: develop
 
 #### Keycloak
 
-    - URL: https://keycloak.dev.dev.num-rdp.de/auth
-    - HTTP Basic auth: see secret `keycloak-basic-auth-input`
-    - Keycloak Username/Password: see secret `dev-env-keycloak-admin`
+- URL: https://keycloak.develop.dev.num-rdp.de/auth
+- HTTP Basic auth: see secret `keycloak-basic-auth-input`
+- Keycloak Username/Password: see secret `develop-keycloak-admin`
 
 ## Tasks
 
@@ -490,7 +491,7 @@ htpasswd -bc auth "$USERNAME" "$PASSWORD"
 We do not want to leak the username in this public repo, so we create a sealed secret to store the auth file:
 
 ```sh
-kubectl create secret generic basic-auth --from-file=auth -o yaml --dry-run=client | kubeseal -o yaml > basic-auth-sealed-secret.yaml
+kubectl create secret generic basic-auth --from-file=auth -o yaml --dry-run=client | kubeseal  --scope cluster-wide -o yaml > basic-auth-sealed-secret.yaml
  ```
 
 And update our repo:
@@ -914,6 +915,48 @@ pg_dump -d keycloak > keycloak_dump-backup.sql
 gunzip keycloak_dump.sql.gz
 psql -d keycloak -f keycloak_dump.sql
 ```
+
+### How to setup the develop environment
+
+#### Rollout new environment
+
+- copy a working values file to `develop-values.yaml` in `num-helm-charts/central-research-repository/deployment-values`
+- replace URLs to match `develop`
+- in `values.yaml` of `num-ops-guide/charts/app-of-app` under `applications` add link to `develop-values.yaml`
+
+```yaml
+developEnv:
+    enabled: true
+    namespace: develop
+    helmValueFile: deployment-values/central-research-repository/develop-values.yaml
+```
+
+- wait, until argo has deployed the `develop` environment
+
+#### Configure keycloak
+
+- copy a working values file to `develop-rdp-dev.yaml` in `keycloak-configurations/vars/central-research-repository`
+- replace URLs to match `develop`
+- run `ansible-playbook playbooks/master_playbook.yml --extra-vars "@vars/central-research-repository/develop-rdp-dev.yaml` to setup clients and roles.
+- create a user and 'Set User-Specifications' in [keycloak](https://keycloak.develop.dev.num-rdp.de/auth) as described in [Lokale_Umgebung](https://github.com/NUM-Forschungsdatenplattform/num-crr-documentation/blob/main/documentation/3_Lokale_Umgebung/local_environment.md)
+- save the keycloak_User_ID
+
+#### Configure num-portal
+
+- use `pgadmin` or `psql` to insert an organization and the user into the numportal db.
+
+```sql
+INSERT INTO num.organization(id, name, description, active)
+       VALUES (1, 'Orga', 'description', true);
+INSERT INTO num.user_details(user_id, approved, organization_id, created_date)
+       VALUES ('<keycloak_User_ID>', true, 1, CURRENT_DATE);
+```
+
+- kill the num-portal pod
+
+#### test login
+
+- login with the user at: https://develop.dev.num-rdp.de
 
 ## Contributing
 

@@ -27,6 +27,7 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [How to disable DEV dsf-bpe on CODEX cluster](#how-to-disable-dev-dsf-bpe-on-codex-cluster)
     - [How to test DEV fhir-bridge on CODEX cluster](#how-to-test-dev-fhir-bridge-on-codex-cluster)
     - [How to setup the develop environment](#how-to-setup-the-develop-environment)
+    - [How to get certs for DSF](#how-to-get-certs-for-dsf)
 1. [Contributing](#contributing)
 1. [License](#license)
 
@@ -957,6 +958,39 @@ INSERT INTO num.user_details(user_id, approved, organization_id, created_date)
 #### test login
 
 - login with the user at: https://develop.dev.num-rdp.de
+
+## How to get certs for DSF
+
+The `sertigo` clusterIssuer can get certs for the `highmed.org` domain. To get a valid certificate for a fhir host in use an ingress like:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: sertigo
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+  name: dsf-fhir
+  namespace: default
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: web
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org
+    secretName: dsf-fhir-sertigo-tls
+```
 
 ## Contributing
 

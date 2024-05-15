@@ -156,6 +156,8 @@ To startup a k8s cluster, that matches the current prod env simply run:
 
 ## Environments
 
+The clusters are managed by [rancher](https://prod.rancher.gwdg.de/dashboard/home).
+
 ### Codex Cluster
 
 - Cluster: codex-central

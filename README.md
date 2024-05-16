@@ -148,48 +148,52 @@ See also:
 
 ### Sealed Secrets
 
-Sealed Secrets ist ein Kubernetes-Controller, der es ermöglicht, Kubernetes-Secrets sicher in einem Git-Repository oder einer anderen Versionskontrolle zu speichern. Die Secrets werden dabei mit einem öffentlichen Schlüssel verschlüsselt und können nur mit einem privaten Schlüssel entschlüsselt werden, der nur im Kubernetes-Cluster verfügbar ist.
+Sealed Secrets is a Kubernetes controller that allows securely storing Kubernetes Secrets in a Git repository or another version control system. The Secrets are encrypted using a public key and can only be decrypted with a private key that is available only within the Kubernetes cluster.
 
-#### Ein Sealed-Secret erstellen
+#### Creating a Sealed-Secret
 
-Um ein [Sealed-Secret](https://github.com/bitnami-labs/sealed-secrets?tab=readme-ov-file#sealed-secrets-for-kubernetes) zu erstellen, können folgenden Schritte ausgeführt werden:
-
-Zuerst `kubectl` verwenden, um ein Beispiel-Kubernetes-Secret zu erstellen und es in einer Datei zu speichern:
+To create a [Sealed-Secret](https://github.com/bitnami-labs/sealed-secrets?tab=readme-ov-file#sealed-secrets-for-kubernetes) follow these steps:
 
 ```bash
-kubectl create secret generic my-secret --from-literal=username=admin --from-literal=password=secretpassword --dry-run=client -o yaml > my-secret.yaml
+# Create a json/yaml-encoded Secret somehow:
+# (note use of `--dry-run` - this is just a local file!)
+kubectl create secret generic my-secret --from-literal=username=admin --from-literal=password=secretpassword --namespace=your-namespace --dry-run=client -o yaml > my-secret.yaml
+
+# This is the important bit:
+kubeseal -f mysecret.yaml -w mysealedsecret.yaml
+
+# At this point mysealedsecret.yaml is safe to upload to Github
+
+# Eventually:
+kubectl create -f mysealedsecret.yaml
+
+# Profit!
+kubectl get secret mysecret
 ```
-Bevor man mit dem nächsten Schritt fortfährt ist es wichtig das richtige Namespace im Secret anzugeben. Dieses kann nach dem kubeseal Befehl nicht mehr geändert werden.
 
-Jetzt das Sealed-Secrets CLI-Tool verwenden, um das Secret zu versiegeln:
+**Note:** The SealedSecret and Secret must have the same namespace and name. This is a feature to prevent other users on the same cluster from re-using your sealed secrets. See the Scopes section for more info.
 
-```bash
-kubeseal --format yaml < my-secret.yaml > sealed-secret.yaml
-```
+kubeseal reads the namespace from the input secret, accepts an explicit --namespace argument, and uses the kubectl default namespace (in that order). Any labels, annotations, etc on the original Secret are preserved, but not automatically reflected in the SealedSecret.
 
-Dadurch wird das Secret in ein Sealed-Secret umgewandelt und in sealed-secret.yaml gespeichert.
+#### Extracting the main.key from the Cluster
 
-Das Sealed-Secret kann nun sicher in einem Git-Repository oder einer anderen Versionskontrolle gespeichert werden.
-
-#### Extrahieren des main.key aus dem Cluster
-
-Um den main.key aus dem Kubernetes-Cluster zu extrahieren, folgenden Befehl ausführen:
+To extract the main.key from the Kubernetes cluster, execute the following command:
 
 ```bash
 kubectl get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml > master-key.yaml
 ```
 
-Dadurch wird der main.key-Wert in master-key.yaml gespeichert.
+This saves the main.key value in master-key.yaml.
 
-#### Offline-Entschlüsselung eines Sealed-Secrets
+#### Offline Decryption of a Sealed-Secret
 
-Nachdem der main.key extrahiert wurde, kann jetzt ein Sealed-Secret offline entschlüsselt werden, indem man das kubeseal-CLI-Tool verwendet. Das funktioniert mit folgendem Befehl:
+After extracting the main.key, a Sealed-Secret can now be decrypted offline using the kubeseal CLI tool. This can be done with the following command:
 
 ```bash
 kubeseal --recovery-unseal --recovery-private-key master-key.yaml < sealed-secret.yaml
 ```
 
-Hinweis: Es ist wichtig, dass der main.key sicher aufbewahrt wird, da er zum Entschlüsseln aller versiegelten Secrets im Cluster benötigt wird.
+Note: It is important to securely store the main.key as it is needed to decrypt all sealed Secrets in the cluster.
 
 
 ## Getting Started

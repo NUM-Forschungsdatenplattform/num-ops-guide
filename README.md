@@ -13,6 +13,7 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [Grafana](#grafana)
     - [Prometheus](#prometheus)
     - [VictoriaLogs](#victorialogs)
+    - [Sealed Secrets](#sealed-secrets)
 1. [Getting Started](#getting-started)
 1. [Tasks](#tasks)
     - [Run a test pod for debugging purpose](#run-a-test-pod-for-debugging-purpose)
@@ -144,6 +145,56 @@ See the [Roadmap](https://docs.victoriametrics.com/VictoriaLogs/Roadmap.html) fo
 See also:
 - [Using VictoriaLogs with Web UI](#using-victorialogs-with-web-ui)
 - [Using VictoriaLogs from the command line](#using-victorialogs-from-the-command-line)
+
+### Sealed Secrets
+
+Sealed Secrets ist ein Kubernetes-Controller, der es ermöglicht, Kubernetes-Secrets sicher in einem Git-Repository oder einer anderen Versionskontrolle zu speichern. Die Secrets werden dabei mit einem öffentlichen Schlüssel verschlüsselt und können nur mit einem privaten Schlüssel entschlüsselt werden, der nur im Kubernetes-Cluster verfügbar ist.
+
+#### Ein Sealed-Secret erstellen
+
+Um ein [Sealed-Secret](https://github.com/bitnami-labs/sealed-secrets?tab=readme-ov-file#sealed-secrets-for-kubernetes) zu erstellen, können folgenden Schritte ausführen:
+
+1. Verwenden Sie `kubectl`, um ein Beispiel-Kubernetes-Secret zu erstellen und es in einer Datei zu speichern:
+
+   ```bash
+   kubectl create secret generic my-secret --from-literal=username=admin --from-literal=password=secretpassword --dry-run=client -o yaml > my-secret.yaml
+   ```
+Bevor man mit dem nächsten Schritt fortfährt ist es wichtig das richtige Namespace im Secret anzugeben. Dieses kann nach dem kubeseal Befehl nicht mehr geändert werden.
+
+
+2. Jetzt das Sealed-Secrets CLI-Tool verwenden, um das Secret zu versiegeln:
+
+    ```bash
+    kubeseal --format yaml < my-secret.yaml > sealed-secret.yaml
+    ```
+
+Dadurch wird das Secret in ein Sealed-Secret umgewandelt und in sealed-secret.yaml gespeichert.
+
+Das Sealed-Secret kann nun sicher in einem Git-Repository oder einer anderen Versionskontrolle gespeichert werden.
+
+#### Extrahieren des main.key aus dem Cluster
+Um den main.key aus dem Kubernetes-Cluster zu extrahieren, können Sie die folgenden Schritte ausführen:
+
+1. Verwenden Sie kubectl, um den main.key aus dem Secret sealed-secrets-key im Namespace kube-system zu extrahieren:
+
+    ```bash
+    kubectl get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml > master-key.yaml
+    ```
+
+Dadurch wird der main.key-Wert in master-key.yaml gespeichert.
+
+#### Offline-Entschlüsselung eines Sealed-Secrets
+
+Nachdem Sie den main.key extrahiert haben, können Sie ein Sealed-Secret offline entschlüsseln, indem Sie das kubeseal-CLI-Tool verwenden. Führen Sie dazu die folgenden Schritte aus:
+
+1. Verwenden Sie kubeseal, um das Sealed-Secret mit dem main.key zu entschlüsseln:
+
+    ```bash
+    kubeseal --recovery-unseal --recovery-private-key master-key.yaml < sealed-secret.yaml
+    ```
+
+Hinweis: Stellen Sie sicher, dass der main.key sicher aufbewahrt wird, da er zum Entschlüsseln aller versiegelten Secrets im Cluster benötigt wird.
+
 
 ## Getting Started
 

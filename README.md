@@ -152,46 +152,42 @@ Sealed Secrets ist ein Kubernetes-Controller, der es ermöglicht, Kubernetes-Sec
 
 #### Ein Sealed-Secret erstellen
 
-Um ein [Sealed-Secret](https://github.com/bitnami-labs/sealed-secrets?tab=readme-ov-file#sealed-secrets-for-kubernetes) zu erstellen, können folgenden Schritte ausführen:
+Um ein [Sealed-Secret](https://github.com/bitnami-labs/sealed-secrets?tab=readme-ov-file#sealed-secrets-for-kubernetes) zu erstellen, können folgenden Schritte ausgeführt werden:
 
-1. Verwenden Sie `kubectl`, um ein Beispiel-Kubernetes-Secret zu erstellen und es in einer Datei zu speichern:
+Zuerst `kubectl` verwenden, um ein Beispiel-Kubernetes-Secret zu erstellen und es in einer Datei zu speichern:
 
-   ```bash
-   kubectl create secret generic my-secret --from-literal=username=admin --from-literal=password=secretpassword --dry-run=client -o yaml > my-secret.yaml
-   ```
+```bash
+kubectl create secret generic my-secret --from-literal=username=admin --from-literal=password=secretpassword --dry-run=client -o yaml > my-secret.yaml
+```
 Bevor man mit dem nächsten Schritt fortfährt ist es wichtig das richtige Namespace im Secret anzugeben. Dieses kann nach dem kubeseal Befehl nicht mehr geändert werden.
 
+Jetzt das Sealed-Secrets CLI-Tool verwenden, um das Secret zu versiegeln:
 
-2. Jetzt das Sealed-Secrets CLI-Tool verwenden, um das Secret zu versiegeln:
-
-    ```bash
-    kubeseal --format yaml < my-secret.yaml > sealed-secret.yaml
-    ```
+```bash
+kubeseal --format yaml < my-secret.yaml > sealed-secret.yaml
+```
 
 Dadurch wird das Secret in ein Sealed-Secret umgewandelt und in sealed-secret.yaml gespeichert.
 
 Das Sealed-Secret kann nun sicher in einem Git-Repository oder einer anderen Versionskontrolle gespeichert werden.
 
 #### Extrahieren des main.key aus dem Cluster
-Um den main.key aus dem Kubernetes-Cluster zu extrahieren, können Sie die folgenden Schritte ausführen:
 
-1. Verwenden Sie kubectl, um den main.key aus dem Secret sealed-secrets-key im Namespace kube-system zu extrahieren:
+Um den main.key aus dem Kubernetes-Cluster zu extrahieren, folgenden Befehl ausführen:
 
-    ```bash
-    kubectl get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml > master-key.yaml
-    ```
+```bash
+kubectl get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml > master-key.yaml
+```
 
 Dadurch wird der main.key-Wert in master-key.yaml gespeichert.
 
 #### Offline-Entschlüsselung eines Sealed-Secrets
 
-Nachdem Sie den main.key extrahiert haben, können Sie ein Sealed-Secret offline entschlüsseln, indem Sie das kubeseal-CLI-Tool verwenden. Führen Sie dazu die folgenden Schritte aus:
+Nachdem der main.key extrahiert wurde, kann jetzt ein Sealed-Secret offline entschlüsselt werden, indem man das kubeseal-CLI-Tool verwendet. Das funktioniert mit folgendem Befehl:
 
-1. Verwenden Sie kubeseal, um das Sealed-Secret mit dem main.key zu entschlüsseln:
-
-    ```bash
-    kubeseal --recovery-unseal --recovery-private-key master-key.yaml < sealed-secret.yaml
-    ```
+```bash
+kubeseal --recovery-unseal --recovery-private-key master-key.yaml < sealed-secret.yaml
+```
 
 Hinweis: Stellen Sie sicher, dass der main.key sicher aufbewahrt wird, da er zum Entschlüsseln aller versiegelten Secrets im Cluster benötigt wird.
 

@@ -189,7 +189,7 @@ Nachdem der main.key extrahiert wurde, kann jetzt ein Sealed-Secret offline ents
 kubeseal --recovery-unseal --recovery-private-key master-key.yaml < sealed-secret.yaml
 ```
 
-Hinweis: Stellen Sie sicher, dass der main.key sicher aufbewahrt wird, da er zum Entschlüsseln aller versiegelten Secrets im Cluster benötigt wird.
+Hinweis: Es ist wichtig, dass der main.key sicher aufbewahrt wird, da er zum Entschlüsseln aller versiegelten Secrets im Cluster benötigt wird.
 
 
 ## Getting Started

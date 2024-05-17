@@ -233,9 +233,28 @@ The clusters are managed by [rancher](https://prod.rancher.gwdg.de/dashboard/hom
 - Cluster: dev (rdp-dev)
 - Namespace: develop
 
+#### Portal
+
+- URL: https://develop.dev.num-rdp.de
+
 #### Keycloak
 
 - URL: https://keycloak.develop.dev.num-rdp.de/auth
+- HTTP Basic auth: see secret `keycloak-basic-auth-input`
+- Keycloak Username/Password: see secret `develop-keycloak-admin`
+
+### Test Environment
+
+- Cluster: dev (rdp-dev)
+- Namespace: test
+
+#### Portal
+
+- URL: https://test.dev.num-rdp.de
+
+#### Keycloak
+
+- URL: https://keycloak.test.dev.num-rdp.de/auth
 - HTTP Basic auth: see secret `keycloak-basic-auth-input`
 - Keycloak Username/Password: see secret `develop-keycloak-admin`
 

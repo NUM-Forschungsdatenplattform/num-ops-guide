@@ -30,6 +30,6 @@ applications:
     namespace: uwe
     helmValueFile: deployment-values/central-research-repository/uwe-values.yaml
   testEnv:
-    enabled: false
+    enabled: true
     namespace: test
     helmValueFile: deployment-values/central-research-repository/test-values.yaml

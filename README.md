@@ -29,6 +29,7 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [How to test DEV fhir-bridge on CODEX cluster](#how-to-test-dev-fhir-bridge-on-codex-cluster)
     - [How to setup the develop environment](#how-to-setup-the-develop-environment)
     - [How to get certs for DSF](#how-to-get-certs-for-dsf)
+    - [How to prepare certs for DSF](#how-to-prepare-certs-for-dsf)
 1. [Contributing](#contributing)
 1. [License](#license)
 
@@ -1061,8 +1062,54 @@ spec:
   tls:
   - hosts:
     - dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org
-    secretName: dsf-fhir-sertigo-tls
+    secretName: dsf-fhir-certificate
 ```
+
+## How to prepare certs for DSF
+
+See: https://dsf.dev/stable/maintain/install.html#dsf-fhir-server
+
+### Store PEM encoded certificate as ssl_certificate_file.pem
+
+    kubectl get secret dsf-fhir-certificate -o jsonpath='{.data.tls\.crt}' | base64 -d > ssl_certificate_file.pem
+
+### Store unencrypted, PEM encoded private-key as ssl_certificate_key_file.pem
+
+    kubectl get secret dsf-fhir-certificate -o jsonpath='{.data.tls\.key}‘ | base64 -d > ssl_certificate_key_file.pem
+
+### Store PEM encoded certificate as client_certificate.pem
+
+    kubectl get secret dsf-bpe-certificate -o jsonpath='{.data.tls\.crt}' | base64 -d > client_certificate.pem
+
+### Store encrypted or not encrypted, PEM encoded private-key as client_certificate_private_key.pem
+
+    kubectl get secret dsf-bpe-certificate -o jsonpath='{.data.tls\.key}' | base64 -d > client_certificate_private_key.pem
+
+###  Get the SHA-512 Hash (lowercase hex) of your client certificate (Certificate B)
+
+Copy the first cert to `client_certificate-1.pem`.
+
+    certtool --fingerprint --hash=sha512 --infile=client_certificate-1.pem
+
+    0dabd48c1dff128149d21b7839ad62b97e3c56ae04878f6a9043341fd355bf5d08ae21a782b6370b14e9e87780ca35278182f119bbc5c17d5aa0ab0771c83897
+
+or
+
+    openssl x509 -fingerprint -sha512 -in client_certificate.pem
+    sha512 Fingerprint=0D:AB:D4:8C:1D:FF:12:81:49:D2:1B:78:39:AD:62:B9:7E:3C:56:AE:04:87:8F:6A:90:43:34:1F:D3:55:BF:5D:08:AE:21:A7:82:B6:37:0B:14:E9:E8:77:80:CA:35:27:81:82:F1:19:BB:C5:C1:7D:5A:A0:AB:07:71:C8:38:97
+
+### Create pkcs12 file
+
+    openssl pkcs12 -export -out client_certificate.p12 -inkey client_certificate_private_key.pem -in client_certificate.pem
+
+### Access dsf-fhir with client certificates
+
+    curl -v --cert-type P12 --cert client_certificate.p12  -H "Accept: application/fhir+xml" https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoints
+
+or
+
+    curl -v --cert client_certificate.pem --key client_certificate_private_key.pem -H "Accept: application/fhir+xml" https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoints
+
 
 ## Contributing
 

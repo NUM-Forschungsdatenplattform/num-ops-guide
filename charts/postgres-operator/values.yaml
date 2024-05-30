@@ -1,6 +1,7 @@
 postgres-operator:
   # JSON logging format
   enableJsonLogging: true
+  enable_persistent_volume_claim_retention_policy: false
 
   configMajorVersionUpgrade:
     # "off": no upgrade, "manual": manifest triggers action, "full": minimal version violation triggers too

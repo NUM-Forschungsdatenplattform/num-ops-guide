@@ -1,3 +1,15 @@
 postgres-operator:
   # JSON logging format
   enableJsonLogging: true
+
+  configMajorVersionUpgrade:
+    # "off": no upgrade, "manual": manifest triggers action, "full": minimal version violation triggers too
+    major_version_upgrade_mode: "full"
+    # upgrades will only be carried out for clusters of listed teams when mode is "off"
+    # major_version_upgrade_team_allow_list:
+    # - acid
+
+    # minimal Postgres major version that will not automatically be upgraded
+    minimal_major_version: "12"
+    # target Postgres major version when upgrading clusters automatically
+    target_major_version: "16"

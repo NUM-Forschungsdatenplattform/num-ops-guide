@@ -3,5 +3,6 @@ name: postgres-operator
 version: 1.0.0
 dependencies:
   - name: postgres-operator
+    alias: pgOperator
     version: v1.11.0
     repository: https://opensource.zalando.com/postgres-operator/charts/postgres-operator

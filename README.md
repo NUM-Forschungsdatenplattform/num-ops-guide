@@ -30,6 +30,7 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [How to setup the develop environment](#how-to-setup-the-develop-environment)
     - [How to get certs for DSF](#how-to-get-certs-for-dsf)
     - [How to prepare certs for DSF](#how-to-prepare-certs-for-dsf)
+    - [How to prepare SSH key for codex-processes-ap1 codex-process-data-transfer process plugin](#how-to-prepare-ssh-key-for-codex-processes-ap1-codex-process-data-transfer-process-plugin)
 1. [Contributing](#contributing)
 1. [License](#license)
 
@@ -1110,6 +1111,59 @@ or
 
     curl -v --cert client_certificate.pem --key client_certificate_private_key.pem -H "Accept: application/fhir+xml" https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoints
 
+## How to prepare SSH key for codex-processes-ap1 codex-process-data-transfer process plugin
+
+Data for the plugin must be encrypted using a rsa 4096 key pair.
+The puclic key should be found on the web page.
+
+### Generating a new SSH key
+
+    ssh-keygen -t rsa -b 4096 -C "admin@highmed.org"
+
+Name it `crr-private-key`. This will also generate the public key `crr-private-key.pub`.
+Now create a k8s secret file with:
+
+    kubectl create secret generic crr-private-key --from-file=crr-private-key -n test -o yaml > crr-private-key-secret.yaml
+
+To seal the secret call:
+
+    kubeseal -f crr-private-key-secret.yaml -w crr-private-key-sealed-secret.yaml
+
+Add the `crr-private-key` and `crr-private-key-secret.yaml` files to .gitignore
+
+    echo crr-private-key >> .gitignore
+    echo crr-private-key-secret.yaml >> .gitignore
+
+Add `.gitignore`, `crr-private-key.pub` and the `crr-private-key-sealed-secret.yaml` to git:
+
+    git add .gitignore
+    git add crr-private-key.pub
+    git add crr-private-key-sealed-secret.yaml
+
+### Using the new SSH key
+
+In the deployment of DSF-BPE there is an env var `DE_NETZWERK_UNIVERSITAETSMEDIZIN_RDP_CRR_PRIVATE_KEY` which contains the value of "{{ .Values.appConfig.privateKey.path }}".
+
+So add a secret volume
+
+```yaml
+volumes:
+  - name: crr-private-key
+    secret:
+      secretName: "crr-private-key"
+      items:
+        - key: "crr-private-key"
+          path: "crr-private-key"
+```
+
+and mount it
+
+```yaml
+volumeMounts:
+  - name: crr-private-key
+    mountPath: "{{ .Values.appConfig.privateKey.path }}"
+    subPath: crr-private-key
+```
 
 ## Contributing
 

@@ -86,11 +86,11 @@ homepage:
                 icon: rancher.svg
           - Swagger Develop:
               - href: https://keycloak.develop.dev.num-rdp.de/auth
-                icon: swagger.svg
+                icon: https://upload.wikimedia.org/wikipedia/commons/a/ab/Swagger-logo.png
                 abbr: Dev
           - Swagger Test:
               - href: https://keycloak.test.dev.num-rdp.de/auth
-                icon: swagger.svg
+                icon: https://upload.wikimedia.org/wikipedia/commons/a/ab/Swagger-logo.png
                 abbr: Tst
           - RDP DEV Grafana:
               - href: https://prod.rancher.gwdg.de/k8s/clusters/c-m-c2mr5hcb/api/v1/namespaces/cattle-monitoring-system/services/http:rancher-monitoring-grafana:80/proxy/?orgId=1

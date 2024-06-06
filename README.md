@@ -9,6 +9,7 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
 1. [Concepts](#concepts)
     - [Environments: development, staging, pre-prod, production](#todo)
 1. [Components](#components)
+    - [Homepage](#homepage)
     - [ArgoCD](#argocd)
     - [Grafana](#grafana)
     - [Prometheus](#prometheus)
@@ -100,6 +101,12 @@ By adhering to these principles, we lay the foundation for a well-managed Kubern
 ## Components
 
 This guide covers the deployment and configuration of essential components for effective NUM operations:
+
+### Homepage
+
+- Url: https://homepage.dev.num-rdp.de
+- Doku: https://gethomepage.dev
+- Add your links here: https://github.com/NUM-Forschungsdatenplattform/num-ops-guide/blob/main/charts/homepage/values.yaml
 
 ### ArgoCD
 

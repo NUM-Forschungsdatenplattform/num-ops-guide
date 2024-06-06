@@ -148,6 +148,14 @@ See also:
 - [Using VictoriaLogs with Web UI](#using-victorialogs-with-web-ui)
 - [Using VictoriaLogs from the command line](#using-victorialogs-from-the-command-line)
 
+#### Useful query strings
+
+- Log the errors from the last 5 minutes: `_time:5m error`
+
+- Log the output a given namespace: `_time:5m _stream:{k8s_ns="develop",k8s_container="num-portal"}`
+
+- Log the output from a container in a given namespace: `_time:5m _stream:{k8s_ns="develop",k8s_container="num-portal"}`
+
 ### Sealed Secrets
 
 Sealed Secrets is a Kubernetes controller that allows securely storing Kubernetes Secrets in a Git repository or another version control system. The Secrets are encrypted using a public key and can only be decrypted with a private key that is available only within the Kubernetes cluster.

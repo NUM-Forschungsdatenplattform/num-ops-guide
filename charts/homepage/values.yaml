@@ -84,6 +84,14 @@ homepage:
               - href: https://prod.rancher.gwdg.de
                 abbr: R
                 icon: rancher.svg
+          - Swagger Develop:
+              - href: https://keycloak.develop.dev.num-rdp.de/auth
+                icon: swagger.svg
+                abbr: Dev
+          - Swagger Test:
+              - href: https://keycloak.test.dev.num-rdp.de/auth
+                icon: swagger.svg
+                abbr: Tst
           - RDP DEV Grafana:
               - href: https://prod.rancher.gwdg.de/k8s/clusters/c-m-c2mr5hcb/api/v1/namespaces/cattle-monitoring-system/services/http:rancher-monitoring-grafana:80/proxy/?orgId=1
                 abbr: G
@@ -94,12 +102,12 @@ homepage:
                 icon: argocd.svg
           - NUM-RDP Keycloak Develop:
               - href: https://keycloak.develop.dev.num-rdp.de/auth
-                abbr: KDev
+                abbr: Dev
                 icon: keycloak.svg
           - NUM-RDP Keycloak Test:
               - href: https://keycloak.test.dev.num-rdp.de/auth
                 icon: keycloak.svg
-                abbr: KTst
+                abbr: Tst
       - Docs:
           - NUM CRR Documentation:
               - abbr: CRR
@@ -170,6 +178,7 @@ homepage:
       mode: cluster
     docker:
     settings:
+      theme: light
   persistence:
     logs:
       enabled: true

@@ -85,11 +85,11 @@ homepage:
                 abbr: R
                 icon: rancher.svg
           - Swagger Develop:
-              - href: https://keycloak.develop.dev.num-rdp.de/auth
+              - href: https://num-portal.develop.dev.num-rdp.de/swagger-ui/index.html
                 icon: https://upload.wikimedia.org/wikipedia/commons/a/ab/Swagger-logo.png
                 abbr: Dev
           - Swagger Test:
-              - href: https://keycloak.test.dev.num-rdp.de/auth
+              - href: https://num-portal.test.dev.num-rdp.de/swagger-ui/index.html
                 icon: https://upload.wikimedia.org/wikipedia/commons/a/ab/Swagger-logo.png
                 abbr: Tst
           - RDP DEV Grafana:

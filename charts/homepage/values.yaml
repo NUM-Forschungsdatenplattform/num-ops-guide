@@ -59,6 +59,10 @@ homepage:
               - href: https://keycloak.test.dev.num-rdp.de/auth
                 icon: keycloak.svg
                 abbr: Tst
+          - Docker Hub:
+              - href: https://hub.docker.com/u/numforschungsdatenplattform
+                icon: docker.svg
+                abbr: DH
       - Docs:
           - NUM CRR Documentation:
               - abbr: CRR

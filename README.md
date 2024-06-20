@@ -1118,6 +1118,18 @@ or
 
     openssl pkcs12 -export -out client_certificate.p12 -inkey client_certificate_private_key.pem -in client_certificate.pem
 
+### Create nth-opt-fhir-sealed-secrets.yaml file
+
+```sh
+kubectl create secret generic nth-opt-fhir-secrets \
+    --from-file=ssl_certificate_file.pem \
+    --from-file=ssl_certificate_key_file.pem \
+    --from-file=client_certificate.pem \
+    --from-file=client_certificate_private_key.pem \
+    --dry-run=client -o yaml -n develop \
+    | kubeseal - -w nth-opt-fhir-sealed-secrets.yaml
+```
+
 ### Access dsf-fhir with client certificates
 
     curl -v --cert-type P12 --cert client_certificate.p12  -H "Accept: application/fhir+xml" https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoints

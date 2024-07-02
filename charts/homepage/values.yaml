@@ -39,6 +39,9 @@ homepage:
               - href: https://num-portal.test.dev.num-rdp.de/swagger-ui/index.html
                 icon: https://upload.wikimedia.org/wikipedia/commons/a/ab/Swagger-logo.png
                 abbr: Tst
+          - Victoria Logs:
+              - href: https://logs.rdp-dev.ingress.k8s.highmed.org/select/vmui/?
+                abbr: VM
           - RDP DEV Grafana:
               - href: https://prod.rancher.gwdg.de/k8s/clusters/c-m-c2mr5hcb/api/v1/namespaces/cattle-monitoring-system/services/http:rancher-monitoring-grafana:80/proxy/?orgId=1
                 abbr: G
@@ -64,6 +67,10 @@ homepage:
                 icon: docker.svg
                 abbr: DH
       - Docs:
+          - FHIR Documentation:
+              - abbr: HL7
+                href: http://hl7.org/fhir/
+                icon: http://hl7.org/favicon.ico
           - NUM CRR Documentation:
               - abbr: CRR
                 href: https://github.com/NUM-Forschungsdatenplattform/num-crr-documentation
@@ -110,11 +117,7 @@ homepage:
           backend: resources
           expanded: false
           cpu: false
-          memory:
-            false
-            #    - search:
-            #        provider: duckduckgo
-            #        target: _blank
+          memory: false
     docker:
     settings:
       theme: light

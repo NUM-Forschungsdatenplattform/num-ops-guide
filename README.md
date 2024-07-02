@@ -32,6 +32,7 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [How to get certs for DSF](#how-to-get-certs-for-dsf)
     - [How to prepare certs for DSF](#how-to-prepare-certs-for-dsf)
     - [How to prepare SSH key for codex-processes-ap1 codex-process-data-transfer process plugin](#how-to-prepare-ssh-key-for-codex-processes-ap1-codex-process-data-transfer-process-plugin)
+    - [How to insert test data to hapi fhir store](#how-to-insert-test-data-to-hapi-fhir-store)
 1. [Contributing](#contributing)
 1. [License](#license)
 
@@ -1190,6 +1191,26 @@ volumeMounts:
   - name: crr-private-key
     mountPath: "{{ .Values.appConfig.privateKey.path }}"
     subPath: crr-private-key
+```
+
+## How to insert test data to hapi fhir store
+
+- get the test data
+
+```sh
+wget https://github.com/medizininformatik-initiative/mii-process-data-sharing/raw/develop/src/test/resources/fhir/Bundle/Dic1FhirStore_Demo_Bundle.xml
+```
+
+ - port foreward to localhost:8080
+
+ - post to the FHIR server
+
+```sh
+curl
+    -XPOST -L
+    -H "Accept: application/json"
+    -H "Content-Type: application/fhir+xml"
+    -d @Dic1FhirStore_Demo_Bundle.xml http://localhost:8080/fhir | jq .
 ```
 
 ## Contributing

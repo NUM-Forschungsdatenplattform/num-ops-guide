@@ -71,6 +71,14 @@ homepage:
               - abbr: HL7
                 href: http://hl7.org/fhir/
                 icon: http://hl7.org/favicon.ico
+          - Data Sharing Framework:
+              - abbr: DSF
+                href: https://github.com/datasharingframework
+                icon: github.svg
+          - NUM Codex Processes Plugin:
+              - abbr: AP1
+                href: https://github.com/num-codex/codex-processes-ap1
+                icon: github.svg
           - NUM CRR Documentation:
               - abbr: CRR
                 href: https://github.com/NUM-Forschungsdatenplattform/num-crr-documentation

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+export CRR_ENDPOINT=https://crr-fhir.develop.rdp-dev.ingress.k8s.highmed.org
+export CRR_IDENTIFIER=crr.highmed.org
+export CRR_THUMBPRINT=1633690f2a98f185c094dc72efd9735a49b747c7258d0180a0a9437433e209860ac1def9a1782772d6a219bae46a2ef455318d113bfe6e293d742c6566cceb8b
+export DIZ_ENDPOINT=https://diz-fhir.develop.rdp-dev.ingress.k8s.highmed.org
+export DIZ_IDENTIFIER=diz.highmed.org
+export DIZ_THUMBPRINT=b9769931ed07d630be5ac8dde5aa784192c399666e65a2a977a0fa2b23151dc2d9488173abbda7949f76b2a88891094a8b52c182de43d7877a609e1d5731f1bd
+export NTH_ENDPOINT=https://nth-fhir.develop.rdp-dev.ingress.k8s.highmed.org
+export NTH_IDENTIFIER=nth.highmed.org
+export NTH_THUMBPRINT=62fd940dc40f00141bcf3d166a5ceb976b4b09cb772b7fce35ada34b1323eb74ae045980e6cc78dc63109872b623392a3ede56e35d7b327529679a89f311ade9
+
+envsubst < bundle-template.xml > bundle.xml

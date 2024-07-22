@@ -11,7 +11,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: development/dmu
-    repoURL: 'https://github.com/NUM-Forschungsdatenplattform/dmu-argocd-charts.git'
+    repoURL: 'git@github.com:NUM-Forschungsdatenplattform/dmu-argocd-charts.git'
     targetRevision: development
     helm:
       valueFiles:

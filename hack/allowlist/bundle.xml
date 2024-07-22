@@ -129,7 +129,7 @@
 				</payloadType>
 				<payloadMimeType value="application/fhir+json" />
 				<payloadMimeType value="application/fhir+xml" />
-				<address value="https://nth-fhir.develop.rdp-dev.ingress.k8s.highmed.org" />
+				<address value="https://nth-fhir.develop.rdp-dev.ingress.k8s.highmed.org/fhir" />
 			</Endpoint>
 		</resource>
 		<request>
@@ -171,7 +171,7 @@
 				</payloadType>
 				<payloadMimeType value="application/fhir+json" />
 				<payloadMimeType value="application/fhir+xml" />
-				<address value="https://diz-fhir.develop.rdp-dev.ingress.k8s.highmed.org" />
+				<address value="https://diz-fhir.develop.rdp-dev.ingress.k8s.highmed.org/fhir" />
 			</Endpoint>
 		</resource>
 		<request>
@@ -213,7 +213,7 @@
 				</payloadType>
 				<payloadMimeType value="application/fhir+json" />
 				<payloadMimeType value="application/fhir+xml" />
-				<address value="https://crr-fhir.develop.rdp-dev.ingress.k8s.highmed.org" />
+				<address value="https://crr-fhir.develop.rdp-dev.ingress.k8s.highmed.org/fhir" />
 			</Endpoint>
 		</resource>
 		<request>

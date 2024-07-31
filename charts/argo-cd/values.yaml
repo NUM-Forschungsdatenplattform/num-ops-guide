@@ -11,7 +11,7 @@ argo-cd:
       server.insecure: true
     secret:
       extra:
-        oidc.keycloak.clientSecret: VWdCajZFM0lURkhvbVZBUVV1aW1QeTNVUlVvcnBOcXU
+        oidc.keycloak.clientSecret: UgBj6E3ITFHomVAQUuimPy3URUorpNqu
     rbac:
       policy.csv: |
         g, ArgoCDAdmins, role:admin

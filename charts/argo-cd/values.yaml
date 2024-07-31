@@ -11,7 +11,7 @@ argo-cd:
       server.insecure: true
     secret:
       extra:
-        oidc.keycloak.clientSecret: OZpRRU2AIhsFDGSblSxxEPd7dibqmcQX
+        oidc.keycloak.clientSecret: VWdCajZFM0lURkhvbVZBUVV1aW1QeTNVUlVvcnBOcXU
     rbac:
       policy.csv: |
         g, ArgoCDAdmins, role:admin
@@ -20,7 +20,7 @@ argo-cd:
       url: https://argocd.dev.num-rdp.de
       oidc.config: |
         name: Keycloak
-        issuer: https://keycloak.dev.num-rdp.de/auth/realms/rdp-dev
+        issuer: https://keycloak.dev.num-rdp.de/auth/realms/master
         clientID: argocd
         clientSecret: $oidc.keycloak.clientSecret
         requestedScopes: ["openid", "profile", "email", "groups"]

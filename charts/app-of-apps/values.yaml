@@ -21,10 +21,10 @@ applications:
     enabled: false
     namespace: dev
     helmValueFile: deployment-values/central-research-repository/development-values.yaml
-  opsEnv:
-    enabled: true
-    namespace: ops
-    helmValueFile: deployment-values/central-research-repository/ops-values.yaml
+  # opsEnv:
+  #   enabled: true
+  #   namespace: ops
+  #   helmValueFile: deployment-values/central-research-repository/ops-values.yaml
   uweEnv:
     enabled: false
     namespace: uwe

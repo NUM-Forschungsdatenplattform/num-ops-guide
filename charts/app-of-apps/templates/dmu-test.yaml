@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test-dmu
+  namespace: {{ .Values.global.argoNamespace }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: test-dmu
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: development/dmu
+    repoURL: 'git@github.com:NUM-Forschungsdatenplattform/dmu-argocd-charts.git'
+    targetRevision: testing
+    helm:
+      valueFiles:
+        - values.yaml
+      version: v3
+      passCredentials: true
+  project: {{ .Values.projects.devEnv.name }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true
+      - PrunePropagationPolicy=background
+  revisionHistoryLimit: 1

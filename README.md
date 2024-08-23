@@ -3227,12 +3227,12 @@ The puclic key should be found on the web page.
 
 ### Generating a new SSH key
 
-    ssh-keygen -t rsa -b 4096 -C "admin@highmed.org"
+    openssl genrsa -out crr-private-key.pem 4096 && openssl rsa -pubout -in crr-private-key.pem -out crr-public-key.pem
 
-Name it `crr-private-key`. This will also generate the public key `crr-private-key.pub`.
+This will also generate the public key `crr-public-key.pem`.
 Now create a k8s secret file with:
 
-    kubectl create secret generic crr-private-key --from-file=crr-private-key -n test -o yaml > crr-private-key-secret.yaml
+    kubectl create secret generic crr-private-key --from-file=crr-private-key.pem -n test -o yaml > crr-private-key-secret.yaml
 
 To seal the secret call:
 
@@ -3243,10 +3243,10 @@ Add the `crr-private-key` and `crr-private-key-secret.yaml` files to .gitignore
     echo crr-private-key >> .gitignore
     echo crr-private-key-secret.yaml >> .gitignore
 
-Add `.gitignore`, `crr-private-key.pub` and the `crr-private-key-sealed-secret.yaml` to git:
+Add `.gitignore`, `crr-private-key.pem` and the `crr-private-key-sealed-secret.yaml` to git:
 
     git add .gitignore
-    git add crr-private-key.pub
+    git add crr-private-key.pem
     git add crr-private-key-sealed-secret.yaml
 
 ### Using the new SSH key

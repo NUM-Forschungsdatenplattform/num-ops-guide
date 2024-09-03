@@ -333,6 +333,20 @@ You need to inport a `.p12` cert into your browser to access the fhir server, se
 - Wait a few seconds to let the process complete.
 - Reload the page and check the outputs.
 
+### Start DataSend
+
+You need to import a `.p12` cert into your browser to access the fhir server, see [How to prepare certs for DSF](#how-to-prepare-certs-for-dsf).
+
+- Open `<baseUrl>/Task?_sort=_profile,identifier&status=draft` in the DSF FHIR UI, e.g.
+  https://diz-fhir.develop.rdp-dev.ingress.k8s.highmed.org/fhir/Task?_sort=_profile,identifier&status=draft
+
+- Click on the row with the message name `startDataSend` with Identifier `task-start-data-send-absolute-reference`.
+- Add a patient reference to the patient field e. g. `http://develop-diz-hapi-fhir:8080/fhir/Patient/170`
+- On dry-run click `No` and click on `Start Process`.
+- The Task resource with a yellow info box will open --> Process in the status in-progress.
+- Wait a few seconds to let the process complete.
+- Reload the page and check the outputs.
+
 ## Tasks
 
 Follow the step-by-step instructions in the guide to deploy and configure each component. The guide is continually updated to include the latest best practices and improvements.

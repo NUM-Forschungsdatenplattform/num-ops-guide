@@ -1120,7 +1120,7 @@ INSERT INTO num.user_details(user_id, approved, organization_id, created_date)
 
 - login with the user at: https://develop.dev.num-rdp.de
 
-## How to get certs for DSF
+### How to get certs for DSF
 
 The `sertigo` clusterIssuer can get certs for the `highmed.org` domain. To get a valid certificate for a fhir host in use an ingress like:
 
@@ -1153,27 +1153,27 @@ spec:
     secretName: dsf-fhir-certificate
 ```
 
-## How to prepare certs for DSF
+### How to prepare certs for DSF
 
 See: https://dsf.dev/stable/maintain/install.html#dsf-fhir-server
 
-### Store PEM encoded certificate as ssl_certificate_file.pem
+#### Store PEM encoded certificate as ssl_certificate_file.pem
 
     kubectl get secret dsf-fhir-certificate -o jsonpath='{.data.tls\.crt}' | base64 -d > ssl_certificate_file.pem
 
-### Store unencrypted, PEM encoded private-key as ssl_certificate_key_file.pem
+#### Store unencrypted, PEM encoded private-key as ssl_certificate_key_file.pem
 
     kubectl get secret dsf-fhir-certificate -o jsonpath='{.data.tls\.key}‘ | base64 -d > ssl_certificate_key_file.pem
 
-### Store PEM encoded certificate as client_certificate.pem
+#### Store PEM encoded certificate as client_certificate.pem
 
     kubectl get secret dsf-bpe-certificate -o jsonpath='{.data.tls\.crt}' | base64 -d > client_certificate.pem
 
-### Store encrypted or not encrypted, PEM encoded private-key as client_certificate_private_key.pem
+#### Store encrypted or not encrypted, PEM encoded private-key as client_certificate_private_key.pem
 
     kubectl get secret dsf-bpe-certificate -o jsonpath='{.data.tls\.key}' | base64 -d > client_certificate_private_key.pem
 
-###  Get the SHA-512 Hash (lowercase hex) of your client certificate (Certificate B)
+####  Get the SHA-512 Hash (lowercase hex) of your client certificate (Certificate B)
 
 Copy the first cert to `client_certificate-1.pem`.
 
@@ -1186,11 +1186,11 @@ or
     openssl x509 -fingerprint -sha512 -in client_certificate.pem
     sha512 Fingerprint=0D:AB:D4:8C:1D:FF:12:81:49:D2:1B:78:39:AD:62:B9:7E:3C:56:AE:04:87:8F:6A:90:43:34:1F:D3:55:BF:5D:08:AE:21:A7:82:B6:37:0B:14:E9:E8:77:80:CA:35:27:81:82:F1:19:BB:C5:C1:7D:5A:A0:AB:07:71:C8:38:97
 
-### Create pkcs12 file
+#### Create pkcs12 file
 
     openssl pkcs12 -export -out client_certificate.p12 -inkey client_certificate_private_key.pem -in client_certificate.pem
 
-### Create nth-opt-fhir-sealed-secrets.yaml file
+#### Create nth-opt-fhir-sealed-secrets.yaml file
 
 ```sh
 kubectl create secret generic nth-opt-fhir-secrets \
@@ -1202,7 +1202,7 @@ kubectl create secret generic nth-opt-fhir-secrets \
     | kubeseal - -w nth-opt-fhir-sealed-secrets.yaml
 ```
 
-### Access dsf-fhir with client certificates
+#### Access dsf-fhir with client certificates
 
     curl -v --cert-type P12 --cert client_certificate.p12  -H "Accept: application/fhir+xml" https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoints
 
@@ -3234,12 +3234,12 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
 
 ```
 
-## How to prepare SSH key for codex-processes-ap1 codex-process-data-transfer process plugin
+### How to prepare SSH key for codex-processes-ap1 codex-process-data-transfer process plugin
 
 Data for the plugin must be encrypted using a rsa 4096 key pair.
 The puclic key should be found on the web page.
 
-### Generating a new SSH key
+#### Generating a new SSH key
 
     openssl genrsa -out crr-private-key.pem 4096 && openssl rsa -pubout -in crr-private-key.pem -out crr-public-key.pem
 
@@ -3263,7 +3263,7 @@ Add `.gitignore`, `crr-private-key.pem` and the `crr-private-key-sealed-secret.y
     git add crr-private-key.pem
     git add crr-private-key-sealed-secret.yaml
 
-### Using the new SSH key
+#### Using the new SSH key
 
 In the deployment of DSF-BPE there is an env var `DE_NETZWERK_UNIVERSITAETSMEDIZIN_RDP_CRR_PRIVATE_KEY` which contains the value of "{{ .Values.appConfig.privateKey.path }}".
 
@@ -3288,12 +3288,12 @@ volumeMounts:
     subPath: crr-private-key
 ```
 
-## How to insert test data to hapi fhir store
+### How to insert risk principe data to hapi fhir store
 
 - get the test data
 
-```sh
-wget https://github.com/medizininformatik-initiative/mii-process-data-sharing/raw/develop/src/test/resources/fhir/Bundle/Dic1FhirStore_Demo_Bundle.xml
+```
+wget https://raw.githubusercontent.com/num-codex/codex-processes-ap1/main/codex-process-data-transfer/src/test/resources/fhir/Bundle/dic_fhir_store_demo_risk_principe.json
 ```
 
  - port foreward to localhost:8080
@@ -3304,8 +3304,8 @@ wget https://github.com/medizininformatik-initiative/mii-process-data-sharing/ra
 curl
     -XPOST -L
     -H "Accept: application/json"
-    -H "Content-Type: application/fhir+xml"
-    -d @Dic1FhirStore_Demo_Bundle.xml http://localhost:8080/fhir | jq .
+    -H "Content-Type: application/json"
+    -d @dic_fhir_store_demo_risk_principe.json http://localhost:8080/fhir | jq .
 ```
 
 ## Contributing

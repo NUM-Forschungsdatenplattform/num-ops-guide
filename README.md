@@ -21,7 +21,7 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [Process of updating the allow list](#process-of-updating-the-allow-list)
     - [Ping Pong Test](#ping-pong-test)
     - [ Start DataSend ](#start-datasend)
-    - [ Configure json logging for DSF ] (#configure-json-logging-for-dsf)
+    - [ Configure json logging for DSF ](#configure-json-logging-for-dsf)
 1. [Tips and Tricks](#tips-and-tricks)
    - [VictoriaLogs: Useful query strings](#victorialogs-useful-query-strings)
    - [kubectl: Useful Aliases](#kubectl-useful-aliases)

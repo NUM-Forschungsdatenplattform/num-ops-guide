@@ -20,6 +20,8 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [Allow List](#allow-list)
     - [Process of updating the allow list](#process-of-updating-the-allow-list)
     - [Ping Pong Test](#ping-pong-test)
+    - [ Start DataSend ](#start-datasend)
+    - [ Configure json logging for DSF ] (#configure-json-logging-for-dsf)
 1. [Tips and Tricks](#tips-and-tricks)
    - [VictoriaLogs: Useful query strings](#victorialogs-useful-query-strings)
    - [kubectl: Useful Aliases](#kubectl-useful-aliases)
@@ -343,6 +345,69 @@ You need to import a `.p12` cert into your browser to access the fhir server, se
 - Wait a few seconds to let the process complete.
 - Reload the page and check the outputs.
 
+### Configure json logging for DSF 
+
+To do this, overwrite / mount a custom Log4j2 configuration on the Log4j2 path in the container.
+
+Here is an example of a customized Log4j2 configuration for the FHIR server:
+
+```xml
+<Configuration status="INFO" monitorInterval="30" verbose="false">
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <JSONLayout compact="true" eventEol="true" properties="true" stacktraceAsString="true" includeTimeMillis="true" />
+        </Console>
+        <RollingFile name="FILE" fileName="log/bpe.log" filePattern="log/bpe_%d{yyyy-MM-dd}_%i.log.gz" ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d [%t] %-5p %c - %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="dev.dsf" level="DEBUG" />
+        <Logger name="de.netzwerk_universitaetsmedizin" level="DEBUG" />
+        <Logger name="de.medizininformatik_initiative" level="DEBUG" />
+        <Logger name="org.eclipse.jetty" level="INFO" />
+
+        <Root level="WARN">
+            <AppenderRef ref="CONSOLE" level="INFO" />
+            <AppenderRef ref="FILE" level="DEBUG" />
+        </Root>
+    </Loggers>
+</Configuration>
+```
+Mount this configfile in the fhir-server pod via configmap:
+
+kubectl create configmap log4j2-config --from-file=log4j2.xml
+
+```
+    volumes:
+      - name: log4j2-config
+        configMap:
+          name: log4j2-config
+    volumeMounts:
+      - name: log4j2-config
+        mountPath: /opt/bpe/conf
+```
+
+The original Log4j2 configurations can be found here:
+https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-server-jetty/docker/conf/log4j2.xml
+https://github.com/datasharingframework/dsf/blob/main/dsf-bpe/dsf-bpe-server-jetty/docker/conf/log4j2.xml
+
+In the BPE, /opt/bpe/conf/log4j2.xml would have to be overwritten accordingly.
+
+For the test I have just overwritten only the console logs (by `<JSONLayout compact=“true” eventEol=“true” properties=“true” stacktraceAsString=“true” includeTimeMillis=“true” />`)
+
+Example log output:
+
+```
+{"timeMillis":1725603502386,"thread":"jetty-server-22","level":"INFO","loggerName":"dev.dsf.fhir.websocket.ServerEndpoint","message":"Websocket open, session 4e3021b5-a527-47d3-abd2-2b992c60a7a4, identity 'diz-test.gecko.hs-heilbronn.de'","endOfBatch":false,"loggerFqcn":"org.apache.logging.slf4j.Log4jLogger","contextMap":{},"threadId":22,"threadPriority":5}
+```
+
 ## Tips and Tricks
 
 ### VictoriaLogs: Useful query strings
@@ -372,7 +437,6 @@ You need to import a `.p12` cert into your browser to access the fhir server, se
   `alias kcodex='kubectl config use-context codex-central && kubectl get nodes'`
 
   `alias   kdev='kubectl config use-context rdp-dev       && kubectl get nodes'`
-
 
 
 ## Tasks

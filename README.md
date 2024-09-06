@@ -20,6 +20,9 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [Allow List](#allow-list)
     - [Process of updating the allow list](#process-of-updating-the-allow-list)
     - [Ping Pong Test](#ping-pong-test)
+1. [Tips and Tricks](#tips-and-tricks)
+   - [VictoriaLogs: Useful query strings](#victorialogs-useful-query-strings)
+   - [kubectl: Useful Aliases](#kubectl-useful-aliases)
 1. [Tasks](#tasks)
     - [Run a test pod for debugging purpose](#run-a-test-pod-for-debugging-purpose)
     - [Deploy ArgoCD](#deploy-argocd)
@@ -160,13 +163,6 @@ See also:
 - [Using VictoriaLogs with Web UI](#using-victorialogs-with-web-ui)
 - [Using VictoriaLogs from the command line](#using-victorialogs-from-the-command-line)
 
-#### Useful query strings
-
-- Log the errors from the last 5 minutes: `_time:5m error`
-
-- Log the output a given namespace: `_time:5m _stream:{k8s_ns="develop",k8s_container="num-portal"}`
-
-- Log the output from a container in a given namespace: `_time:5m _stream:{k8s_ns="develop",k8s_container="num-portal"}`
 
 ### Sealed Secrets
 
@@ -346,6 +342,38 @@ You need to import a `.p12` cert into your browser to access the fhir server, se
 - The Task resource with a yellow info box will open --> Process in the status in-progress.
 - Wait a few seconds to let the process complete.
 - Reload the page and check the outputs.
+
+## Tips and Tricks
+
+### VictoriaLogs: Useful query strings
+
+- Log the errors from the last 5 minutes:
+
+  `_time:5m error`
+
+- Log the output a given namespace:
+
+  `_stream:{k8s_ns="develop"}`
+
+- Log errors from a container in a given namespace from the last 12 hours:
+
+  `_time:12h _stream:{k8s_ns="develop",k8s_container="num-portal"} error`
+
+### kubectl: Useful Aliases
+
+- Use `k` short cut for `kubectl`:
+
+  `alias k='kubectl'`
+
+- Switch contexts:
+
+  This will switch to the `codex-central` context and list all the nodes.
+
+  `alias kcodex='kubectl config use-context codex-central && kubectl get nodes'`
+
+  `alias   kdev='kubectl config use-context rdp-dev       && kubectl get nodes'`
+
+
 
 ## Tasks
 

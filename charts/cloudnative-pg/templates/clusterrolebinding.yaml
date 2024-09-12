@@ -5,7 +5,8 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: cloudnative-pg
+    namespace: cloudnative-pg
 roleRef:
   kind: ClusterRole
-  name: crd-access
+  name: crd-access # The ClusterRole you created
   apiGroup: rbac.authorization.k8s.io

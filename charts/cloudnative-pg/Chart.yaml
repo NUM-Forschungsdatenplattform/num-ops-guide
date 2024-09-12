@@ -1,0 +1,7 @@
+apiVersion: v2
+name: cloudnative-pg
+version: 1.0.0
+dependencies:
+  - name: cloudnative-pg
+    version: cloudnative-pg-v0.22.0
+    repository: https://github.com/cloudnative-pg/

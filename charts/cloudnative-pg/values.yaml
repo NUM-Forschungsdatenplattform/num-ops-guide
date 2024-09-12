@@ -1,10 +1,1 @@
 cloudnative-pg:
-  image:
-    tag: 1.22.5
-  rbac:
-    aggregateClusterRoles: true
-  webhook:
-    mutating:
-      create: false
-    validating:
-      create: false

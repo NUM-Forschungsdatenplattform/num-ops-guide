@@ -31,6 +31,10 @@ homepage:
               - href: https://prod.rancher.gwdg.de
                 abbr: R
                 icon: rancher.svg
+          - GWDG Grafana:
+              - href: https://prod.rancher.gwdg.de/k8s/clusters/c-m-c2mr5hcb/api/v1/namespaces/cattle-monitoring-system/services/http:rancher-monitoring-grafana:80/proxy/?orgId=1
+                abbr: G
+                icon: grafana.svg
           - Swagger Develop:
               - href: https://num-portal.develop.dev.num-rdp.de/swagger-ui/index.html
                 icon: https://upload.wikimedia.org/wikipedia/commons/a/ab/Swagger-logo.png

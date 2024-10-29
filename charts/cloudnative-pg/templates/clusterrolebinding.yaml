@@ -8,5 +8,5 @@ subjects:
     namespace: cloudnative-pg
 roleRef:
   kind: ClusterRole
-  name: crd-access # The ClusterRole you created
+  name: crd-access
   apiGroup: rbac.authorization.k8s.io

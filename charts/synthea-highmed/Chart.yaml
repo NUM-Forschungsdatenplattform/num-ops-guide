@@ -1,0 +1,5 @@
+---
+apiVersion: v2
+description: Chart for Synthea Highmed
+name: synthea-highmed
+version: 1.0.0

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: synthea-highmed
+  name: synthea-highmed
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: synthea-highmed
+  template:
+    metadata:
+      labels:
+        app: synthea-highmed
+    spec:
+      containers:
+        - image: ghcr.io/medblocks/synthea_highmed:main
+          name: synthea-highmed
+          ports:
+            - containerPort: 3000

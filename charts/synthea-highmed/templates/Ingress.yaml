@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+  name: synthea-highmed
+  namespace: synthea-highmed
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: testdaten.synthea-highmed.num-rdp.de
+      http:
+        paths:
+          - backend:
+              service:
+                name: synthea-highmed
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - testdaten.synthea-highmed.num-rdp.de
+      secretName: synthea-highmed-tls

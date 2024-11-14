@@ -23,8 +23,8 @@ homepage:
                 icon: https://upload.wikimedia.org/wikipedia/commons/3/36/SVA-Logo.png
                 abbr: Test
           - Testdaten Synthea Highmed:
-                abbr: Syn
               - href: https://testdaten.synthea-highmed.dev.num-rdp.de
+                abbr: Syn
       - Mgmt:
           - Jira Backlog:
               - href: https://highmed-ev.atlassian.net/jira/software/projects/NUM/boards/1/backlog?epics=visible

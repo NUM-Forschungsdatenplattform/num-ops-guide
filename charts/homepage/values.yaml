@@ -4,24 +4,27 @@ homepage:
       - Environments:
           - NUM Codex Production:
               - href: https://num-codex.de
-                abbr: VG
+                abbr: Prod
           - NUM Codex Pre Prod:
               - href: https://num-codex.de
-                abbr: VG
+                abbr: PP
           - NUM Codex Staging:
               - href: https://staging.num-codex.de
-                abbr: VG
+                abbr: Stg
           - NUM Codex Dev:
               - href: https://dev.num-codex.de
-                abbr: VG
+                abbr: Dev
           - NUM RDP Develop:
               - href: https://develop.dev.num-rdp.de
                 icon: https://upload.wikimedia.org/wikipedia/commons/3/36/SVA-Logo.png
-                abbr: D
+                abbr: Dev
           - NUM RDP Test:
               - href: https://test.dev.num-rdp.de
                 icon: https://upload.wikimedia.org/wikipedia/commons/3/36/SVA-Logo.png
-                abbr: T
+                abbr: Test
+          - Testdaten Synthea Highmed:
+                abbr: Syn
+              - href: https://testdaten.synthea-highmed.dev.num-rdp.de
       - Mgmt:
           - Jira Backlog:
               - href: https://highmed-ev.atlassian.net/jira/software/projects/NUM/boards/1/backlog?epics=visible

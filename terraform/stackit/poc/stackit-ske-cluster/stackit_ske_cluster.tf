@@ -1,34 +1,23 @@
-
-resource "stackit_ske_cluster" "this" {
-  name       = var.CLUSTERNAME
-  project_id = var.PROJECTID
-
+# Define the node_pools
+locals {
   node_pools = [
-    {
-      name               = "node-pool-eu01-1"
+    for zone in var.availability_zones : {
+      name               = "node-pool-${zone}"
       machine_type       = "g1.3"
+      volume_size        = 50
       minimum            = "1"
       maximum            = "2"
       max_surge          = "1"
-      availability_zones = ["eu01-1"]
-    },
-    {
-      name               = "node-pool-eu01-2"
-      machine_type       = "g1.3"
-      minimum            = "1"
-      maximum            = "2"
-      max_surge          = "1"
-      availability_zones = ["eu01-2"]
-    },
-    {
-      name               = "node-pool-eu01-3"
-      machine_type       = "g1.3"
-      minimum            = "1"
-      maximum            = "2"
-      max_surge          = "1"
-      availability_zones = ["eu01-3"]
+      availability_zones = [zone]
     }
   ]
+}
+
+resource "stackit_ske_cluster" "this" {
+  project_id = var.project_id
+  name       = var.cluster_name
+  node_pools = local.node_pools
+
   hibernations = [
     {
       start    = "30 17 * * *"
@@ -36,12 +25,14 @@ resource "stackit_ske_cluster" "this" {
       timezone = "Europe/Berlin"
     }
   ]
+
   maintenance = {
     enable_kubernetes_version_updates    = true
     enable_machine_image_version_updates = true
     start                                = "01:00:00Z"
     end                                  = "02:00:00Z"
   }
+
   extensions = {
     acl = {
       allowed_cidrs = ["0.0.0.0/24"] # adjust

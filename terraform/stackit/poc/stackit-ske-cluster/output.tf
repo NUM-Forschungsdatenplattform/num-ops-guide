@@ -1,9 +1,10 @@
 output "kubeversion" {
-   description = "K8s-Version used"
-   value       = stackit_ske_cluster.k8scluster1.kubernetes_version_used
+  description = "kubernetes version used"
+  value       = stackit_ske_cluster.this.kubernetes_version_used
 }
+
 output "kubeconfig" {
-   description = "Kubeconfig"
-   value       = stackit_ske_kubeconfig.k8scluster1.kube_config
-   sensitive = true
+  description = "kubeconfig used to connect to the cluster"
+  value       = stackit_ske_kubeconfig.this.kube_config
+  sensitive   = true
 }

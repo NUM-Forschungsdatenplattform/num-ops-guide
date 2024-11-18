@@ -1,0 +1,19 @@
+global:
+  argoNamespace: argo
+  repoURL: https://github.com/NUM-Forschungsdatenplattform/num-ops-guide.git
+  numHelmChartsRepoURL: git@github.com:NUM-Forschungsdatenplattform/num-helm-charts.git
+  numHelmChartsBranch: rdp-dev
+
+projects:
+  devCluster:
+    description: NUM RDP Poc Cluster
+    name: cluster
+  devEnv:
+    description: NUM RDP Dev Environments
+    name: environments
+
+applications:
+  developEnv:
+    enabled: true
+    namespace: develop
+    helmValueFile: deployment-values/central-research-repository/poc-values.yaml

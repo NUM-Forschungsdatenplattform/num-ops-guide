@@ -3,7 +3,7 @@ locals {
   node_pools = [
     for zone in var.availability_zones : {
       name               = "node-pool-${zone}"
-      machine_type       = "g1.3"
+      machine_type       = "g2i.2"
       volume_size        = 50
       minimum            = "1"
       maximum            = "2"

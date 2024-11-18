@@ -1,0 +1,20 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps-poc
+  namespace: {{.Values.global.argoNamespace}}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{.Values.projects.devCluster.name}}
+  source:
+    repoURL: {{.Values.global.repoURL}}
+    path: charts/app-of-apps-poc/
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{.Values.global.argoNamespace}}
+  syncPolicy:
+    automated:
+      selfHeal: true

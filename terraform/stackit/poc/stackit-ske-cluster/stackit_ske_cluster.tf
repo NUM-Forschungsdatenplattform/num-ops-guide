@@ -35,7 +35,7 @@ resource "stackit_ske_cluster" "this" {
 
   extensions = {
     acl = {
-      allowed_cidrs = ["0.0.0.0/24"] # adjust
+      allowed_cidrs = ["0.0.0.0/0"] # adjust
       enabled       = true
     },
     argus = {

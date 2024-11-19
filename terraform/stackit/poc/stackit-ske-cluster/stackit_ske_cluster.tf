@@ -2,7 +2,7 @@
 locals {
   node_pools = [
     for zone in var.availability_zones : {
-      name               = "node-pool-${zone}"
+      name               = "nodepool-${zone}"
       machine_type       = "g2i.2"
       volume_size        = 50
       minimum            = "1"
@@ -37,6 +37,10 @@ resource "stackit_ske_cluster" "this" {
     acl = {
       allowed_cidrs = ["0.0.0.0/24"] # adjust
       enabled       = true
+    },
+    argus = {
+      enabled           = true
+      argus_instance_id = stackit_observability_instance.this.id
     }
   }
 }

@@ -12,7 +12,7 @@ spec:
     path: charts/argo-cd
     targetRevision: HEAD
     helm:
-      valuesFiles:
+      valueFiles:
         - values-argo-cd-poc.yaml
   destination:
     server: https://kubernetes.default.svc

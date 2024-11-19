@@ -40,7 +40,7 @@ resource "stackit_ske_cluster" "this" {
     },
     argus = {
       enabled           = true
-      argus_instance_id = stackit_observability_instance.this.id
+      argus_instance_id = stackit_observability_instance.this.instance_id
     }
   }
 }

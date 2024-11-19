@@ -13,7 +13,7 @@ spec:
     targetRevision: HEAD
     helm:
       valueFiles:
-        - ./values-argo-cd-poc.yaml
+        - values-argo-cd-poc.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: {{.Values.global.argoNamespace}}

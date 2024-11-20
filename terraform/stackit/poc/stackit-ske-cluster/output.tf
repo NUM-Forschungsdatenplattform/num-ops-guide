@@ -21,4 +21,7 @@ output "grafana_initial_admin_password" {
   sensitive   = true
 }
 
-
+output "zone_id" {
+  description = "highmed dns zone id"
+  value       = stackit_dns_zone.this.zone_id
+}

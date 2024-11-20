@@ -41,6 +41,11 @@ resource "stackit_ske_cluster" "this" {
     argus = {
       enabled           = true
       argus_instance_id = stackit_observability_instance.this.instance_id
+    },
+    dns = {
+      enabled = true
+      zones   = [stackit_dns_zone.this.dns_name]
     }
   }
+  depends_on = [stackit_dns_zone.this, stackit_observability_instance.this]
 }

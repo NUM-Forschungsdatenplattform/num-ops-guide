@@ -7,7 +7,7 @@ variable "project_id" {
 variable "cluster_name" {
   type        = string
   description = "Cluster Name"
-  default     = "poc"
+  default     = "highmed"
 }
 
 variable "availability_zones" {

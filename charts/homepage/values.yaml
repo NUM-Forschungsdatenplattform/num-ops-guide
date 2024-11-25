@@ -57,6 +57,10 @@ homepage:
               - href: https://argocd.dev.num-rdp.de/applications
                 abbr: ARGO
                 icon: argocd.svg
+          - Stackit ArgoCD:
+              - href: https://argocd.highmed.runs.onstackit.cloud/applications
+                abbr: ARGO
+                icon: argocd.svg
           - Codex ArgoCD:
               - href: https://argocd.dev.num-codex.de/applications
                 abbr: ARGO

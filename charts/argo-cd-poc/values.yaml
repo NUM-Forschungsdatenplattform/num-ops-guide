@@ -1,0 +1,33 @@
+argo-cd:
+  global:
+    domain: argocd.highmed.runs.onstackit.cloud
+    logging:
+      format: json
+      # -- Set the global logging level. One of: `debug`, `info`, `warn` or `error`
+      level: info
+
+  configs:
+    params:
+      server.insecure: true
+
+  dex:
+    enabled: false
+  notifications:
+    enabled: false
+  applicationSet:
+    enabled: false
+
+  server:
+    # SSL Termination at Ingress Controller
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      hostname: argocd.highmed.runs.onstackit.cloud
+      annotations:
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      extraTls:
+        - hosts:
+            - argocd.highmed.runs.onstackit.cloud
+          secretName: argocd-letsencrypt-prod-tls

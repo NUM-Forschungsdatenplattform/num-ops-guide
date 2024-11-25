@@ -345,7 +345,7 @@ You need to import a `.p12` cert into your browser to access the fhir server, se
 - Wait a few seconds to let the process complete.
 - Reload the page and check the outputs.
 
-### Configure json logging for DSF 
+### Configure json logging for DSF
 
 To do this, overwrite / mount a custom Log4j2 configuration on the Log4j2 path in the container.
 
@@ -3398,6 +3398,19 @@ curl
     -H "Accept: application/json"
     -H "Content-Type: application/json"
     -d @dic_fhir_store_demo_risk_principe.json http://localhost:8080/fhir | jq .
+```
+
+## POC
+
+### Install & Configure Nginx Ingress Controller
+
+```sh
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
+  --namespace ingress-nginx --create-namespace \
+  --set controller.config.allow-snippet-annotations=true \
+  --set controller.config.use-forwarded-headers=true
 ```
 
 ## Contributing

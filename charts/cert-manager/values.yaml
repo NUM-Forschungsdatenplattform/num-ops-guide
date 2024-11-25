@@ -1,3 +1,6 @@
+global:
+  sertigo:
+    enabled: true
+
 cert-manager:
   installCRDs: true
-      

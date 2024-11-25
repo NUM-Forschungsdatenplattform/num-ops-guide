@@ -4,6 +4,9 @@ global:
   numHelmChartsRepoURL: git@github.com:NUM-Forschungsdatenplattform/num-helm-charts.git
   numHelmChartsBranch: stackit
 
+  sertigo:
+    enabled: false
+
 projects:
   devCluster:
     description: Stackit Poc Cluster

@@ -20,8 +20,8 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
     - [Allow List](#allow-list)
     - [Process of updating the allow list](#process-of-updating-the-allow-list)
     - [Ping Pong Test](#ping-pong-test)
-    - [ Start DataSend ](#start-datasend)
-    - [ Configure json logging for DSF ](#configure-json-logging-for-dsf)
+    - [Start DataSend](#start-datasend)
+    - [Configure json logging for DSF](#configure-json-logging-for-dsf)
 1. [Tips and Tricks](#tips-and-tricks)
    - [VictoriaLogs: Useful query strings](#victorialogs-useful-query-strings)
    - [kubectl: Useful Aliases](#kubectl-useful-aliases)
@@ -323,7 +323,7 @@ After the deployment of the new databases, do not forget to delete the old datab
 You need to inport a `.p12` cert into your browser to access the fhir server, see [How to prepare certs for DSF](#how-to-prepare-certs-for-dsf).
 
 - Open `<baseUrl>/Task?_sort=_profile,identifier&status=draft` in the DSF FHIR UI, e.g.
-  https://nth-fhir.develop.rdp-dev.ingress.k8s.highmed.org/fhir/Task?_sort=_profile,identifier&status=draft
+  https://diz-fhir.develop.rdp-dev.ingress.k8s.highmed.org/fhir/Task?_sort=_profile,identifier&status=draft
 
 - Click on the row with the message name `startPing`.
 - Leave the input field target-endpoints empty and click on `Start Process`.
@@ -3393,11 +3393,82 @@ wget https://raw.githubusercontent.com/num-codex/codex-processes-ap1/main/codex-
  - post to the FHIR server
 
 ```sh
-curl
-    -XPOST -L
-    -H "Accept: application/json"
-    -H "Content-Type: application/json"
+curl \
+    -XPOST -L \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
     -d @dic_fhir_store_demo_risk_principe.json http://localhost:8080/fhir | jq .
+```
+
+- replace dic-pseudonym
+
+```json
+{
+  "resourceType": "Bundle",
+  "id": "46e9ee38-b83a-4e48-87ff-ed7e06d3caac",
+  "meta": {
+    "lastUpdated": "2024-11-28T08:21:47.627+00:00"
+  },
+  "type": "searchset",
+  "total": 1,
+  "link": [ {
+    "relation": "self",
+    "url": "http://localhost:8080/fhir/Patient?_pretty=true"
+  } ],
+  "entry": [ {
+    "fullUrl": "http://localhost:8080/fhir/Patient/1",
+    "resource": {
+      "resourceType": "Patient",
+      "id": "1",
+      "meta": {
+        "versionId": "6",
+        "lastUpdated": "2024-09-02T08:10:06.995+00:00",
+        "source": "#5NzeIQNOkqWHraNA",
+        "profile": [ "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert" ]
+      },
+      "identifier": [ {
+        "type": {
+          "coding": [ {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+            "code": "PSEUDED"
+          } ]
+        },
+        "system": "urn:ietf:rfc:4122",
+        "value": "07f602e0-579e-4fe3-95af-381728b00015"
+      }, {
+        "type": {
+          "coding": [ {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "ANON"
+          } ]
+        },
+        "system": "http://www.netzwerk-universitaetsmedizin.de/sid/dic-pseudonym",
+        "value": "dic_crr_test/dic_E6AXT"
+      } ],
+      "gender": "other",
+      "_gender": {
+        "extension": [ {
+          "url": "http://fhir.de/StructureDefinition/gender-amtlich-de",
+          "valueCoding": {
+            "system": "http://fhir.de/CodeSystem/gender-amtlich-de",
+            "code": "D",
+            "display": "divers"
+          }
+        } ]
+      },
+      "birthDate": "2022-12-01",
+      "managingOrganization": {
+        "identifier": {
+          "system": "https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier",
+          "value": "MHH"
+        }
+      }
+    },
+    "search": {
+      "mode": "match"
+    }
+  } ]
+}
 ```
 
 ## POC

@@ -11,3 +11,18 @@ export NTH_IDENTIFIER=nth.highmed.org
 export NTH_THUMBPRINT=62fd940dc40f00141bcf3d166a5ceb976b4b09cb772b7fce35ada34b1323eb74ae045980e6cc78dc63109872b623392a3ede56e35d7b327529679a89f311ade9
 
 envsubst < bundle-template.xml > bundle.xml
+
+export CRR_ENDPOINT=https://crr-fhir.poc.ingress.k8s.highmed.org/fhir
+export CRR_IDENTIFIER=crr.highmed.org
+export CRR_THUMBPRINT=b78e9174b3994d824f144c5f45f33fd8440085884c49ff38319c47ddc6fe63ece9b41121638c094f9f0d342678ca6735f0d1742cc3ee12b08f85e76299f1cbbb
+
+export DIZ_ENDPOINT=https://diz-fhir.poc.ingress.k8s.highmed.org/fhir
+export DIZ_IDENTIFIER=diz.highmed.org
+export DIZ_THUMBPRINT=2fe81bceed43d690b8f0f70989b23080b1a4fde0599a7bd85fe1d1c4b5cb3e3a0e8e477cea254d07d887e86fb2008c8221bf10ed188281047bf645f4805bad91
+
+export NTH_ENDPOINT=https://nth-fhir.poc.ingress.k8s.highmed.org/fhir
+export NTH_IDENTIFIER=nth.highmed.org
+export NTH_THUMBPRINT=2809efca471af9f1e0edf2e83aa47d8aa97e4cf3f21c6e6358ad94870a56eb8d7c88c690638f4125a3dde77a3885b275edc56ad6c602c02048b0e36e9947656a
+
+envsubst < bundle-template.xml > poc-bundle.xml
+

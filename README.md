@@ -315,7 +315,7 @@ Create new `bundle-xml` configMap:
 
 After the deployment:
 - check the configMap `bundele-xml` and restart Fhir server and BPEs
-- checl logs of Fhir server and BPEs
+- check logs of Fhir server and BPEs
 
 ### Ping Pong Test
 

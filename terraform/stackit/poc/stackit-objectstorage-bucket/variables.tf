@@ -7,6 +7,6 @@ variable "project_id" {
 variable "bucket_name" {
   type        = string
   description = "Bucket Name"
-  default     = "postgres-backpus"
+  default     = "postgres-backups"
 }
 

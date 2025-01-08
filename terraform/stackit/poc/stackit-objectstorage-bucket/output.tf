@@ -20,3 +20,14 @@ output "s3_secret_access_key" {
   sensitive   = true
 }
 
+output "s3_access_key_neu" {
+  description = "s3 access key"
+  value       = stackit_objectstorage_credential.neu.access_key
+}
+
+output "s3_secret_access_key_neu" {
+  description = "s3 secret accesskey"
+  value       = stackit_objectstorage_credential.neu.secret_access_key
+  sensitive   = true
+}
+

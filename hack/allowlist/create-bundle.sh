@@ -26,3 +26,14 @@ export NTH_THUMBPRINT=2809efca471af9f1e0edf2e83aa47d8aa97e4cf3f21c6e6358ad94870a
 
 envsubst < bundle-template.xml > poc-bundle.xml
 
+export CRR_ENDPOINT=https://crr-fhir.develop.rdp-dev.ingress.k8s.highmed.org/fhir
+export CRR_IDENTIFIER=crr.highmed.org
+export CRR_THUMBPRINT=6816c06b3c19e320747617714e39404002c329e33a5b2e80894096febea7c2f549340216ad673e537dfa67b97164fc9dc882c061e6d776b021a1e4031bc0f689
+export DIZ_ENDPOINT=https://diz-fhir.develop.rdp-dev.ingress.k8s.highmed.org/fhir
+export DIZ_IDENTIFIER=diz.highmed.org
+export DIZ_THUMBPRINT=05e09dbc8a4063f286b0855d38c9eb3f5413827e34e8c3436714875a0f495aa6c22f5493a982455ccf7fc86dc4edee4508f4f650553ed2a8078b929cb2c98143
+export NTH_ENDPOINT=https://nth-fhir.develop.rdp-dev.ingress.k8s.highmed.org/fhir
+export NTH_IDENTIFIER=nth.highmed.org
+export NTH_THUMBPRINT=3852b4efdaf62226316ca56ab2b33cd55b7aad646f4f124a32c04800df5ec00a8b215e77b6f9d2eb1b8b0d85b2693b7a540c899451a0cf4a6e7b633e16e47d30
+
+envsubst < bundle-template.xml > rdp-develop-bundle.xml

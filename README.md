@@ -306,17 +306,16 @@ The `bundle.xml` is stored in a config map `bundle-xml` - see num-helm-charts `c
 
 ### Process of updating the allow list
 
-- edit `bundle-template.xml` or change ENV values in `create-bundle.sh`
+Create new `bundle-xml` configMap:
+- get new thumbprints from `[diz|nth|crr]-fhir` server logs
+- add thumbprints  values in `create-bundle.sh`
 - execute `create-bundle.sh`
-- copy the new `bundle.xml` into the config map.
-- change 6 databases: nthfhir2, nthbpe2, dizfhir2, dizbpe2, crrfhir2, crrbpe2 in `postgres-operator-num-portal-manifest.yaml` in `num-portal/templates` and in `develop-values.yaml` change the 6 `appConfig.postgresqlDatabase` to the new database names.
+- copy the new `rdp-dev-bundle.xml` into the crr-fhir helm chart
+- update the annotation on the configMap `bundele-xml`
 
-After the deployment of the new databases, do not forget to delete the old databases:
-- in pod `num-portal-postgres-0`
-- `su postgres`
-- `psql`
-- list databases with `\l`
-- delete the old databases with e.g. `DROP DATABASE nthfhir2`
+After the deployment:
+- check the configMap `bundele-xml` and restart Fhir server and BPEs
+- checl logs of Fhir server and BPEs
 
 ### Ping Pong Test
 

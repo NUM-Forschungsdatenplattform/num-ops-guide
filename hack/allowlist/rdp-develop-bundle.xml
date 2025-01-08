@@ -13,7 +13,7 @@
         </meta>
         <extension
           url="http://dsf.dev/fhir/StructureDefinition/extension-certificate-thumbprint">
-          <valueString value="${NTH_THUMBPRINT}" />
+          <valueString value="3852b4efdaf62226316ca56ab2b33cd55b7aad646f4f124a32c04800df5ec00a8b215e77b6f9d2eb1b8b0d85b2693b7a540c899451a0cf4a6e7b633e16e47d30" />
         </extension>
         <identifier>
           <system value="http://dsf.dev/sid/organization-identifier" />
@@ -45,7 +45,7 @@
         </meta>
         <extension
           url="http://dsf.dev/fhir/StructureDefinition/extension-certificate-thumbprint">
-          <valueString value="${DIZ_THUMBPRINT}" />
+          <valueString value="05e09dbc8a4063f286b0855d38c9eb3f5413827e34e8c3436714875a0f495aa6c22f5493a982455ccf7fc86dc4edee4508f4f650553ed2a8078b929cb2c98143" />
         </extension>
         <identifier>
           <system value="http://dsf.dev/sid/organization-identifier" />
@@ -77,7 +77,7 @@
         </meta>
         <extension
           url="http://dsf.dev/fhir/StructureDefinition/extension-certificate-thumbprint">
-          <valueString value="${CRR_THUMBPRINT}" />
+          <valueString value="6816c06b3c19e320747617714e39404002c329e33a5b2e80894096febea7c2f549340216ad673e537dfa67b97164fc9dc882c061e6d776b021a1e4031bc0f689" />
         </extension>
         <identifier>
           <system value="http://dsf.dev/sid/organization-identifier" />
@@ -129,7 +129,7 @@
         </payloadType>
         <payloadMimeType value="application/fhir+json" />
         <payloadMimeType value="application/fhir+xml" />
-        <address value="${NTH_ENDPOINT}" />
+        <address value="https://nth-fhir.develop.rdp-dev.ingress.k8s.highmed.org/fhir" />
       </Endpoint>
     </resource>
     <request>
@@ -171,7 +171,7 @@
         </payloadType>
         <payloadMimeType value="application/fhir+json" />
         <payloadMimeType value="application/fhir+xml" />
-        <address value="${DIZ_ENDPOINT}" />
+        <address value="https://diz-fhir.develop.rdp-dev.ingress.k8s.highmed.org/fhir" />
       </Endpoint>
     </resource>
     <request>
@@ -213,7 +213,7 @@
         </payloadType>
         <payloadMimeType value="application/fhir+json" />
         <payloadMimeType value="application/fhir+xml" />
-        <address value="${CRR_ENDPOINT}" />
+        <address value="https://crr-fhir.develop.rdp-dev.ingress.k8s.highmed.org/fhir" />
       </Endpoint>
     </resource>
     <request>

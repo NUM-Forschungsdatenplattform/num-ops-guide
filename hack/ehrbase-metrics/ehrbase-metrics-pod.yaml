@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ehrbase-metrics
+  name: ehrbase-metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ehrbase-metrics
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ehrbase-metrics
+    spec:
+      containers:
+        - image: debian
+          name: debian
+          env:
+            - name: USER
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: "ehrbase-ehrbase-security-admin-user-secret"
+            - name: PASSWD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: "ehrbase-ehrbase-security-admin-user-secret"
+          command:
+            - sh
+            - -c
+            - |
+              apt-get update && apt-get install -y curl jq
+              while true; 
+              do 
+                echo $(date);
+                
+                total_patients=$(curl -s -u "$USER:$PASSWD" "Accept: application/json"  'http://develop-ehrbase-service:8080/ehrbase/rest/openehr/v1/query/aql?q=SELECT%20COUNT%28e%2Fehr_id%2Fvalue%29%20AS%20total_patients%20FROM%20EHR%20e' | jq '.rows[0][0]')
+                
+                echo query status = $?
+                echo total_patients = $total_patients
+
+                echo total_patients $total_patients | curl -s --data-binary @- http://develop-prometheus-pushgateway:9091/metrics/job/ehrbase-metrics/instance/develop
+                
+                echo push status = $?
+
+                sleep 60; 
+              done;

@@ -7,41 +7,42 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
 1. [Introduction](#introduction)
 1. [Principles](#principles)
 1. [Concepts](#concepts)
-    - [Environments: development, staging, pre-prod, production](#todo)
+   - [Environments: development, staging, pre-prod, production](#todo)
 1. [Components](#components)
-    - [Homepage](#homepage)
-    - [ArgoCD](#argocd)
-    - [Grafana](#grafana)
-    - [Prometheus](#prometheus)
-    - [VictoriaLogs](#victorialogs)
-    - [Sealed Secrets](#sealed-secrets)
+   - [Homepage](#homepage)
+   - [ArgoCD](#argocd)
+   - [Grafana](#grafana)
+   - [Prometheus](#prometheus)
+   - [VictoriaLogs](#victorialogs)
+   - [Sealed Secrets](#sealed-secrets)
 1. [Getting Started](#getting-started)
 1. [DSF Develop](#dsf-develop)
-    - [Allow List](#allow-list)
-    - [Process of updating the allow list](#process-of-updating-the-allow-list)
-    - [Ping Pong Test](#ping-pong-test)
-    - [Start DataSend](#start-datasend)
-    - [Configure json logging for DSF](#configure-json-logging-for-dsf)
+   - [Allow List](#allow-list)
+   - [Process of updating the allow list](#process-of-updating-the-allow-list)
+   - [Ping Pong Test](#ping-pong-test)
+   - [Start DataSend](#start-datasend)
+   - [Configure json logging for DSF](#configure-json-logging-for-dsf)
 1. [Tips and Tricks](#tips-and-tricks)
    - [VictoriaLogs: Useful query strings](#victorialogs-useful-query-strings)
    - [kubectl: Useful Aliases](#kubectl-useful-aliases)
 1. [Tasks](#tasks)
-    - [Run a test pod for debugging purpose](#run-a-test-pod-for-debugging-purpose)
-    - [Deploy ArgoCD](#deploy-argocd)
-    - [Add your private ssh key to get access to private num-helm-charts](#add-your-private-ssh-key-to-get-access-to-private-num-helm-charts)
-    - [Deploy the App of Apps](#deploy-the-app-of-apps)
-    - [Update ArgoCD](#update-argocd)
-    - [Securing Kubernetes Services with Let's Encrypt, Nginx Ingress Controller and Cert-Manager](#securing-kubernetes-services-with-lets-encrypt-nginx-ingress-controller-and-cert-manager)
-    - [Securing Kubernetes Services with Ingress-Nginx Controller and Basic Authentication](#securing-kubernetes-services-with-ingress-nginx-controller-and-basic-authentication)
-    - [Using VictoriaLogs with Web UI](#using-victorialogs-with-web-ui)
-    - [Using VictoriaLogs from the command line](#using-victorialogs-from-the-command-line)
-    - [How to disable DEV dsf-bpe on CODEX cluster](#how-to-disable-dev-dsf-bpe-on-codex-cluster)
-    - [How to test DEV fhir-bridge on CODEX cluster](#how-to-test-dev-fhir-bridge-on-codex-cluster)
-    - [How to setup the develop environment](#how-to-setup-the-develop-environment)
-    - [How to get certs for DSF](#how-to-get-certs-for-dsf)
-    - [How to prepare certs for DSF](#how-to-prepare-certs-for-dsf)
-    - [How to prepare SSH key for codex-processes-ap1 codex-process-data-transfer process plugin](#how-to-prepare-ssh-key-for-codex-processes-ap1-codex-process-data-transfer-process-plugin)
-    - [How to insert test data to hapi fhir store](#how-to-insert-test-data-to-hapi-fhir-store)
+   - [Run a test pod for debugging purpose](#run-a-test-pod-for-debugging-purpose)
+   - [Deploy ArgoCD](#deploy-argocd)
+   - [Add your private ssh key to get access to private num-helm-charts](#add-your-private-ssh-key-to-get-access-to-private-num-helm-charts)
+   - [Deploy the App of Apps](#deploy-the-app-of-apps)
+   - [Update ArgoCD](#update-argocd)
+   - [Securing Kubernetes Services with Let's Encrypt, Nginx Ingress Controller and Cert-Manager](#securing-kubernetes-services-with-lets-encrypt-nginx-ingress-controller-and-cert-manager)
+   - [Securing Kubernetes Services with Ingress-Nginx Controller and Basic Authentication](#securing-kubernetes-services-with-ingress-nginx-controller-and-basic-authentication)
+   - [Using VictoriaLogs with Web UI](#using-victorialogs-with-web-ui)
+   - [Using VictoriaLogs from the command line](#using-victorialogs-from-the-command-line)
+   - [How to disable DEV dsf-bpe on CODEX cluster](#how-to-disable-dev-dsf-bpe-on-codex-cluster)
+   - [How to test DEV fhir-bridge on CODEX cluster](#how-to-test-dev-fhir-bridge-on-codex-cluster)
+   - [How to setup the develop environment](#how-to-setup-the-develop-environment)
+   - [How to get certs for DSF](#how-to-get-certs-for-dsf)
+   - [How to prepare certs for DSF](#how-to-prepare-certs-for-dsf)
+   - [How to prepare SSH key for codex-processes-ap1 codex-process-data-transfer process plugin](#how-to-prepare-ssh-key-for-codex-processes-ap1-codex-process-data-transfer-process-plugin)
+   - [How to insert test data to hapi fhir store](#how-to-insert-test-data-to-hapi-fhir-store)
+   - [How to renew CRR Client Certificate](#how-to-renew-crr-client-certificate)
 1. [Contributing](#contributing)
 1. [License](#license)
 
@@ -162,9 +163,9 @@ It isn't recommended to migrate from existing logging solutions to VictoriaLogs 
 See the [Roadmap](https://docs.victoriametrics.com/VictoriaLogs/Roadmap.html) for details.
 
 See also:
+
 - [Using VictoriaLogs with Web UI](#using-victorialogs-with-web-ui)
 - [Using VictoriaLogs from the command line](#using-victorialogs-from-the-command-line)
-
 
 ### Sealed Secrets
 
@@ -215,7 +216,6 @@ kubeseal --recovery-unseal --recovery-private-key master-key.yaml < sealed-secre
 
 Note: It is important to securely store the main.key as it is needed to decrypt all sealed Secrets in the cluster.
 
-
 ## Getting Started
 
 Before diving into Kubernetes operations, make sure you have the necessary prerequisites installed. Consult the [official Kubernetes documentation](https://kubernetes.io/docs/setup/) for guidance on setting up `kubectl` for managing the Kubernetes cluster.
@@ -245,7 +245,7 @@ The clusters are managed by [rancher](https://prod.rancher.gwdg.de/dashboard/hom
 ### Dev Cluster
 
 - Cluster: dev (rdp-dev)
-- DNS: *.dev.num-rdp.de has address 134.76.15.219
+- DNS: \*.dev.num-rdp.de has address 134.76.15.219
 - ArgoCD: https://argocd.dev.num-rdp.de/applications
 
 ### Dev Environment
@@ -287,6 +287,7 @@ Docs: https://dsf.dev/intro/info/allowList.html
 In the `develop` namespace, we have the three DSF instances `diz`, `nth` and `crr`.
 They share the same allow list in `/opt/fhir/conf/bundle.xml`.
 With the
+
 - Organizations:
   - netzwerk-universitaetsmedizin.de (parent Organization)
   - Test_DTS (nth)
@@ -307,13 +308,15 @@ The `bundle.xml` is stored in a config map `bundle-xml` - see num-helm-charts `c
 ### Process of updating the allow list
 
 Create new `bundle-xml` configMap:
+
 - get new thumbprints from `[diz|nth|crr]-fhir` server logs
-- add thumbprints  values in `create-bundle.sh`
+- add thumbprints values in `create-bundle.sh`
 - execute `create-bundle.sh`
 - copy the new `rdp-dev-bundle.xml` into the crr-fhir helm chart
 - update the annotation on the configMap `bundele-xml`
 
 After the deployment:
+
 - check the configMap `bundele-xml` and restart Fhir servers and BPEs
 - check logs of Fhir servers and BPEs
 
@@ -379,6 +382,7 @@ Here is an example of a customized Log4j2 configuration for the FHIR server:
     </Loggers>
 </Configuration>
 ```
+
 Mount this configfile in the fhir-server pod via configmap:
 
 kubectl create configmap log4j2-config --from-file=log4j2.xml
@@ -436,7 +440,6 @@ Example log output:
   `alias kcodex='kubectl config use-context codex-central && kubectl get nodes'`
 
   `alias   kdev='kubectl config use-context rdp-dev       && kubectl get nodes'`
-
 
 ## Tasks
 
@@ -598,22 +601,22 @@ Let’s create a test ClusterIssuer to make sure the certificate provisioning me
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-    name: letsencrypt-staging
-    namespace: cert-manager
+  name: letsencrypt-staging
+  namespace: cert-manager
 spec:
-    acme:
-        # Email address used for ACME registration
-        email: admin@example.org
-        # The ACME server URL
-        server: https://acme-staging-v02.api.letsencrypt.org/directory
-        # Name of a secret used to store the ACME account private key
-        privateKeySecretRef:
-        name: letsencrypt-staging-issuer-account-key
-        # Add a single challenge solver, HTTP01 using nginx
-        solvers:
-        - http01:
-            ingress:
-                ingressClassName: nginx
+  acme:
+    # Email address used for ACME registration
+    email: admin@example.org
+    # The ACME server URL
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+    name: letsencrypt-staging-issuer-account-key
+    # Add a single challenge solver, HTTP01 using nginx
+    solvers:
+      - http01:
+          ingress:
+            ingressClassName: nginx
 ```
 
 Here we specify that we’d like to create a ClusterIssuer called `letsencrypt-staging`, and use the Let’s Encrypt staging server. We’ll later use the production server to roll out our certificates, but the production server rate-limits requests made against it, so for testing purposes we should use the staging URL.
@@ -628,10 +631,10 @@ To request TLS signed certificates we annotations to our Ingress resources and c
 
 ```yaml
 annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-staging
+  cert-manager.io/cluster-issuer: letsencrypt-staging
 ```
 
-Ingress-shim  will ensure a Certificate resource with the name provided in the `tls.secretName` field and configured as described on the Ingress exists in the Ingress's namespace.
+Ingress-shim will ensure a Certificate resource with the name provided in the `tls.secretName` field and configured as described on the Ingress exists in the Ingress's namespace.
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -693,7 +696,6 @@ As we transition from testing with the staging server to the production environm
 - [Annotated Ingress resource](https://cert-manager.io/docs/usage/ingress/)
 - [How to Set Up an Nginx Ingress with Cert-Manager on DigitalOcean Kubernetes](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nginx-ingress-with-cert-manager-on-digitalocean-kubernetes)
 
-
 ### Securing Kubernetes Services with Ingress-Nginx Controller and Basic Authentication
 
 After setting up HTTPS for our Kubernetes Services it is file to use Basic Authentication to control access to them. I order to set up Basic Authentication we will do the following steps:
@@ -712,13 +714,13 @@ For the htpasswd file file, we nedd a username and a password. We generate them 
 apiVersion: v1
 kind: Secret
 metadata:
-    name: basic-auth-generated-secret
-    annotations:
-        argocd.argoproj.io/sync-options: "Delete=false"
+  name: basic-auth-generated-secret
+  annotations:
+    argocd.argoproj.io/sync-options: "Delete=false"
 type: Opaque
 data:
-    username: {{ printf "%s-%s" "u" (randAlphaNum 16) | b64enc | quote }}
-    password: {{ printf "%s-%s" "p" (randAlphaNum 32) | b64enc | quote }}
+  username: { { printf "%s-%s" "u" (randAlphaNum 16) | b64enc | quote } }
+  password: { { printf "%s-%s" "p" (randAlphaNum 32) | b64enc | quote } }
 ```
 
 When using argocd, each time, arrgocd syncs the status, new username and passwords are generated.
@@ -745,7 +747,7 @@ We do not want to leak the username in this public repo, so we create a sealed s
 
 ```sh
 kubectl create secret generic basic-auth --from-file=auth -o yaml --dry-run=client | kubeseal  --scope cluster-wide -o yaml > basic-auth-sealed-secret.yaml
- ```
+```
 
 And update our repo:
 
@@ -767,12 +769,12 @@ kind: Ingress
 metadata:
 name: ingress-with-auth
 annotations:
-    # type of authentication
-    nginx.ingress.kubernetes.io/auth-type: basic
-    # name of the secret that contains the user/password definitions
-    nginx.ingress.kubernetes.io/auth-secret: basic-auth
-    # message to display with an appropriate context why the authentication is required
-    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+  # type of authentication
+  nginx.ingress.kubernetes.io/auth-type: basic
+  # name of the secret that contains the user/password definitions
+  nginx.ingress.kubernetes.io/auth-secret: basic-auth
+  # message to display with an appropriate context why the authentication is required
+  nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
 ```
 
 #### Use curl to confirm authorization is required by the ingress
@@ -928,11 +930,13 @@ echo password: $(kubectl get secret basic-auth-input -n victoria-logs -o jsonpat
 After you log in enter a log query e.q. `_time:5m` and press the `Execute Query` button.
 
 There are three modes of displaying query results:
+
 - Group - results are displayed as a table with rows grouped by stream and fields for filtering.
 - Table - displays query results as a table.
 - JSON - displays raw JSON response from HTTP API.
 
 This is the first version that has minimal functionality. It comes with the following limitations:
+
 - The number of query results is always limited to 1000 lines. Iteratively add more specific filters to the query in order to get full response with less than 1000 lines.
 - Queries are always executed against tenant 0.
 
@@ -949,7 +953,7 @@ See also:
 VictoriaLogs integrates well with `curl` and other command-line tools during querying because of the following features:
 
 - VictoriaLogs sends the matching log entries to the response stream as soon as they are found.
-  This allows forwarding the response stream to arbitrary [Unix pipes](https://en.wikipedia.org/wiki/Pipeline_(Unix)).
+  This allows forwarding the response stream to arbitrary [Unix pipes](<https://en.wikipedia.org/wiki/Pipeline_(Unix)>).
 - VictoriaLogs automatically adjusts query execution speed to the speed of the client, which reads the response stream.
   For example, if the response stream is piped to `less` command, then the query is suspended
   until the `less` command reads the next block from the response stream.
@@ -1057,7 +1061,6 @@ See also:
 - [Key concepts](https://docs.victoriametrics.com/VictoriaLogs/keyConcepts.html).
 - [LogsQL docs](https://docs.victoriametrics.com/VictoriaLogs/LogsQL.html).
 
-
 ### How to disable DEV dsf-bpe on CODEX cluster
 
 - checkout the [num-helm-charts](https://github.com/NUM-Forschungsdatenplattform/num-helm-charts) repository
@@ -1087,6 +1090,7 @@ TEST SUITE: None
 ### How to test DEV fhir-bridge on CODEX cluster
 
 To test a fhir-bridge we do the following steps:
+
 - count COMPOSITIONs in ehrbase
 - add one Observation to fhir-bridge
 - count COMPOSITIONs in ehrbase
@@ -1099,6 +1103,7 @@ If you like `Postman`, please use this [config](https://github.com/NUM-Forschung
 - use `kubectl` or `k9s` to port-forward the ehrbase HTTP port to `localhost:8080`
 - get username and password for basic auth from the [deployment values in num-helm-charts](https://github.com/NUM-Forschungsdatenplattform/num-helm-charts/blob/main/deployment-values/central-transactional-repository/development-values.yaml) and export them to your ENV like `export USERNAME='karl'` and `export PASSWORD='leiser'`
 - use the this `curl` command:
+
 ```
 curl -s \
     -XPOST \
@@ -1113,6 +1118,7 @@ curl -s \
 
 - use `kubectl` or `k9s` to port-forward the ehrbase HTTP port to `localhost:8888`.
 - use the this `curl` command:
+
 ```
 curl -s \
     -XPOST \
@@ -1121,11 +1127,12 @@ curl -s \
     http://localhost:8888/fhir-bridge/fhir/Observation \
     | jq .status
 ```
+
 The curl output should be `"final"`.
 
 ### How to dump dev keycloak db on CODEX cluster
 
-Describe the pod `num-keycloak-0` in  `central-research-repository-development` namespace.
+Describe the pod `num-keycloak-0` in `central-research-repository-development` namespace.
 In the env-vars for the keycloak container you will find something like `KC_DB_URL_HOST: acid-keycloak-development.development-postgres-cluster`.
 So the database service is called `acid-keycloak-development` in the `development-postgres-cluster` namespace.
 Exec a shell for the pod `acid-keycloak-development-0` the run the commands
@@ -1179,9 +1186,9 @@ psql -d keycloak -f keycloak_dump.sql
 
 ```yaml
 developEnv:
-    enabled: true
-    namespace: develop
-    helmValueFile: deployment-values/central-research-repository/develop-values.yaml
+  enabled: true
+  namespace: develop
+  helmValueFile: deployment-values/central-research-repository/develop-values.yaml
 ```
 
 - wait, until argo has deployed the `develop` environment
@@ -1228,20 +1235,20 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org
-    http:
-      paths:
-      - backend:
-          service:
-            name: web
-            port:
-              number: 8080
-        path: /
-        pathType: Prefix
+    - host: dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org
+      http:
+        paths:
+          - backend:
+              service:
+                name: web
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
   tls:
-  - hosts:
-    - dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org
-    secretName: dsf-fhir-certificate
+    - hosts:
+        - dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org
+      secretName: dsf-fhir-certificate
 ```
 
 ### How to prepare certs for DSF
@@ -1264,7 +1271,7 @@ See: https://dsf.dev/stable/maintain/install.html#dsf-fhir-server
 
     kubectl get secret dsf-bpe-certificate -o jsonpath='{.data.tls\.key}' | base64 -d > client_certificate_private_key.pem
 
-####  Get the SHA-512 Hash (lowercase hex) of your client certificate (Certificate B)
+#### Get the SHA-512 Hash (lowercase hex) of your client certificate (Certificate B)
 
 Copy the first cert to `client_certificate-1.pem`.
 
@@ -2248,9 +2255,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:45.037+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -2284,10 +2289,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://dizdsftest.med.uni-giessen.de/fhir"
       },
       "search": {
@@ -2302,9 +2304,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:39.431+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -2338,10 +2338,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://medic-dsf-test.mh-hannover.de/fhir"
       },
       "search": {
@@ -2356,9 +2353,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:37.647+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -2392,10 +2387,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://nth-test.gecko.hs-heilbronn.de/fhir"
       },
       "search": {
@@ -2410,9 +2402,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:38.725+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -2446,10 +2436,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://test-dsf-fhir.med.uni-rostock.de/fhir"
       },
       "search": {
@@ -2464,9 +2451,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:40.131+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -2500,10 +2485,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://highmed-dsf-fhir-test.uk-augsburg.science/fhir"
       },
       "search": {
@@ -2518,9 +2500,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:36.697+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -2554,10 +2534,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://diz-test.gecko.hs-heilbronn.de/fhir"
       },
       "search": {
@@ -2572,9 +2549,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:48.186+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -2608,10 +2583,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://dsf-qs.diz.uk-erlangen.de/fhir"
       },
       "search": {
@@ -2626,9 +2598,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:43.919+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -2662,10 +2632,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://dsf-fhir-ext-test.medicsh.de/fhir"
       },
       "search": {
@@ -2680,9 +2647,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:46.641+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -2716,10 +2681,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://num-codex-fhir-test.medizin.uni-leipzig.de/fhir"
       },
       "search": {
@@ -2734,9 +2696,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:36.067+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -2770,10 +2730,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://dsf.diz-1.test.forschen-fuer-gesundheit.de/fhir"
       },
       "search": {
@@ -2788,9 +2745,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:42.495+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -2824,10 +2779,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://fhir-dsf-medic-test.med.uni-heidelberg.de/fhir"
       },
       "search": {
@@ -2842,9 +2794,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:36.381+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -2878,10 +2828,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://dsf.diz-2.test.forschen-fuer-gesundheit.de/fhir"
       },
       "search": {
@@ -2896,9 +2843,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:43.548+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -2932,10 +2877,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://diz.uks.eu/dsf/test/fhir"
       },
       "search": {
@@ -2950,9 +2892,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:45.858+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -2986,10 +2926,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://dsf-test.uniklinik-freiburg.de/fhir"
       },
       "search": {
@@ -3004,9 +2941,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:35.140+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -3040,10 +2975,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://dsf-fhir-dev.charite.de/fhir"
       },
       "search": {
@@ -3058,9 +2990,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:40.456+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -3094,10 +3024,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://test-dsf-fhir.diz.uk-essen.de/fhir"
       },
       "search": {
@@ -3112,9 +3039,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:44.636+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -3148,10 +3073,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://dsf-test-dbmi.umm.uni-heidelberg.de/fhir"
       },
       "search": {
@@ -3166,9 +3088,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:39.100+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -3202,10 +3122,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://fdpg-dmz-t.medizin.uni-tuebingen.de/fhir"
       },
       "search": {
@@ -3220,9 +3137,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:47.019+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -3256,10 +3171,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://dsfm-test.imbei.de/fhir"
       },
       "search": {
@@ -3274,9 +3186,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
         "meta": {
           "versionId": "2",
           "lastUpdated": "2024-06-12T13:38:38.041+02:00",
-          "profile": [
-            "http://dsf.dev/fhir/StructureDefinition/endpoint"
-          ],
+          "profile": ["http://dsf.dev/fhir/StructureDefinition/endpoint"],
           "tag": [
             {
               "system": "http://dsf.dev/fhir/CodeSystem/read-access-tag",
@@ -3310,10 +3220,7 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
             ]
           }
         ],
-        "payloadMimeType": [
-          "application/fhir+json",
-          "application/fhir+xml"
-        ],
+        "payloadMimeType": ["application/fhir+json", "application/fhir+xml"],
         "address": "https://test-dsf.kgu.de/fhir"
       },
       "search": {
@@ -3322,7 +3229,6 @@ curl -s --cert client_certificate.pem --key client_certificate_private_key.pem  
     }
   ]
 }
-
 ```
 
 ### How to prepare SSH key for codex-processes-ap1 codex-process-data-transfer process plugin
@@ -3387,9 +3293,9 @@ volumeMounts:
 wget https://raw.githubusercontent.com/num-codex/codex-processes-ap1/main/codex-process-data-transfer/src/test/resources/fhir/Bundle/dic_fhir_store_demo_risk_principe.json
 ```
 
- - port foreward to localhost:8080
+- port foreward to localhost:8080
 
- - post to the FHIR server
+- post to the FHIR server
 
 ```sh
 curl \
@@ -3410,65 +3316,101 @@ curl \
   },
   "type": "searchset",
   "total": 1,
-  "link": [ {
-    "relation": "self",
-    "url": "http://localhost:8080/fhir/Patient?_pretty=true"
-  } ],
-  "entry": [ {
-    "fullUrl": "http://localhost:8080/fhir/Patient/1",
-    "resource": {
-      "resourceType": "Patient",
-      "id": "1",
-      "meta": {
-        "versionId": "6",
-        "lastUpdated": "2024-09-02T08:10:06.995+00:00",
-        "source": "#5NzeIQNOkqWHraNA",
-        "profile": [ "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert" ]
-      },
-      "identifier": [ {
-        "type": {
-          "coding": [ {
-            "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
-            "code": "PSEUDED"
-          } ]
-        },
-        "system": "urn:ietf:rfc:4122",
-        "value": "07f602e0-579e-4fe3-95af-381728b00015"
-      }, {
-        "type": {
-          "coding": [ {
-            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
-            "code": "ANON"
-          } ]
-        },
-        "system": "http://www.netzwerk-universitaetsmedizin.de/sid/dic-pseudonym",
-        "value": "dic_crr_test/dic_E6AXT"
-      } ],
-      "gender": "other",
-      "_gender": {
-        "extension": [ {
-          "url": "http://fhir.de/StructureDefinition/gender-amtlich-de",
-          "valueCoding": {
-            "system": "http://fhir.de/CodeSystem/gender-amtlich-de",
-            "code": "D",
-            "display": "divers"
-          }
-        } ]
-      },
-      "birthDate": "2022-12-01",
-      "managingOrganization": {
-        "identifier": {
-          "system": "https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier",
-          "value": "MHH"
-        }
-      }
-    },
-    "search": {
-      "mode": "match"
+  "link": [
+    {
+      "relation": "self",
+      "url": "http://localhost:8080/fhir/Patient?_pretty=true"
     }
-  } ]
+  ],
+  "entry": [
+    {
+      "fullUrl": "http://localhost:8080/fhir/Patient/1",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "1",
+        "meta": {
+          "versionId": "6",
+          "lastUpdated": "2024-09-02T08:10:06.995+00:00",
+          "source": "#5NzeIQNOkqWHraNA",
+          "profile": [
+            "https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert"
+          ]
+        },
+        "identifier": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+                  "code": "PSEUDED"
+                }
+              ]
+            },
+            "system": "urn:ietf:rfc:4122",
+            "value": "07f602e0-579e-4fe3-95af-381728b00015"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "ANON"
+                }
+              ]
+            },
+            "system": "http://www.netzwerk-universitaetsmedizin.de/sid/dic-pseudonym",
+            "value": "dic_crr_test/dic_E6AXT"
+          }
+        ],
+        "gender": "other",
+        "_gender": {
+          "extension": [
+            {
+              "url": "http://fhir.de/StructureDefinition/gender-amtlich-de",
+              "valueCoding": {
+                "system": "http://fhir.de/CodeSystem/gender-amtlich-de",
+                "code": "D",
+                "display": "divers"
+              }
+            }
+          ]
+        },
+        "birthDate": "2022-12-01",
+        "managingOrganization": {
+          "identifier": {
+            "system": "https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier",
+            "value": "MHH"
+          }
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    }
+  ]
 }
 ```
+
+### How to renew CRR Client Certificate
+
+The client certificate is the DSF BPE certificate.
+It is stored in the `dsf-bpe-certificate` k8s secret.
+The secret has the data fields `tls.crt` and `tls.key`.
+For the stages `pre-pro` and `production`, the current certificates are valid until `2025-12-05`.
+the renewal time is `2025-08-05`.
+
+After the content of the `dsf-bpe-certificate` changed, the deployment values for the `dsf-fhir` need the new `thumbprint` for the certificate.
+
+You can get the new `thumbprint` value from the dsf-fhir log file.
+
+#### Add Certificate to https://allowlist-test.gecko.hs-heilbronn.de/
+
+After login to https://allowlist-test.gecko.hs-heilbronn.de/, click on `Certificates` and `Add Organization Certificate`. Add the contents of the `tls.crt` in to the `Certificate PEM` input field and click on `Save`.
+Then click on `Send Request for Approval`.
+
+#### Install new Allowlist
+
+When your request was approved, follow the instuctions after ckicking on the `Download Allow List` button.
 
 ## POC
 
@@ -3492,4 +3434,3 @@ Contributions are welcome! If you find issues, have suggestions, or want to cont
 This project is licensed under the [Apache License, Version 2.0](LICENSE).
 
 Happy NUM operations!
-

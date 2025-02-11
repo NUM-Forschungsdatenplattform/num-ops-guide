@@ -14,7 +14,7 @@ spec:
         valueFiles:
           - $values/develop/ehrbase.yaml
     - ref: values
-      repoURL: https://github.com/NUM-Forschungsdatenplattform/helm-values/
+      repoURL: git@github.com:NUM-Forschungsdatenplattform/helm-values.git
       targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc

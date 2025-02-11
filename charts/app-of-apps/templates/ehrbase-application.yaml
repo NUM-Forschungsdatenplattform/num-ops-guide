@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main//argoproj.io/application_v1alpha1.json
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: homepage
+  namespace: {{ .Values.global.argoNamespace }}
+spec:
+  project: {{ .Values.projects.RDPdevelop.name }}
+  sources:
+    - repoURL: https://github.com/konateq/ehrbase-helm-chart
+      chart: ehrbase
+      targetRevision: 1.2.0
+      helm:
+        valueFiles:
+          - $values/values/develop/ehrbase.yaml
+    - ref: values
+      repoURL: {{ .Values.global.repoURL }}
+      targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: develop
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: homepage
+  name: ehrbase
   namespace: {{ .Values.global.argoNamespace }}
 spec:
   project: {{ .Values.projects.RDPdevelop.name }}

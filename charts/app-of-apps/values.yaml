@@ -16,7 +16,7 @@ projects:
     name: environments
   RDPdevelop:
     description: NUM RDP Develop Environment
-    name: RDPdevelop
+    name: rdp-develop
 
 applications:
   developEnv:

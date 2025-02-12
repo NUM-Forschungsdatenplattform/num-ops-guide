@@ -9,7 +9,7 @@ spec:
   sources:
     - repoURL: https://num-forschungsdatenplattform.github.io/ehrbase-helm-chart/      
       chart: ehrbase
-      targetRevision: 1.2.0
+      targetRevision: 1.2.1
       helm:
         valueFiles:
           - $values/develop/ehrbase.yaml

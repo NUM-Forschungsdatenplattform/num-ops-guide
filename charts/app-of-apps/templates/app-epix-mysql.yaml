@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: epix-mysql
+  namespace: {{ .Values.global.argoNamespace }}
+spec:
+  project: {{ .Values.projects.RDPdevelop.name }}
+  source:
+    chart: mysql
+    repoURL: registry-1.docker.io/bitnamicharts
+    targetRevision: 12.2.2
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: epix
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

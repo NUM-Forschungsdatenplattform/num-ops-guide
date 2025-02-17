@@ -3391,6 +3391,13 @@ curl \
 }
 ```
 
+### Ho to refresh `develop` from cli
+
+```bash
+argocd login https://argocd.dev.num-rdp.de/
+argocd app get argo/develop --refresh
+```
+
 ### How to renew CRR Client Certificate
 
 The client certificate is the DSF BPE certificate.

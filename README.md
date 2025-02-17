@@ -3394,7 +3394,7 @@ curl \
 ### Ho to refresh `develop` from cli
 
 ```bash
-argocd login https://argocd.dev.num-rdp.de/
+argocd login argocd.dev.num-rdp.de
 argocd app get argo/develop --refresh
 ```
 

@@ -12,6 +12,8 @@ spec:
     helm:
       valuesObject:
         initdbScriptsConfigMap: epix-init-db-config-map
+        auth:
+          authenticationPolicy: MEDIUM
         primary:
           livenessProbe:
             enabled: false

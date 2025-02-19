@@ -9,9 +9,9 @@ spec:
     chart: mysql
     repoURL: registry-1.docker.io/bitnamicharts
     targetRevision: 11.1.20
-  #   helm:
-  #     valuesObject:
-  #       initdbScriptsConfigMap: epix-init-db-config-map
+    helm:
+      valuesObject:
+        initdbScriptsConfigMap: epix-init-db-config-map
   #       primary:
   #         livenessProbe:
   #           enabled: false

@@ -19,7 +19,7 @@ spec:
   #           enabled: false
   #         startupProbe:
   #           enabled: false
-  # destination:
+  destination:
     server: "https://kubernetes.default.svc"
     namespace: epix
   syncPolicy:

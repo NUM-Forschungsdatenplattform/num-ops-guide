@@ -9,17 +9,17 @@ spec:
     chart: mysql
     repoURL: registry-1.docker.io/bitnamicharts
     targetRevision: 12.2.2
-    helm:
-      valuesObject:
-        initdbScriptsConfigMap: epix-init-db-config-map
-        primary:
-          livenessProbe:
-            enabled: false
-          readinessProbe:
-            enabled: false
-          startupProbe:
-            enabled: false
-  destination:
+  #   helm:
+  #     valuesObject:
+  #       initdbScriptsConfigMap: epix-init-db-config-map
+  #       primary:
+  #         livenessProbe:
+  #           enabled: false
+  #         readinessProbe:
+  #           enabled: false
+  #         startupProbe:
+  #           enabled: false
+  # destination:
     server: "https://kubernetes.default.svc"
     namespace: epix
   syncPolicy:

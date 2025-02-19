@@ -8,7 +8,7 @@ spec:
   source:
     chart: mysql
     repoURL: registry-1.docker.io/bitnamicharts
-    targetRevision: 12.2.2
+    targetRevision: 11.1.20
   #   helm:
   #     valuesObject:
   #       initdbScriptsConfigMap: epix-init-db-config-map

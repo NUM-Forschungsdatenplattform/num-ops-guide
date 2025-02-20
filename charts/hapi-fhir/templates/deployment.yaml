@@ -17,3 +17,25 @@ spec:
       containers:
       - image: hapiproject/hapi:latest
         name: hapi-fhir
+        env:
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            secretKeyRef:
+              key: jdbc-uri
+              name: {{ .Values.appConfig.postgresqlDatabaseSecretName }}
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: {{ .Values.appConfig.postgresqlDatabaseSecretName }}
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: {{ .Values.appConfig.postgresqlDatabaseSecretName }}
+        - name: SPRING_DATASOURCE_DRIVERCLASSNAME
+          value: org.postgresql.Driver
+        - name: spring.jpa.properties.hibernate.dialect
+          value: ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgres94Dialect
+        - name: HAPI_FHIR_USE_APACHE_ADDRESS_STRATEGY
+          value: "true"

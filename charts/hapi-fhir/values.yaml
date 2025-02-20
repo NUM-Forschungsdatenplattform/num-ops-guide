@@ -1,0 +1,4 @@
+appConfig:
+  postgresqlDatabase: hapifhir
+  postgresqlDatabaseSecretName: hapifhir-postgres-app
+

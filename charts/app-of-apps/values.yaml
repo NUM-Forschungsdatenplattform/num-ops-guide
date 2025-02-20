@@ -17,6 +17,9 @@ projects:
   RDPdevelop:
     description: NUM RDP Develop Environment
     name: rdp-develop
+  rdpFhirBridgeDev:
+    description: NUM RDP Fhir-Bridge Develop Environment
+    name: rdp-fhir-bridge-dev
 
 applications:
   developEnv:

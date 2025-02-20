@@ -17,6 +17,13 @@ spec:
       containers:
       - image: hapiproject/hapi:latest
         name: hapifhir
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        - name: metrics
+          containerPort: 8081
+          protocol: TCP
         env:
         - name: SPRING_DATASOURCE_URL
           valueFrom:

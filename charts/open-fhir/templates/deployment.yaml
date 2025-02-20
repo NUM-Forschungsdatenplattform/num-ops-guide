@@ -20,7 +20,7 @@ spec:
         - image: ghcr.io/num-forschungsdatenplattform/openfhir:latest
           name: openfhir
           ports:
-            - containerPort: 8080
+            - containerPort: 8090
           env:
             - name: DB_TYPE
               value: postgres

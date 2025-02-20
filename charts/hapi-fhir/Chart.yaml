@@ -1,0 +1,5 @@
+---
+apiVersion: v2
+description: Chart for hapi fhir server
+name: hapi-fhir
+version: 1.0.0

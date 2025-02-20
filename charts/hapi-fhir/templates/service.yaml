@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hapifhir
+    argocd.argoproj.io/instance: hapi-fhir
+  name: hapifhir
+spec:
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: 8081
+  - name: metrics
+    port: 8081
+    protocol: TCP
+    targetPort: 8081
+  selector:
+    app: hapifhir

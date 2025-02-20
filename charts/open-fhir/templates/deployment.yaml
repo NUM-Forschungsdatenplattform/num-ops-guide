@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: openfhir
+  name: openfhir
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openfhir
+  template:
+    metadata:
+      labels:
+        app: openfhir
+    spec:
+      imagePullSecrets:
+        - name: ghcr-login-secret
+      containers:
+        - image: ghcr.io/num-forschungsdatenplattform/openfhir:latest
+          name: openfhir
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_TYPE
+              value: postgres
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                secretKeyRef:
+                  key: jdbc-uri
+                  name: {{ .Values.appConfig.postgresqlDatabaseSecretName }}
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: {{ .Values.appConfig.postgresqlDatabaseSecretName }}
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: {{ .Values.appConfig.postgresqlDatabaseSecretName }}

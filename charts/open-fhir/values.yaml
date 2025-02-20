@@ -1,3 +1,4 @@
 appConfig:
   postgresqlDatabase: openfhir
+  postgresqlDatabaseSecretName: openfhir-postgres-app
 

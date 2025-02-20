@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: hapi-fhir
-  name: hapi-fhir
+    app: hapifhir
+  name: hapifhir
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hapi-fhir
+      app: hapifhir
   template:
     metadata:
       labels:
-        app: hapi-fhir
+        app: hapifhir
     spec:
       containers:
       - image: hapiproject/hapi:latest
-        name: hapi-fhir
+        name: hapifhir
         env:
         - name: SPRING_DATASOURCE_URL
           valueFrom:

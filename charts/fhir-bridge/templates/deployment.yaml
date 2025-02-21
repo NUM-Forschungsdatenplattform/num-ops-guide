@@ -2,23 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: openfhir
-  name: openfhir
+    app: fhirbridge
+  name: fhirbridge
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: openfhir
+      app: fhirbridge
   template:
     metadata:
       labels:
-        app: openfhir
+        app: fhirbridge
     spec:
       imagePullSecrets:
         - name: ghcr-login-secret
       containers:
-        - image: ghcr.io/num-forschungsdatenplattform/openfhir:latest
-          name: openfhir
+        - image: ghcr.io/num-forschungsdatenplattform/fhirbridge:latest
+          name: fhirbridge
           ports:
             - containerPort: 8090
           env:

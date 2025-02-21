@@ -1,0 +1,4 @@
+apiVersion: v2
+description: Chart for fhir-bridge
+name: fhir-bridge
+version: 1.0.0

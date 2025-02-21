@@ -1,0 +1,4 @@
+appConfig:
+  postgresqlDatabase: fhirbridge
+  postgresqlDatabaseSecretName: fhirbridge-postgres-app
+

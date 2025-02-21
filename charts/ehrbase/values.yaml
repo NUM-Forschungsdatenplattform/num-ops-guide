@@ -1,4 +1,7 @@
 appConfig:
   postgresqlDatabase: ehrbase
   postgresqlDatabaseSecretName: ehrbase-postgres-app
+  databaseServiceName: ehrbase-postgres-rw
+  dbPort: 5432
+  loggingPluginVersion: develop
 

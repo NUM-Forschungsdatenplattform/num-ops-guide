@@ -2,19 +2,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argo-cd
+  name: ehrbase
   namespace: {{ .Values.global.argoNamespace }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: {{ .Values.projects.devCluster.name }}
+  project: {{ .Values.projects.rdpFhirBridgeDev.name }}
   source:
     repoURL: {{ .Values.global.repoURL }}
-    path: charts/argo-cd
+    path: charts/ehrbase
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
-    namespace: {{ .Values.global.argoNamespace }}
+    namespace: {{ .Values.projects.rdpFhirBridgeDev.name }}
   syncPolicy:
     automated:
       selfHeal: true

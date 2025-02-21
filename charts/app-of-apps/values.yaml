@@ -14,12 +14,12 @@ projects:
   devEnv:
     description: NUM RDP Dev Environments
     name: environments
-  RDPdevelop:
-    description: NUM RDP Develop Environment
-    name: rdp-develop
-  rdpFhirBridgeDev:
+  ePIX:
+    description: NUM RDP E-PIX
+    name: rdp-dev-epix
+  rdpDevFhirbridge:
     description: NUM RDP Fhir-Bridge Develop Environment
-    name: rdp-fhir-bridge-dev
+    name: rdp-dev-fhirbridge
 
 applications:
   developEnv:

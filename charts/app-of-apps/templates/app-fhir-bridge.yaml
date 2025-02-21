@@ -7,14 +7,14 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: {{ .Values.projects.rdpFhirBridgeDev.name }}
+  project: {{ .Values.projects.rdpDevFhirbridge.name }}
   source:
     repoURL: {{ .Values.global.repoURL }}
     path: charts/fhir-bridge
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
-    namespace: {{ .Values.projects.rdpFhirBridgeDev.name }}
+    namespace: {{ .Values.projects.rdpDevFhirbridge.name }}
   syncPolicy:
     automated:
       selfHeal: true

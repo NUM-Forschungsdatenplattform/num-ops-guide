@@ -5,24 +5,14 @@ metadata:
   name: epix-mysql
   namespace: {{ .Values.global.argoNamespace }}
 spec:
-  project: {{ .Values.projects.RDPdevelop.name }}
+  project: {{ .Values.projects.ePIX.name }}
   source:
     chart: mysql
     repoURL: registry-1.docker.io/bitnamicharts
     targetRevision: 11.1.20
-    helm:
-  #    valuesObject:
-  #      initdbScriptsConfigMap: epix-init-db-config-map
-  #       primary:
-  #         livenessProbe:
-  #           enabled: false
-  #         readinessProbe:
-  #           enabled: false
-  #         startupProbe:
-  #           enabled: false
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: epix
+    namespace: {{ .Values.projects.ePIX.name }}
   syncPolicy:
     automated:
       selfHeal: true

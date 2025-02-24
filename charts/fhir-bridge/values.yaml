@@ -3,4 +3,4 @@ appConfig:
   postgresqlDatabaseSecretName: fhirbridge-postgres-app
 
 
-openEhrURL: http://ehrbase:8080/
+openEhrURL: http://ehrbase:8080/ehrbase

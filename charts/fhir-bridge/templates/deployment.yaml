@@ -20,7 +20,7 @@ spec:
         - image: ghcr.io/num-forschungsdatenplattform/fhirbridge:latest
           name: fhirbridge
           ports:
-            - containerPort: 8090
+            - containerPort: 8888
           env:
             - name: DB_TYPE
               value: postgres

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: fhirbridge
+    argocd.argoproj.io/instance: fhir-bridge
+  name: fhirbridge
+spec:
+  ports:
+  - port: 8090
+    protocol: TCP
+    targetPort: 8090
+    name: http
+  selector:
+    app: fhirbridge

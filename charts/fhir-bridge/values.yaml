@@ -4,3 +4,5 @@ appConfig:
 
 
 openEhrURL: http://ehrbase:8080/ehrbase/
+openFhirURL: http://ehrbase:8080
+hapiFhirURL: http://hapifhir:8080/fhir

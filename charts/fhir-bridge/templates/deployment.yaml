@@ -41,3 +41,8 @@ spec:
                   name: {{ .Values.appConfig.postgresqlDatabaseSecretName }}
             - name: FHIR_BRIDGE_OPENEHR_URL
               value: {{ .Values.openEhrURL }}
+            - name: OPENFHIR_SERVER_URL
+              value: {{ .Values.openFhirURL }}
+            - name: SERVER_URL
+              value: {{ .Values.hapiFihrURL }}
+              

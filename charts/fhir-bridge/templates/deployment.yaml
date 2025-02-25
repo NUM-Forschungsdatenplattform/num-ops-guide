@@ -44,5 +44,5 @@ spec:
             - name: OPENFHIR_SERVER_URL
               value: {{ .Values.openFhirURL }}
             - name: SERVER_URL
-              value: {{ .Values.hapiFihrURL }}
+              value: {{ .Values.hapiFhirURL }}
               

@@ -1,0 +1,905 @@
+<Bundle xmlns="http://hl7.org/fhir">
+    <type value="searchset"></type>
+    <timestamp value="2024-07-10T13:00:39.974+02:00"></timestamp>
+    <total value="39"></total>
+    <link>
+        <relation value="self"></relation>
+        <url
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint?_page=1&amp;_count=20"></url>
+    </link>
+    <link>
+        <relation value="first"></relation>
+        <url
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint?_page=1&amp;_count=20"></url>
+    </link>
+    <link>
+        <relation value="next"></relation>
+        <url
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint?_page=2&amp;_count=20"></url>
+    </link>
+    <link>
+        <relation value="last"></relation>
+        <url
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint?_page=2&amp;_count=20"></url>
+    </link>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/095f0e5f-6a55-494e-80bf-3af13c024dcd"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="095f0e5f-6a55-494e-80bf-3af13c024dcd"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:45.037+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="dizdsftest.med.uni-giessen.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for dizdsftest.med.uni-giessen.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/4691c447-c7be-4695-b5ae-d47cf25b841d"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://dizdsftest.med.uni-giessen.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/151ed028-bf74-4918-96a1-3ae03f1f9189"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="151ed028-bf74-4918-96a1-3ae03f1f9189"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:39.431+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="medic-dsf-test.mh-hannover.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for medic-dsf-test.mh-hannover.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/64ae6779-bd15-445c-9ec2-de06ea8e69c6"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://medic-dsf-test.mh-hannover.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/1955fcaf-ab47-44e1-93cb-abff6fc21f65"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="1955fcaf-ab47-44e1-93cb-abff6fc21f65"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:37.647+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="nth-test.gecko.hs-heilbronn.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for nth-test.gecko.hs-heilbronn.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/9b37ef33-e566-489a-96a0-0ae72ee62920"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://nth-test.gecko.hs-heilbronn.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/239004b4-0dd5-4047-a500-83df955aa81e"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="239004b4-0dd5-4047-a500-83df955aa81e"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:38.725+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="test-dsf-fhir.med.uni-rostock.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for test-dsf-fhir.med.uni-rostock.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/09c41f8c-830c-45e4-a0e4-7a5e7210cc30"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://test-dsf-fhir.med.uni-rostock.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/2c4d4947-751b-44ce-b64e-e1a95f1c0017"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="2c4d4947-751b-44ce-b64e-e1a95f1c0017"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:40.131+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="highmed-dsf-fhir-test.uk-augsburg.science"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for highmed-dsf-fhir-test.uk-augsburg.science"></name>
+                <managingOrganization>
+                    <reference value="Organization/0e895fdd-277a-4aa5-a600-9029fdb23c3a"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://highmed-dsf-fhir-test.uk-augsburg.science/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/2d87e764-47b4-4776-8053-1d2c4912ced3"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="2d87e764-47b4-4776-8053-1d2c4912ced3"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:36.697+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="diz-test.gecko.hs-heilbronn.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for diz-test.gecko.hs-heilbronn.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/89091d0d-a03f-403e-9dbd-5325e58edb62"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://diz-test.gecko.hs-heilbronn.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/39d1284e-4026-450d-9dd4-b8338def51ed"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="39d1284e-4026-450d-9dd4-b8338def51ed"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:48.186+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="dsf-qs.diz.uk-erlangen.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for dsf-qs.diz.uk-erlangen.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/06aa8077-a8de-47f5-8db1-de9add73df0a"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://dsf-qs.diz.uk-erlangen.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/466a6342-606e-45c3-a02e-af3827168087"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="466a6342-606e-45c3-a02e-af3827168087"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:43.919+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="dsf-fhir-ext-test.medicsh.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for dsf-fhir-ext-test.medicsh.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/73acef90-cd10-45e7-b90a-5d6f68cffde0"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://dsf-fhir-ext-test.medicsh.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/50b59074-3db2-4380-a377-ff63b62b0d1a"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="50b59074-3db2-4380-a377-ff63b62b0d1a"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:46.641+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="num-codex-fhir-test.medizin.uni-leipzig.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for num-codex-fhir-test.medizin.uni-leipzig.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/3d49410d-fd11-49b1-b69d-112dbecb82fb"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://num-codex-fhir-test.medizin.uni-leipzig.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/50e561c3-d10c-4843-9356-881335cd045d"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="50e561c3-d10c-4843-9356-881335cd045d"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:36.067+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="dsf.diz-1.test.forschen-fuer-gesundheit.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for dsf.diz-1.test.forschen-fuer-gesundheit.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/e12adf4a-01f6-470e-9815-4a680c26133b"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://dsf.diz-1.test.forschen-fuer-gesundheit.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/525a9346-3a1f-4892-b25d-2036389a3726"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="525a9346-3a1f-4892-b25d-2036389a3726"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:42.495+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="fhir-dsf-medic-test.med.uni-heidelberg.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for fhir-dsf-medic-test.med.uni-heidelberg.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/71d7f91f-4712-425c-9b0d-7916295c3675"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://fhir-dsf-medic-test.med.uni-heidelberg.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/5887ecd7-fcf4-49b4-bc8e-1b5646e6ac86"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="5887ecd7-fcf4-49b4-bc8e-1b5646e6ac86"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:36.381+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="dsf.diz-2.test.forschen-fuer-gesundheit.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for dsf.diz-2.test.forschen-fuer-gesundheit.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/34c275fb-cb99-4b4d-9fde-66ae0511f96d"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://dsf.diz-2.test.forschen-fuer-gesundheit.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/697eb014-48da-448c-919a-2eb751327fbc"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="697eb014-48da-448c-919a-2eb751327fbc"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:43.548+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="diz.uks.eu"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for diz.uks.eu"></name>
+                <managingOrganization>
+                    <reference value="Organization/33030f5b-92fc-4913-a038-c10163e25da6"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://diz.uks.eu/dsf/test/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/70a5f123-e40a-4ad0-82c2-fcabddacddb9"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="70a5f123-e40a-4ad0-82c2-fcabddacddb9"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:45.858+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="dsf-test.uniklinik-freiburg.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for dsf-test.uniklinik-freiburg.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/074ae676-fdf5-4861-9299-4a141e9b3d2c"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://dsf-test.uniklinik-freiburg.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/72a17f30-8b48-4a5e-a665-eec85cea4d11"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="72a17f30-8b48-4a5e-a665-eec85cea4d11"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:35.140+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="dsf-fhir-dev.charite.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for dsf-fhir-dev.charite.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/9add30ec-4eae-4ca8-a518-306b3d2ccae3"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://dsf-fhir-dev.charite.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/73efaa9c-be69-411e-9c3e-ec9b5c8d5cb8"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="73efaa9c-be69-411e-9c3e-ec9b5c8d5cb8"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:40.456+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="test-dsf-fhir.diz.uk-essen.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for test-dsf-fhir.diz.uk-essen.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/f15c5d3a-1c63-43e6-9a8f-e91c0bbc1669"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://test-dsf-fhir.diz.uk-essen.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/75de61fb-0ea7-4518-a830-caa0c4e3241a"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="75de61fb-0ea7-4518-a830-caa0c4e3241a"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:44.636+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="dsf-test-dbmi.umm.uni-heidelberg.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for dsf-test-dbmi.umm.uni-heidelberg.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/6eeee03d-78f0-4447-a3f4-a600b2f16f41"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://dsf-test-dbmi.umm.uni-heidelberg.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/786826d5-efd8-46ed-900c-ba172e3cb519"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="786826d5-efd8-46ed-900c-ba172e3cb519"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:39.100+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="fdpg-dmz-t.medizin.uni-tuebingen.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for fdpg-dmz-t.medizin.uni-tuebingen.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/fbe290d0-a0d1-437e-be2e-df2f3c6ab02d"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://fdpg-dmz-t.medizin.uni-tuebingen.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/7c720af5-fdd5-4c96-9353-9a7d65fef3c1"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="7c720af5-fdd5-4c96-9353-9a7d65fef3c1"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:47.019+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="dsfm-test.imbei.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for dsfm-test.imbei.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/7962054a-7b32-4a67-b748-fefd42527285"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://dsfm-test.imbei.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+    <entry>
+        <fullUrl
+            value="https://dsf-fhir.test.rdp-dev.ingress.k8s.highmed.org/fhir/Endpoint/86869393-27e2-454e-ab46-d52c9a13d20a"></fullUrl>
+        <resource>
+            <Endpoint xmlns="http://hl7.org/fhir">
+                <id value="86869393-27e2-454e-ab46-d52c9a13d20a"></id>
+                <meta>
+                    <versionId value="2"></versionId>
+                    <lastUpdated value="2024-06-12T13:38:38.041+02:00"></lastUpdated>
+                    <profile value="http://dsf.dev/fhir/StructureDefinition/endpoint"></profile>
+                    <tag>
+                        <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag"></system>
+                        <code value="ALL"></code>
+                    </tag>
+                </meta>
+                <identifier>
+                    <system value="http://dsf.dev/sid/endpoint-identifier"></system>
+                    <value value="test-dsf.kgu.de"></value>
+                </identifier>
+                <status value="active"></status>
+                <connectionType>
+                    <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"></system>
+                    <code value="hl7-fhir-rest"></code>
+                </connectionType>
+                <name value="DSF Endpoint for test-dsf.kgu.de"></name>
+                <managingOrganization>
+                    <reference value="Organization/bdb50bf0-de4b-44c3-b965-30efc6b53b15"></reference>
+                    <type value="Organization"></type>
+                </managingOrganization>
+                <payloadType>
+                    <coding>
+                        <system value="http://hl7.org/fhir/resource-types"></system>
+                        <code value="Task"></code>
+                    </coding>
+                </payloadType>
+                <payloadMimeType value="application/fhir+json"></payloadMimeType>
+                <payloadMimeType value="application/fhir+xml"></payloadMimeType>
+                <address value="https://test-dsf.kgu.de/fhir"></address>
+            </Endpoint>
+        </resource>
+        <search>
+            <mode value="match"></mode>
+        </search>
+    </entry>
+</Bundle>

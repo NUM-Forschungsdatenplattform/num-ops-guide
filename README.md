@@ -6,8 +6,7 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
 
 1. [Introduction](#introduction)
 1. [Principles](/docs/principles.md)
-1. [Concepts](/docs/concepts.md)
-   - [Environments: development, staging, pre-prod, production](/docs/environments.md)
+1. [Environments: development, staging, pre-prod, production](/docs/environments.md)
 1. [Components](/docs/components.md)
 1. [Getting Started](/docs/getting_started.md)
 1. [DSF Develop](/docs/dsf_develop.md)

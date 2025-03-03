@@ -23,6 +23,8 @@ spec:
           ports:
             - containerPort: 8090
           env:
+            - name: BOOTSTRAP_RECURSIVELY_OPEN_DIRECTORIES
+              value: "true"
             - name: DB_TYPE
               value: postgres
             - name: SPRING_DATASOURCE_URL

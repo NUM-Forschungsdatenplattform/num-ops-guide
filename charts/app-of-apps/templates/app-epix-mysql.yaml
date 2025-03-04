@@ -10,6 +10,9 @@ spec:
     chart: mysql
     repoURL: registry-1.docker.io/bitnamicharts
     targetRevision: 11.1.20
+    helm:
+      values: |
+        initdbScriptsConfigMap: epix-init-db-config-map
   destination:
     server: "https://kubernetes.default.svc"
     namespace: {{ .Values.projects.ePIX.name }}

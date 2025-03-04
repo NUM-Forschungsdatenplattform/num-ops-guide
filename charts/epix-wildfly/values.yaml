@@ -1,0 +1,29 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/num-forschungsdatenplattform/epix-wildfly
+  tag: latest
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: ghcr-login-secret
+
+service:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      name: http
+      targetPort: 8080
+      protocol: TCP
+    - port: 9990
+      name: epix
+      targetPort: 9990
+      protocol: TCP
+
+env:
+  TTP_DB_HOST: epix-mysql
+  TTP_GRAS_DB_HOST: epix-mysql
+  TTP_NOTI_DB_HOST: epix-mysql
+  TTP_EPIX_DB_HOST: epix-mysql
+
+resources: {}

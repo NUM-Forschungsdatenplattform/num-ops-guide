@@ -25,13 +25,13 @@ service:
 
 env:
   TTP_DB_HOST: epix-mysql
-  TTP_DB_PORT: 3306
+  TTP_DB_PORT: "3306"
   TTP_GRAS_DB_HOST: epix-mysql
-  TTP_GRAS_DB_PORT: 3306
+  TTP_GRAS_DB_PORT: "3306"
   TTP_NOTI_DB_HOST: epix-mysql
-  TTP_NOTI_DB_PORT: 3306
+  TTP_NOTI_DB_PORT: "3306"
   TTP_EPIX_DB_HOST: epix-mysql
-  TTP_EPIX_DB_PORT: 3306
+  TTP_EPIX_DB_PORT: "3306"
   TTP_EPIX_DB_NAME: epix
   TTP_EPIX_DB_USER: epix_user
   TTP_EPIX_DB_PASS: epix_password

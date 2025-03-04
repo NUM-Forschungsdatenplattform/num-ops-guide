@@ -1,3 +1,6 @@
+global:
+  env: develop 
+
 replicaCount: 1
 
 image:

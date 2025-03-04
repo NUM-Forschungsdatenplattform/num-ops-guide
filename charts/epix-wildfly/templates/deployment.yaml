@@ -29,7 +29,7 @@ spec:
         env:
         {{- range $key, $value := .Values.env }}
         - name: {{ $key }}
-          value: {{ $value }}
+          value: {{ printf "\"%s\"" $value }}
         {{- end }}
         ports:
         {{- range .Values.service.ports }}

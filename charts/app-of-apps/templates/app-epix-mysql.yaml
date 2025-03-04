@@ -13,6 +13,11 @@ spec:
     helm:
       values: |
         initdbScriptsConfigMap: epix-init-db-config-map
+        extraEnvVars:
+          - name: MYSQL_ROOT_PASSWORD
+            value: "root"
+          - name: TZ
+            value: "Europe/Berlin"
   destination:
     server: "https://kubernetes.default.svc"
     namespace: {{ .Values.projects.ePIX.name }}

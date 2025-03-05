@@ -7,7 +7,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: {{ .Values.projects.devCluster.name }}
+  project: {{ .Values.projects.ePIX.name }}
   source:
     repoURL: {{ .Values.global.repoURL }}
     path: charts/epix-wildfly

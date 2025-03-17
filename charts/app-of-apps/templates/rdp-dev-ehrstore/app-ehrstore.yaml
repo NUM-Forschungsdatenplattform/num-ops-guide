@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/argoproj.io/application_v1alpha1.json
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ehrstore
+  namespace: {{ .Values.global.argoNamespace }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ .Values.projects.ehrstore.name }}
+  source:
+    repoURL: {{ .Values.global.repoURL }}
+    path: charts/ehrstore
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ .Values.projects.ehrstore.name }}
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

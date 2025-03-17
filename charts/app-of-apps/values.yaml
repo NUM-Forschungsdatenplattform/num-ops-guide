@@ -17,6 +17,9 @@ projects:
   ePIX:
     description: NUM RDP E-PIX
     name: rdp-dev-epix
+  ehrstore:
+    description: ehrstore
+    name: rdp-dev-ehrstore
   rdpDevFhirbridge:
     description: NUM RDP Fhir-Bridge Develop Environment
     name: rdp-dev-fhirbridge

@@ -1,0 +1,9 @@
+global:
+  env: develop
+appConfig:
+  postgresqlDatabase: ehrshow
+  postgresqlDatabaseSecretName: ehrshow-postgres-app
+  databaseServiceName: ehrshow-postgres-rw
+  dbPort: 5432
+  loggingPluginVersion: develop
+

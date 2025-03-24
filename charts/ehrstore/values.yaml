@@ -1,9 +1,0 @@
-global:
-  env: develop
-appConfig:
-  postgresqlDatabase: ehrstore
-  postgresqlDatabaseSecretName: ehrstore-postgres-app
-  databaseServiceName: ehrstore-postgres-rw
-  dbPort: 5432
-  loggingPluginVersion: develop
-

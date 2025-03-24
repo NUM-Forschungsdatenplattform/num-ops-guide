@@ -1,0 +1,4 @@
+apiVersion: v2
+description: Chart for ehrshow
+name: ehrshow
+version: 1.0.0

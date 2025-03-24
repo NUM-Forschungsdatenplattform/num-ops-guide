@@ -2,19 +2,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ehrstore
+  name: ehrshow
   namespace: {{ .Values.global.argoNamespace }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: {{ .Values.projects.ehrstore.name }}
+  project: {{ .Values.projects.ehrshow.name }}
   source:
     repoURL: {{ .Values.global.repoURL }}
-    path: charts/ehrstore
+    path: charts/ehrshow
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
-    namespace: {{ .Values.projects.ehrstore.name }}
+    namespace: {{ .Values.projects.ehrshow.name }}
   syncPolicy:
     automated:
       selfHeal: true

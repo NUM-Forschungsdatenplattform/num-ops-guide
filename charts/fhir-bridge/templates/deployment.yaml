@@ -18,7 +18,7 @@ spec:
       imagePullSecrets:
         - name: ghcr-login-secret
       containers:
-        - image: ghcr.io/num-forschungsdatenplattform/fhirbridge:latest
+        - image: ghcr.io/medblocks/fhir-bridge:latest
           name: fhirbridge
           ports:
             - containerPort: 8888

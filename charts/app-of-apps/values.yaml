@@ -20,6 +20,7 @@ projects:
   ehrshow:
     description: ehrshow
     name: rdp-dev-ehrshow
+    repoURL: https://github.com/highmed-eV/ehrshow.git
   rdpDevFhirbridge:
     description: NUM RDP Fhir-Bridge Develop Environment
     name: rdp-dev-fhirbridge

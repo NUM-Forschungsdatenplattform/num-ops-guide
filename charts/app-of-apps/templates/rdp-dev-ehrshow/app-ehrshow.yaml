@@ -9,9 +9,9 @@ metadata:
 spec:
   project: {{ .Values.projects.ehrshow.name }}
   source:
-    repoURL: {{ .Values.global.repoURL }}
+    repoURL: {{ .Values.projects.ehrshow.repoURL }}
     path: charts/ehrshow
-    targetRevision: HEAD
+    targetRevision: develop
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Values.projects.ehrshow.name }}

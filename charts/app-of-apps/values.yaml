@@ -18,8 +18,8 @@ projects:
     description: NUM RDP E-PIX
     name: rdp-dev-epix
   ehrshow:
-    description: ehrshow
-    name: rdp-dev-ehrshow
+    description: EHRshow
+    name: develop-ehrshow
     repoURL: git@github.com:highmed-eV/ehrshow.git
   rdpDevFhirbridge:
     description: NUM RDP Fhir-Bridge Develop Environment

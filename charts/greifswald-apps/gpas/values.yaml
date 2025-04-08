@@ -22,8 +22,8 @@ service:
       name: healthcheck
 
 env:
-  WF_ADMIN_PASS: admin
-  TTP_FHIR_GICS_TERMINOLOGY_FOLDER value: gics/terminology
-  WF_HEALTHCHECK_URLS: http://localhost:8080/
+  WF_ADMIN_PASS: "admin"
+  TTP_FHIR_GICS_TERMINOLOGY_FOLDER value: "gics/terminology"
+  WF_HEALTHCHECK_URLS: "http://localhost:8080/"
 
 resources: {}

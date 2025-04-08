@@ -1,0 +1,32 @@
+global:
+  env: develop 
+
+replicaCount: 1
+
+image:
+  repository: mosaicgreifswald/gpas
+  tag: 2024.3.0
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: ghcr-login-secret
+
+service:
+  type: ClusterIP
+  ports:
+    - containerPort: 8787
+      name: debug
+    - containerPort: 8080
+      name: webui
+    - containerPort: 9990
+      name: healthcheck
+
+env:
+  - name: "WF_ADMIN_PASS"
+    value: admin
+  - name: "TTP_FHIR_GICS_TERMINOLOGY_FOLDER"
+    value: gics/terminology
+  - name: "WF_HEALTHCHECK_URLS"
+    value: http://localhost:8080/
+
+resources: {}

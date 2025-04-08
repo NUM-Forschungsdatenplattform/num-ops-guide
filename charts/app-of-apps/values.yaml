@@ -14,9 +14,9 @@ projects:
   devEnv:
     description: NUM RDP Dev Environments
     name: environments
-  ePIX:
-    description: NUM RDP E-PIX
-    name: rdp-dev-epix
+  greifswaldApps:
+    description: Apps von Greifswald
+    name: greifswald-apps
   ehrshow:
     description: EHRshow
     name: develop-ehrshow

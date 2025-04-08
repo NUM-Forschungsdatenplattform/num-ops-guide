@@ -7,14 +7,14 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: {{ .Values.projects.greifwaldApps.name }}
+  project: {{ .Values.projects.greifswaldApps.name }}
   source:
     repoURL: {{ .Values.global.repoURL }}
     path: charts/greifswald-apps/epix-wildfly
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
-    namespace: {{ .Values.projects.greifwaldApps.name }}
+    namespace: {{ .Values.projects.greifswaldApps.name }}
   syncPolicy:
     automated:
       selfHeal: true

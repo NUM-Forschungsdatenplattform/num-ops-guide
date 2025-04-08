@@ -15,10 +15,13 @@ service:
   type: ClusterIP
   ports:
     - port: 8787
+      targetPort: 8787
       name: debug
     - port: 8080
+      targetPort: 8080
       name: webui
     - port: 9990
+      targetPort: 9990
       name: healthcheck
 
 env:

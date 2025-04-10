@@ -3,6 +3,13 @@
 
 Follow the step-by-step instructions in the guide to deploy and configure each component. The guide is continually updated to include the latest best practices and improvements.
 
+[Run a test pod for debugging purpose](Run-a-test-pod-for-debugging-purpose)
+[Deploy ArgoCD](deploy-argocd)
+[Add your private ssh key to get access to private num-helm-charts](Add-your-private-ssh-key-to-get-access-to-private-num-helm-charts)
+[Deploy the App of Apps](Deploy-the-App-of-Apps)
+[How to add an app to the app-op-apps](How-to-add-an-app-to-the-app-op-apps)
+[Update ArgoCD](Update-ArgoCD)
+
 ### Run a test pod for debugging purpose
 
     kubectl run -it --rm test --image=busybox --restart=Never -- sh
@@ -26,7 +33,7 @@ We have to do the initial installation manually from our local machine, later we
 
 The Helm chart doesn't install an Ingress by default. To access the Web UI we have to port-forward to the argocd-server service on port 443:
 
-    kubectl port-forward --namespace argo --address='0.0.0.0' svc/argo-cd-argocd-server 8080:443 &
+    kubectl port-forward --namespace argo --address='00.0.0' svc/argo-cd-argocd-server 8080:443 &
 
 We can then visit http://localhost:8080 to access it, which will show as a login form. The default username is `admin`. The password is auto-generated, we can get it with:
 

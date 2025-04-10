@@ -2,6 +2,13 @@
 
 This guide covers the deployment and configuration of essential components for effective NUM operations:
 
+- [Homepage](#Homepage)
+- [ArgoCD](#ArgoCD)
+- [Grafana](#Grafana)
+- [Prometheus](#Prometheus)
+- [VictoriaLogs](#VictoriaLogs)
+- [SealedSecrets](#SealedSecrets)
+
 ### Homepage
 
 - Url: https://homepage.dev.num-rdp.de

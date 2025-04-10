@@ -6,7 +6,7 @@ homepage:
               - href: https://num-codex.de
                 abbr: Prod
           - NUM Codex Pre Prod:
-              - href: https://num-codex.de
+              - href: https://pre-prod.num-codex.de
                 abbr: PP
           - NUM Codex Staging:
               - href: https://staging.num-codex.de

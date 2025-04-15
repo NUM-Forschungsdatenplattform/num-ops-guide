@@ -1,12 +1,10 @@
-Andere Geschichte: es wäre gut, wenn ihr kurzfristig eure Cluster auf v1.27 oder besser noch v1.28 upgraden könntet. Das geht ja recht einfach / schnell per Rancher und wir können auch unterstützen, falls ihr das in der neuen Besetzung noch nicht gemacht habt.
-
-Hintergrund ist zum einen die IngressNightmare Lücke (v1.28 enthält eine Version des NGINX Ingress mit allen Fixes) und zum anderen wollen wir Rancher upgraden, was voraussetzt, dass alle Cluster mind. auf v1.27 sind. Danach wird es dann auch neue K8s-Versionen für weitere Upgrades geben.
 
 ## Tasks
 
 Follow the step-by-step instructions in the guide to deploy and configure each component. The guide is continually updated to include the latest best practices and improvements.
 
 [Run a test pod for debugging purpose](Run-a-test-pod-for-debugging-purpose)
+[Deploy ArgoCD](deploy-argocd)
 [Add your private ssh key to get access to private num-helm-charts](Add-your-private-ssh-key-to-get-access-to-private-num-helm-charts)
 [Deploy the App of Apps](Deploy-the-App-of-Apps)
 [How to add an app to the app-op-apps](How-to-add-an-app-to-the-app-op-apps)
@@ -16,6 +14,34 @@ Follow the step-by-step instructions in the guide to deploy and configure each c
 
     kubectl run -it --rm test --image=busybox --restart=Never -- sh
 
+### Deploy ArgoCD
+
+We'll use Helm to install Argo CD with the community-maintained chart from argoproj/argo-helm. The Argo project doesn't provide an official Helm chart.
+
+Specifically, we are going to create a Helm "umbrella chart". This is basically a custom chart that wraps another chart. It pulls the original chart in as a dependency, and overrides the default values. In our case, we create an argo-cd Helm chart that wraps the community-maintained argo-cd Helm chart.
+
+Using this approach, we have more flexibility in the future, by possibly including additional Kubernetes resources. The most common use case for this is to add Secrets (which could be encrypted using sops or SealedSecrets) to our application. For example, if we use webhooks with Argo CD, we have the possibility to securely store the webhook URL in a Secret.
+
+Before we install our chart, we need to generate a Helm chart lock file for it. When installing a Helm chart, Argo CD checks the lock file for any dependencies and downloads them. Not having the lock file will result in an error.
+
+    helm repo add argo-cd https://argoproj.github.io/argo-helm
+    helm dep update charts/argo-cd/
+
+We have to do the initial installation manually from our local machine, later we set up Argo CD to manage itself (meaning that Argo CD will automatically detect any changes to the helm chart and synchronize it.
+
+    helm install --create-namespace --namespace argo argo-cd charts/argo-cd/
+
+The Helm chart doesn't install an Ingress by default. To access the Web UI we have to port-forward to the argocd-server service on port 443:
+
+    kubectl port-forward --namespace argo --address='00.0.0' svc/argo-cd-argocd-server 8080:443 &
+
+We can then visit http://localhost:8080 to access it, which will show as a login form. The default username is `admin`. The password is auto-generated, we can get it with:
+
+    kubectl get secret argocd-initial-admin-secret -n argo -o jsonpath="{.data.password}" | base64 -d
+
+Or
+
+    argocd -n argo admin initial-password
 
 ### Add your private ssh key to get access to private num-helm-charts
 

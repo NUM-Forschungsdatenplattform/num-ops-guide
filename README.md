@@ -44,7 +44,26 @@ This repository uses the [ArgoCD App-of-Apps pattern](https://argo-cd.readthedoc
 │   │   ├── Chart.yaml
 │   │   ├── templates
 │   │   │   ├── app-argo-cd.yaml
+│   │   │   ├── app-cert-manager.yaml
+│   │   │   ├── app-cloudnative-pg.yaml
+│   │   │   ├── app-homepage.yaml
+│   │   │   ├── app-keycloak.yaml
+│   │   │   ├── app-of-apps.yaml
+│   │   │   ├── app-postgres-operator.yaml
+│   │   │   ├── app-sealed-secrets-controller.yaml
+│   │   │   ├── app-synthea-highmed.yaml
+│   │   │   ├── app-victoria-logs.yaml
+│   │   │   ├── application-dev-env.yaml
+│   │   │   ├── develop-ehrshow
+│   │   │   ├── dmu-development.yaml
+│   │   │   ├── dmu-test.yaml
+│   │   │   ├── greifswald-apps
+│   │   │   ├── oci-bitnami-charts-secret.yaml
+│   │   │   ├── project-dev-cluster.yaml
+│   │   │   ├── project-dev-env.yaml
+│   │   │   └── rdp-dev-fhirbridge
 │   │   └── values.yaml
+
 │   ├── app-of-apps-poc
 │   ├── argo-cd
 │   ├── argo-cd-poc
@@ -72,6 +91,7 @@ This repository uses the [ArgoCD App-of-Apps pattern](https://argo-cd.readthedoc
 ├── hack
 │   ├── allowlist
 │   └── ehrbase-metrics
+├── ingress-install.diff
 ├── keys
 │   └── test
 ├── LICENSE

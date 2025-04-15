@@ -1,7 +1,3 @@
-Andere Geschichte: es wäre gut, wenn ihr kurzfristig eure Cluster auf v1.27 oder besser noch v1.28 upgraden könntet. Das geht ja recht einfach / schnell per Rancher und wir können auch unterstützen, falls ihr das in der neuen Besetzung noch nicht gemacht habt.
-
-Hintergrund ist zum einen die IngressNightmare Lücke (v1.28 enthält eine Version des NGINX Ingress mit allen Fixes) und zum anderen wollen wir Rancher upgraden, was voraussetzt, dass alle Cluster mind. auf v1.27 sind. Danach wird es dann auch neue K8s-Versionen für weitere Upgrades geben.
-
 ## Tasks
 
 Follow the step-by-step instructions in the guide to deploy and configure each component. The guide is continually updated to include the latest best practices and improvements.

@@ -12,7 +12,7 @@ This guide covers the deployment and configuration of essential components for e
   + [Extracting the main.key from the Cluster](#extracting-the-mainkey-from-the-cluster)
   + [Offline Decryption of a Sealed-Secret](#offline-decryption-of-a-sealed-secret)
 
----
+##
 
 ### Homepage
 

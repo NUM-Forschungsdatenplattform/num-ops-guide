@@ -2,12 +2,17 @@
 
 This guide covers the deployment and configuration of essential components for effective NUM operations:
 
-- [Homepage](#Homepage)
-- [ArgoCD](#ArgoCD)
-- [Grafana](#Grafana)
-- [Prometheus](#Prometheus)
-- [VictoriaLogs](#VictoriaLogs)
-- [SealedSecrets](#SealedSecrets)
+* [Homepage](#homepage)
+* [ArgoCD](#argocd)
+* [Grafana](#grafana)
+* [Prometheus](#prometheus)
+* [VictoriaLogs](#victorialogs)
+* [Sealed Secrets](#sealed-secrets)
+  + [Creating a Sealed-Secret](#creating-a-sealed-secret)
+  + [Extracting the main.key from the Cluster](#extracting-the-mainkey-from-the-cluster)
+  + [Offline Decryption of a Sealed-Secret](#offline-decryption-of-a-sealed-secret)
+
+---
 
 ### Homepage
 

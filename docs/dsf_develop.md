@@ -1,11 +1,12 @@
 ## DSF Develop
 
-- [Allow List](#Allow-List)
-- [Process of updating the allow list](#process-of-updating-the-allow-list)
-- [Ping Pong Test](#ping-pong-test)
-- [Start DataSend](#start-datasend)
-- [Configure json logging for DSF](#configure-json-logging-for-dsf)
-- [SealedSecrets](#SealedSecrets)
+* [Allow List](#allow-list)
+* [Process of updating the allow list](#process-of-updating-the-allow-list)
+* [Ping Pong Test](#ping-pong-test)
+* [Start DataSend](#start-datasend)
+* [Configure json logging for DSF](#configure-json-logging-for-dsf)
+
+---
 
 ### Allow List
 

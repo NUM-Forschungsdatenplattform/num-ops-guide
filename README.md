@@ -23,6 +23,51 @@ Welcome to the NUM Operations Guide! This repository serves as a comprehensive g
 1. [Contributing](#contributing)
 1. [License](#license)
 
+---
+
+### Tree
+```bash
+.
+├── charts
+│   ├── app-of-apps
+│   ├── app-of-apps-poc
+│   ├── argo-cd
+│   ├── argo-cd-poc
+│   ├── cert-manager
+│   ├── cloudnative-pg
+│   ├── ehrbase
+│   ├── fhir-bridge
+│   ├── greifswald-apps
+│   ├── hapi-fhir
+│   ├── homepage
+│   ├── keycloak
+│   ├── open-fhir
+│   ├── postgres-operator
+│   ├── synthea-highmed
+│   └── victoria-logs
+├── docs
+│   ├── assets
+│   ├── components.md
+│   ├── dsf_develop.md
+│   ├── environments.md
+│   ├── getting_started.md
+│   ├── principles.md
+│   ├── tasks.md
+│   └── tips_and_tricks.md
+├── hack
+│   ├── allowlist
+│   └── ehrbase-metrics
+├── keys
+│   └── test
+├── LICENSE
+├── manifests
+│   └── private-repo-example.yaml
+├── README.md
+├── terraform
+│   └── stackit
+└── test
+    └── fhir-bridge
+```
 
 ### Deploy ArgoCD
 

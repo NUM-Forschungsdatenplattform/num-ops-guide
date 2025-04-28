@@ -30,6 +30,7 @@ Follow the step-by-step instructions in the guide to deploy and configure each c
     + [Configure keycloak](#configure-keycloak)
     + [Configure num-portal](#configure-num-portal)
     + [test login](#test-login)
+  * [How to Ingress Annotation for DSF](#how-to-ingress-annotation-for-dsf)
   * [How to get certs for DSF](#how-to-get-certs-for-dsf)
   * [How to prepare certs for DSF](#how-to-prepare-certs-for-dsf)
     + [Store PEM encoded certificate as ssl_certificate_file.pem](#store-pem-encoded-certificate-as-ssl_certificate_filepem)
@@ -695,6 +696,18 @@ INSERT INTO num.user_details(user_id, approved, organization_id, created_date)
 #### test login
 
 - login with the user at: https://develop.dev.num-rdp.de
+
+### How to Ingress Annotation for DSF
+Only the **DSF-Fhir-Server** needs the following annotation in the ingress resource
+
+```yaml
+nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream: "true"
+```
+
+And this ENV variable must been set in the deployment
+```yaml
+DEV_DSF_SERVER_AUTH_CLIENT_CERTIFICATE_HEADER: ssl-client-cert
+```
 
 ### How to get certs for DSF
 

@@ -698,7 +698,7 @@ INSERT INTO num.user_details(user_id, approved, organization_id, created_date)
 - login with the user at: https://develop.dev.num-rdp.de
 
 ### How to Ingress Annotation for DSF
-Only the **DSF-Fhir-Server** needs the following annotation in the ingress resource
+Only the **DSF-Fhir-Server** needs the following annotation in the [ingress resource](https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md)
 
 ```yaml
 nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream: "true"

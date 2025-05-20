@@ -27,6 +27,7 @@ projects:
   airflow:
     description: Apache Airflow
     name: airflow
+    repoURL: git@github.com:highmed-eV/apache-airflow.git
 
 applications:
   developEnv:

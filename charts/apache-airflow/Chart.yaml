@@ -1,7 +1,7 @@
 apiVersion: v2
-name: apache-airflow
+name: airflow
 version: 1.0.0
 dependencies:
-  - name: apache-airflow
+  - name: airflow
     version: 2.10.5
     repository: https://airflow.apache.org

@@ -24,9 +24,9 @@ projects:
   rdpDevFhirbridge:
     description: NUM RDP Fhir-Bridge Develop Environment
     name: rdp-dev-fhirbridge
-  apacheAirflow:
+  airflow:
     description: Apache Airflow
-    name: apache-airflow
+    name: airflow
 
 applications:
   developEnv:

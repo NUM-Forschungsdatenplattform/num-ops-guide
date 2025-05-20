@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: apache-airflow
+  name: airflow
   namespace: {{.Values.global.argoNamespace}}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -10,11 +10,11 @@ spec:
   project: {{.Values.projects.apacheAirflow.name}}
   source:
     repoURL: {{.Values.global.repoURL}}
-    path: charts/apache-airflow
+    path: charts/airflow
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
-    namespace: apache-airflow
+    namespace: airflow
   syncPolicy:
     automated:
       selfHeal: true

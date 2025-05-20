@@ -9,7 +9,7 @@ metadata:
 spec:
   project: {{.Values.projects.airflow.name}}
   source:
-    repoURL: {{.Values.global.repoURL}}
+    repoURL: {{.Values.airflow.repoURL}}
     path: charts/airflow
     targetRevision: HEAD
   destination:

@@ -2,12 +2,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: {{ .Values.projects.airflow.name }}
+  name: {{ .Values.projects.apacheAirflow.name }}
   namespace: {{ .Values.global.argoNamespace }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  description: {{ .Values.projects.airflow.description }}
+  description: {{ .Values.projects.apacheAirflow.description }}
   sourceRepos:
   - '*'
   destinations:

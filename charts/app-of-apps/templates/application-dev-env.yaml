@@ -20,7 +20,7 @@ spec:
   project: {{ $devEnvName }}
   source:
     repoURL: {{ $global.numHelmChartsRepoURL }}
-    targetRevision: {{ $global.numHelmChartsBranch }}
+    targetRevision: {{ $app.numHelmChartsBranch }}
     path: .
     helm:
       valueFiles:

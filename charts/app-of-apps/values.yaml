@@ -34,19 +34,9 @@ applications:
     enabled: true
     namespace: develop
     helmValueFile: deployment-values/central-research-repository/develop-values.yaml
-  devEnv:
-    enabled: false
-    namespace: dev
-    helmValueFile: deployment-values/central-research-repository/development-values.yaml
-  opsEnv:
-    enabled: false
-    namespace: ops
-    helmValueFile: deployment-values/central-research-repository/ops-values.yaml
-  uweEnv:
-    enabled: false
-    namespace: uwe
-    helmValueFile: deployment-values/central-research-repository/uwe-values.yaml
+    numHelmChartsBranch: feature/MII-Process-Data-Transfer
   testEnv:
     enabled: true
     namespace: test
     helmValueFile: deployment-values/central-research-repository/test-values.yaml
+    numHelmChartsBranch: rdp-dev

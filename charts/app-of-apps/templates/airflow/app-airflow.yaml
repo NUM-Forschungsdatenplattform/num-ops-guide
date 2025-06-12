@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: {{.Values.projects.airflow.repoURL}}
     path: charts/airflow
-    targetRevision: HEAD
+    targetRevision: feature/airflow-dags
   destination:
     server: https://kubernetes.default.svc
     namespace: airflow

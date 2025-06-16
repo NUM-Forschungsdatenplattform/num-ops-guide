@@ -1,0 +1,1656 @@
+<Bundle xmlns="http://hl7.org/fhir">
+  <type value="transaction"/>
+
+  <!-- DocumentReference entry -->
+  <entry>
+    <fullUrl value="DocumentReference/123e4567-e89b-12d3-a456-426614174000"/>
+    <resource>
+      <DocumentReference xmlns="http://hl7.org/fhir">
+        <id value="123e4567-e89b-12d3-a456-426614174000"/>
+        <masterIdentifier>
+          <system value="http://medizininformatik-initiative.de/sid/project-identifier"/>
+          <value value="test-2"/>
+        </masterIdentifier>
+        <status value="current"/>
+        <docStatus value="final"/>
+        <author>
+          <type value="Organization"/>
+          <identifier>
+            <system value="http://dsf.dev/sid/organization-identifier"/>
+            <value value="Test_DIC"/>
+          </identifier>
+        </author>
+        <date value="2025-06-05T14:30:00+01:00"/>
+        <content>
+          <attachment>
+            <contentType value="application/fhir+xml"/>
+            <url value="Bundle/abcdef12-3456-7890-abcd-ef1234567890"/>
+          </attachment>
+        </content>
+      </DocumentReference>
+    </resource>
+    <request>
+      <method value="PUT"/>
+      <url value="DocumentReference/123e4567-e89b-12d3-a456-426614174000"/>
+    </request>
+  </entry>
+
+  <!-- Referenced Bundle entry -->
+  <entry>
+    <fullUrl value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+    <resource>
+      <Patient>
+        <meta>
+          <profile value='https://www.medizininformatik-initiative.de/fhir/core/modul-person/StructureDefinition/PatientPseudonymisiert'/>
+        </meta>
+        <identifier>
+          <type>
+            <coding>
+              <system value='http://terminology.hl7.org/CodeSystem/v3-ObservationValue'/>
+              <code value='PSEUDED'/>
+            </coding>
+          </type>
+          <system value='urn:ietf:rfc:4122'/>
+          <value value='07f602e0-579e-4fe3-95af-381728b00015'/>
+        </identifier>
+        <gender value='other'>
+          <extension url='http://fhir.de/StructureDefinition/gender-amtlich-de'>
+            <valueCoding>
+              <system value='http://fhir.de/CodeSystem/gender-amtlich-de'/>
+              <code value='D'/>
+              <display value='divers'/>
+            </valueCoding>
+          </extension>
+        </gender>
+        <birthDate value='2022-12-01'/>
+        <managingOrganization>
+          <identifier>
+            <system value='https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier'/>
+            <value value='MHH'/>
+          </identifier>
+        </managingOrganization>
+      </Patient>
+    </resource>
+    <request>
+      <method value='POST'/>
+      <url value='Patient'/>
+    </request>
+  </entry>
+  <entry>
+    <fullUrl value='urn:uuid:d7f5f52c-ce49-4e2e-8b2a-b5b4a602a6e2'/>
+    <resource>
+      <Encounter>
+        <meta>
+          <profile value='https://www.medizininformatik-initiative.de/fhir/core/modul-fall/StructureDefinition/KontaktGesundheitseinrichtung'/>
+        </meta>
+        <identifier>
+          <type>
+            <coding>
+              <system value='http://terminology.hl7.org/CodeSystem/v2-0203'/>
+              <code value='VN'/>
+            </coding>
+          </type>
+          <system value='http://medizininformatik-initiative.de/fhir/NamingSystem/Aufnahmenummer/MusterKrankenhaus'/>
+          <value value='F_0000001'/>
+        </identifier>
+        <status value='finished'/>
+        <class>
+          <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+            <valueCode value='unsupported'/>
+          </extension>
+        </class>
+        <serviceType>
+          <coding>
+            <system value='https://www.medizininformatik-initiative.de/fhir/core/modul-fall/CodeSystem/Fachabteilungsschluessel'/>
+            <code value='3700'/>
+            <display value='Sonstige Fachabteilung'/>
+            <userSelected value='false'/>
+          </coding>
+        </serviceType>
+        <subject>
+          <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+        </subject>
+        <period>
+          <start value='2020-01-08T07:00:00+01:00'/>
+          <end value='2020-01-11T05:00:00+01:00'/>
+        </period>
+        <diagnosis>
+          <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+            <valueCode value='unsupported'/>
+          </extension>
+          <condition>
+            <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+              <valueCode value='unsupported'/>
+            </extension>
+          </condition>
+          <use>
+            <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+              <valueCode value='unsupported'/>
+            </extension>
+          </use>
+        </diagnosis>
+      </Encounter>
+    </resource>
+    <request>
+      <method value='POST'/>
+      <url value='Encounter'/>
+    </request>
+  </entry>
+  <entry>
+    <fullUrl value='urn:uuid:bb8e9846-9bc1-4a7a-8e1a-cf941c5fddb6'/>
+    <resource>
+      <Observation>
+        <meta>
+          <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-kultur-nachweis'/>
+        </meta>
+        <contained>
+          <Observation>
+            <id value='empf-1'/>
+            <meta>
+              <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-empfindlichkeit'/>
+            </meta>
+            <identifier>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </identifier>
+            <status value='final'/>
+            <category>
+              <coding>
+                <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+                <code value='laboratory'/>
+                <display value='Laboratory'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='26436-6'/>
+                <display value='Laboratory studies (set)'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18725-2'/>
+                <display value='Microbiology studies'/>
+              </coding>
+            </category>
+            <code>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18868-0'/>
+                <display value='Aztreonam [Susceptibility]'/>
+              </coding>
+            </code>
+            <subject>
+              <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+            </subject>
+            <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+            <valueQuantity>
+              <value value='32'/>
+              <unit value='mg/L'/>
+              <system value='http://unitsofmeasure.org'/>
+              <code value='mg/L'/>
+            </valueQuantity>
+            <interpretation>
+              <coding>
+                <system value='http://snomed.info/sct'/>
+                <version value='20240301'/>
+                <code value='1306577009'/>
+                <display value='European Committee on Antimicrobial Susceptibility Testing category 2019 Susceptible, standard dosing regimen'/>
+              </coding>
+            </interpretation>
+            <specimen>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </specimen>
+          </Observation>
+        </contained>
+        <contained>
+          <Observation>
+            <id value='mre-1'/>
+            <meta>
+              <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-mre-klasse'/>
+            </meta>
+            <identifier>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </identifier>
+            <status value='final'/>
+            <category>
+              <coding>
+                <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+                <code value='laboratory'/>
+                <display value='Laboratory'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='26436-6'/>
+                <display value='Laboratory studies (set)'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18725-2'/>
+                <display value='Microbiology studies'/>
+              </coding>
+            </category>
+            <code>
+              <coding>
+                <system value='http://snomed.info/sct'/>
+                <code value='1285113001'/>
+                <display value='Type of antimicrobial resistant organism (observable entity)'/>
+              </coding>
+            </code>
+            <subject>
+              <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+            </subject>
+            <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+            <valueCodeableConcept>
+              <coding>
+                <system value='http://snomed.info/sct'/>
+                <code value='115329001'/>
+                <display value='Methicillin resistant Staphylococcus aureus'/>
+              </coding>
+            </valueCodeableConcept>
+            <specimen>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </specimen>
+          </Observation>
+        </contained>
+        <contained>
+          <Specimen>
+            <id value='probe-1'/>
+            <meta>
+              <profile value='http://hl7.org/fhir/StructureDefinition/Specimen'/>
+            </meta>
+            <collection>
+              <collectedDateTime value='2011-08-16T06:15:00Z'/>
+            </collection>
+          </Specimen>
+        </contained>
+        <identifier>
+          <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+            <valueCode value='unsupported'/>
+          </extension>
+        </identifier>
+        <status value='final'/>
+        <category>
+          <coding>
+            <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+            <code value='laboratory'/>
+            <display value='Laboratory'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='26436-6'/>
+            <display value='Laboratory studies (set)'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='18725-2'/>
+            <display value='Microbiology studies'/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='11475-1'/>
+            <display value='Microorganism identified in Specimen by Culture'/>
+          </coding>
+        </code>
+        <subject>
+          <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+        </subject>
+        <encounter>
+          <reference value='urn:uuid:d7f5f52c-ce49-4e2e-8b2a-b5b4a602a6e2'/>
+        </encounter>
+        <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+        <valueCodeableConcept>
+          <coding>
+            <system value='http://snomed.info/sct'/>
+            <code value='260373001'/>
+            <display value='Detected (qualifier value)'/>
+          </coding>
+        </valueCodeableConcept>
+        <specimen>
+          <reference value='#probe-1'/>
+        </specimen>
+        <hasMember>
+          <reference value='#empf-1'/>
+        </hasMember>
+        <hasMember>
+          <reference value='#mre-1'/>
+        </hasMember>
+        <component>
+          <code>
+            <coding>
+              <system value='http://loinc.org'/>
+              <code value='89248-9'/>
+            </coding>
+          </code>
+          <valueCodeableConcept>
+            <coding>
+              <system value='http://snomed.info/sct'/>
+              <code value='840533007'/>
+              <display value='Severe acute respiratory syndrome coronavirus 2 (organism)'/>
+            </coding>
+          </valueCodeableConcept>
+        </component>
+      </Observation>
+    </resource>
+    <request>
+      <method value='POST'/>
+      <url value='Observation'/>
+    </request>
+  </entry>
+  <entry>
+    <fullUrl value='urn:uuid:17e03942-3286-4b7c-86c2-9ff7f218a74e'/>
+    <resource>
+      <Observation>
+        <meta>
+          <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-kultur-nachweis'/>
+        </meta>
+        <contained>
+          <Observation>
+            <id value='empf-1'/>
+            <meta>
+              <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-empfindlichkeit'/>
+            </meta>
+            <identifier>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </identifier>
+            <status value='final'/>
+            <category>
+              <coding>
+                <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+                <code value='laboratory'/>
+                <display value='Laboratory'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='26436-6'/>
+                <display value='Laboratory studies (set)'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18725-2'/>
+                <display value='Microbiology studies'/>
+              </coding>
+            </category>
+            <code>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18868-0'/>
+                <display value='Aztreonam [Susceptibility]'/>
+              </coding>
+            </code>
+            <subject>
+              <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+            </subject>
+            <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+            <valueQuantity>
+              <value value='32'/>
+              <unit value='mg/L'/>
+              <system value='http://unitsofmeasure.org'/>
+              <code value='mg/L'/>
+            </valueQuantity>
+            <interpretation>
+              <coding>
+                <system value='http://snomed.info/sct'/>
+                <version value='20240301'/>
+                <code value='1306577009'/>
+                <display value='European Committee on Antimicrobial Susceptibility Testing category 2019 Susceptible, standard dosing regimen'/>
+              </coding>
+            </interpretation>
+            <specimen>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </specimen>
+          </Observation>
+        </contained>
+        <contained>
+          <Observation>
+            <id value='mre-1'/>
+            <meta>
+              <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-mre-klasse'/>
+            </meta>
+            <identifier>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </identifier>
+            <status value='final'/>
+            <category>
+              <coding>
+                <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+                <code value='laboratory'/>
+                <display value='Laboratory'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='26436-6'/>
+                <display value='Laboratory studies (set)'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18725-2'/>
+                <display value='Microbiology studies'/>
+              </coding>
+            </category>
+            <code>
+              <coding>
+                <system value='http://snomed.info/sct'/>
+                <code value='1285113001'/>
+                <display value='Type of antimicrobial resistant organism (observable entity)'/>
+              </coding>
+            </code>
+            <subject>
+              <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+            </subject>
+            <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+            <valueCodeableConcept>
+              <coding>
+                <system value='http://snomed.info/sct'/>
+                <code value='113727004'/>
+                <display value='Vancomycin resistant Enterococcus'/>
+              </coding>
+            </valueCodeableConcept>
+            <specimen>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </specimen>
+          </Observation>
+        </contained>
+        <contained>
+          <Specimen>
+            <id value='probe-1'/>
+            <meta>
+              <profile value='http://hl7.org/fhir/StructureDefinition/Specimen'/>
+            </meta>
+            <collection>
+              <collectedDateTime value='2011-08-16T06:15:00Z'/>
+            </collection>
+          </Specimen>
+        </contained>
+        <identifier>
+          <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+            <valueCode value='unsupported'/>
+          </extension>
+        </identifier>
+        <status value='final'/>
+        <category>
+          <coding>
+            <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+            <code value='laboratory'/>
+            <display value='Laboratory'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='26436-6'/>
+            <display value='Laboratory studies (set)'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='18725-2'/>
+            <display value='Microbiology studies'/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='11475-1'/>
+            <display value='Microorganism identified in Specimen by Culture'/>
+          </coding>
+        </code>
+        <subject>
+          <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+        </subject>
+        <encounter>
+          <reference value='urn:uuid:d7f5f52c-ce49-4e2e-8b2a-b5b4a602a6e2'/>
+        </encounter>
+        <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+        <valueCodeableConcept>
+          <coding>
+            <system value='http://snomed.info/sct'/>
+            <code value='260373001'/>
+            <display value='Detected (qualifier value)'/>
+          </coding>
+        </valueCodeableConcept>
+        <specimen>
+          <reference value='#probe-1'/>
+        </specimen>
+        <hasMember>
+          <reference value='#empf-1'/>
+        </hasMember>
+        <hasMember>
+          <reference value='#mre-1'/>
+        </hasMember>
+        <component>
+          <code>
+            <coding>
+              <system value='http://loinc.org'/>
+              <code value='89248-9'/>
+            </coding>
+          </code>
+          <valueCodeableConcept>
+            <coding>
+              <system value='http://snomed.info/sct'/>
+              <code value='840533007'/>
+              <display value='Severe acute respiratory syndrome coronavirus 2 (organism)'/>
+            </coding>
+          </valueCodeableConcept>
+        </component>
+      </Observation>
+    </resource>
+    <request>
+      <method value='POST'/>
+      <url value='Observation'/>
+    </request>
+  </entry>
+  <entry>
+    <fullUrl value='urn:uuid:863d6462-1293-4999-b173-b37d0b817444'/>
+    <resource>
+      <Observation>
+        <meta>
+          <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-kultur-nachweis'/>
+        </meta>
+        <contained>
+          <Observation>
+            <id value='empf-1'/>
+            <meta>
+              <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-empfindlichkeit'/>
+            </meta>
+            <identifier>
+              <type>
+                <coding>
+                  <system value='http://terminology.hl7.org/CodeSystem/v2-0203'/>
+                  <code value='OBI'/>
+                </coding>
+              </type>
+              <system value='https://example.org/fhir/sid/test-lab-results'/>
+              <value value='59826-8_1234567890'/>
+              <assigner>
+                <identifier>
+                  <system value='https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier'/>
+                  <value value='DIZ-ID'/>
+                </identifier>
+              </assigner>
+            </identifier>
+            <status value='final'/>
+            <category>
+              <coding>
+                <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+                <code value='laboratory'/>
+                <display value='Laboratory'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='26436-6'/>
+                <display value='Laboratory studies (set)'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18725-2'/>
+                <display value='Microbiology studies'/>
+              </coding>
+            </category>
+            <code>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18868-0'/>
+                <display value='Aztreonam [Susceptibility]'/>
+              </coding>
+            </code>
+            <subject>
+              <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+            </subject>
+            <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+            <valueQuantity>
+              <value value='32'/>
+              <unit value='mg/L'/>
+              <system value='http://unitsofmeasure.org'/>
+              <code value='mg/L'/>
+            </valueQuantity>
+            <interpretation>
+              <coding>
+                <system value='http://snomed.info/sct'/>
+                <version value='20240301'/>
+                <code value='1306577009'/>
+                <display value='European Committee on Antimicrobial Susceptibility Testing category 2019 Susceptible, standard dosing regimen'/>
+              </coding>
+            </interpretation>
+            <specimen>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </specimen>
+          </Observation>
+        </contained>
+        <contained>
+          <Observation>
+            <id value='mrgn-1'/>
+            <meta>
+              <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-mrgn-klasse'/>
+            </meta>
+            <identifier>
+              <type>
+                <coding>
+                  <system value='http://terminology.hl7.org/CodeSystem/v2-0203'/>
+                  <code value='OBI'/>
+                </coding>
+              </type>
+              <system value='https://example.org/fhir/sid/test-lab-results'/>
+              <value value='59826-8_1234567890'/>
+              <assigner>
+                <identifier>
+                  <system value='https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier'/>
+                  <value value='DIZ-ID'/>
+                </identifier>
+              </assigner>
+            </identifier>
+            <status value='final'/>
+            <category>
+              <coding>
+                <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+                <code value='laboratory'/>
+                <display value='Laboratory'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='26436-6'/>
+                <display value='Laboratory studies (set)'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18725-2'/>
+                <display value='Microbiology studies'/>
+              </coding>
+            </category>
+            <code>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='99780-9'/>
+                <display value='Multidrug resistant gram-negative organism classification [Type]'/>
+              </coding>
+            </code>
+            <subject>
+              <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+            </subject>
+            <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+            <valueCodeableConcept>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='LA33214-0'/>
+                <display value='2MRGN'/>
+              </coding>
+            </valueCodeableConcept>
+            <specimen>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </specimen>
+          </Observation>
+        </contained>
+        <contained>
+          <Specimen>
+            <id value='probe-1'/>
+            <meta>
+              <profile value='http://hl7.org/fhir/StructureDefinition/Specimen'/>
+            </meta>
+            <collection>
+              <collectedDateTime value='2011-08-16T06:15:00Z'/>
+            </collection>
+          </Specimen>
+        </contained>
+        <identifier>
+          <type>
+            <coding>
+              <system value='http://terminology.hl7.org/CodeSystem/v2-0203'/>
+              <code value='OBI'/>
+            </coding>
+          </type>
+          <system value='https://example.org/fhir/sid/test-lab-results'/>
+          <value value='59826-8_1234567890'/>
+          <assigner>
+            <identifier>
+              <system value='https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier'/>
+              <value value='DIZ-ID'/>
+            </identifier>
+          </assigner>
+        </identifier>
+        <status value='final'/>
+        <category>
+          <coding>
+            <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+            <code value='laboratory'/>
+            <display value='Laboratory'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='26436-6'/>
+            <display value='Laboratory studies (set)'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='18725-2'/>
+            <display value='Microbiology studies'/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='11475-1'/>
+            <display value='Microorganism identified in Specimen by Culture'/>
+          </coding>
+        </code>
+        <subject>
+          <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+        </subject>
+        <encounter>
+          <reference value='urn:uuid:d7f5f52c-ce49-4e2e-8b2a-b5b4a602a6e2'/>
+        </encounter>
+        <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+        <performer>
+          <identifier>
+            <system value='https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifiers'/>
+            <value value='Charité'/>
+          </identifier>
+        </performer>
+        <valueCodeableConcept>
+          <coding>
+            <system value='http://snomed.info/sct'/>
+            <code value='260373001'/>
+            <display value='Detected (qualifier value)'/>
+          </coding>
+        </valueCodeableConcept>
+        <specimen>
+          <reference value='#probe-1'/>
+        </specimen>
+        <hasMember>
+          <reference value='#empf-1'/>
+        </hasMember>
+        <hasMember>
+          <reference value='#mrgn-1'/>
+        </hasMember>
+        <component>
+          <code>
+            <coding>
+              <system value='http://loinc.org'/>
+              <code value='89248-9'/>
+            </coding>
+          </code>
+          <valueCodeableConcept>
+            <coding>
+              <system value='http://snomed.info/sct'/>
+              <code value='840533007'/>
+              <display value='Severe acute respiratory syndrome coronavirus 2 (organism)'/>
+            </coding>
+          </valueCodeableConcept>
+        </component>
+      </Observation>
+    </resource>
+    <request>
+      <method value='POST'/>
+      <url value='Observation'/>
+    </request>
+  </entry>
+  <entry>
+    <fullUrl value='urn:uuid:37a62b3c-2521-4c8c-b713-b3ae41f9224c'/>
+    <resource>
+      <Observation>
+        <meta>
+          <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-kultur-nachweis'/>
+        </meta>
+        <contained>
+          <Observation>
+            <id value='empf-1'/>
+            <meta>
+              <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-empfindlichkeit'/>
+            </meta>
+            <identifier>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </identifier>
+            <status value='final'/>
+            <category>
+              <coding>
+                <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+                <code value='laboratory'/>
+                <display value='Laboratory'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='26436-6'/>
+                <display value='Laboratory studies (set)'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18725-2'/>
+                <display value='Microbiology studies'/>
+              </coding>
+            </category>
+            <code>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18868-0'/>
+                <display value='Aztreonam [Susceptibility]'/>
+              </coding>
+            </code>
+            <subject>
+              <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+            </subject>
+            <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+            <valueQuantity>
+              <value value='32'/>
+              <unit value='mg/L'/>
+              <system value='http://unitsofmeasure.org'/>
+              <code value='mg/L'/>
+            </valueQuantity>
+            <interpretation>
+              <coding>
+                <system value='http://snomed.info/sct'/>
+                <version value='20240301'/>
+                <code value='1306577009'/>
+                <display value='European Committee on Antimicrobial Susceptibility Testing category 2019 Susceptible, standard dosing regimen'/>
+              </coding>
+            </interpretation>
+            <specimen>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </specimen>
+          </Observation>
+        </contained>
+        <contained>
+          <Observation>
+            <id value='mrgn-1'/>
+            <meta>
+              <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-mrgn-klasse'/>
+            </meta>
+            <identifier>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </identifier>
+            <status value='final'/>
+            <category>
+              <coding>
+                <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+                <code value='laboratory'/>
+                <display value='Laboratory'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='26436-6'/>
+                <display value='Laboratory studies (set)'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18725-2'/>
+                <display value='Microbiology studies'/>
+              </coding>
+            </category>
+            <code>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='99780-9'/>
+                <display value='Multidrug resistant gram-negative organism classification [Type]'/>
+              </coding>
+            </code>
+            <subject>
+              <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+            </subject>
+            <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+            <valueCodeableConcept>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='LA33215-7'/>
+                <display value='3MRGN'/>
+              </coding>
+            </valueCodeableConcept>
+            <specimen>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </specimen>
+          </Observation>
+        </contained>
+        <contained>
+          <Specimen>
+            <id value='probe-1'/>
+            <meta>
+              <profile value='http://hl7.org/fhir/StructureDefinition/Specimen'/>
+            </meta>
+            <collection>
+              <collectedDateTime value='2011-08-16T06:15:00Z'/>
+            </collection>
+          </Specimen>
+        </contained>
+        <identifier>
+          <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+            <valueCode value='unsupported'/>
+          </extension>
+        </identifier>
+        <status value='final'/>
+        <category>
+          <coding>
+            <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+            <code value='laboratory'/>
+            <display value='Laboratory'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='26436-6'/>
+            <display value='Laboratory studies (set)'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='18725-2'/>
+            <display value='Microbiology studies'/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='11475-1'/>
+            <display value='Microorganism identified in Specimen by Culture'/>
+          </coding>
+        </code>
+        <subject>
+          <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+        </subject>
+        <encounter>
+          <reference value='urn:uuid:d7f5f52c-ce49-4e2e-8b2a-b5b4a602a6e2'/>
+        </encounter>
+        <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+        <valueCodeableConcept>
+          <coding>
+            <system value='http://snomed.info/sct'/>
+            <code value='260373001'/>
+            <display value='Detected (qualifier value)'/>
+          </coding>
+        </valueCodeableConcept>
+        <specimen>
+          <reference value='#probe-1'/>
+        </specimen>
+        <hasMember>
+          <reference value='#empf-1'/>
+        </hasMember>
+        <hasMember>
+          <reference value='#mrgn-1'/>
+        </hasMember>
+        <component>
+          <code>
+            <coding>
+              <system value='http://loinc.org'/>
+              <code value='89248-9'/>
+            </coding>
+          </code>
+          <valueCodeableConcept>
+            <coding>
+              <system value='http://snomed.info/sct'/>
+              <code value='840533007'/>
+              <display value='Severe acute respiratory syndrome coronavirus 2 (organism)'/>
+            </coding>
+          </valueCodeableConcept>
+        </component>
+      </Observation>
+    </resource>
+    <request>
+      <method value='POST'/>
+      <url value='Observation'/>
+    </request>
+  </entry>
+  <entry>
+    <fullUrl value='urn:uuid:e616f94e-534d-40a4-9d15-59a5dc271e48'/>
+    <resource>
+      <Observation>
+        <meta>
+          <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-kultur-nachweis'/>
+        </meta>
+        <contained>
+          <Observation>
+            <id value='empf-1'/>
+            <meta>
+              <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-empfindlichkeit'/>
+            </meta>
+            <identifier>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </identifier>
+            <status value='final'/>
+            <category>
+              <coding>
+                <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+                <code value='laboratory'/>
+                <display value='Laboratory'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='26436-6'/>
+                <display value='Laboratory studies (set)'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18725-2'/>
+                <display value='Microbiology studies'/>
+              </coding>
+            </category>
+            <code>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18868-0'/>
+                <display value='Aztreonam [Susceptibility]'/>
+              </coding>
+            </code>
+            <subject>
+              <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+            </subject>
+            <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+            <valueQuantity>
+              <value value='32'/>
+              <unit value='mg/L'/>
+              <system value='http://unitsofmeasure.org'/>
+              <code value='mg/L'/>
+            </valueQuantity>
+            <interpretation>
+              <coding>
+                <system value='http://snomed.info/sct'/>
+                <version value='20240301'/>
+                <code value='1306577009'/>
+                <display value='European Committee on Antimicrobial Susceptibility Testing category 2019 Susceptible, standard dosing regimen'/>
+              </coding>
+            </interpretation>
+            <specimen>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </specimen>
+          </Observation>
+        </contained>
+        <contained>
+          <Observation>
+            <id value='mrgn-1'/>
+            <meta>
+              <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-mrgn-klasse'/>
+            </meta>
+            <identifier>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </identifier>
+            <status value='final'/>
+            <category>
+              <coding>
+                <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+                <code value='laboratory'/>
+                <display value='Laboratory'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='26436-6'/>
+                <display value='Laboratory studies (set)'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18725-2'/>
+                <display value='Microbiology studies'/>
+              </coding>
+            </category>
+            <code>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='99780-9'/>
+                <display value='Multidrug resistant gram-negative organism classification [Type]'/>
+              </coding>
+            </code>
+            <subject>
+              <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+            </subject>
+            <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+            <valueCodeableConcept>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='LA33215-7'/>
+                <display value='3MRGN'/>
+              </coding>
+            </valueCodeableConcept>
+            <specimen>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </specimen>
+          </Observation>
+        </contained>
+        <contained>
+          <Specimen>
+            <id value='probe-1'/>
+            <meta>
+              <profile value='http://hl7.org/fhir/StructureDefinition/Specimen'/>
+            </meta>
+            <collection>
+              <collectedDateTime value='2011-08-16T06:15:00Z'/>
+            </collection>
+          </Specimen>
+        </contained>
+        <identifier>
+          <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+            <valueCode value='unsupported'/>
+          </extension>
+        </identifier>
+        <status value='final'/>
+        <category>
+          <coding>
+            <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+            <code value='laboratory'/>
+            <display value='Laboratory'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='26436-6'/>
+            <display value='Laboratory studies (set)'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='18725-2'/>
+            <display value='Microbiology studies'/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='11475-1'/>
+            <display value='Microorganism identified in Specimen by Culture'/>
+          </coding>
+        </code>
+        <subject>
+          <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+        </subject>
+        <encounter>
+          <reference value='urn:uuid:d7f5f52c-ce49-4e2e-8b2a-b5b4a602a6e2'/>
+        </encounter>
+        <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+        <valueCodeableConcept>
+          <coding>
+            <system value='http://snomed.info/sct'/>
+            <code value='260373001'/>
+            <display value='Detected (qualifier value)'/>
+          </coding>
+        </valueCodeableConcept>
+        <specimen>
+          <reference value='#probe-1'/>
+        </specimen>
+        <hasMember>
+          <reference value='#empf-1'/>
+        </hasMember>
+        <hasMember>
+          <reference value='#mrgn-1'/>
+        </hasMember>
+        <component>
+          <code>
+            <coding>
+              <system value='http://loinc.org'/>
+              <code value='89248-9'/>
+            </coding>
+          </code>
+          <valueCodeableConcept>
+            <coding>
+              <system value='http://snomed.info/sct'/>
+              <code value='840533007'/>
+              <display value='Severe acute respiratory syndrome coronavirus 2 (organism)'/>
+            </coding>
+          </valueCodeableConcept>
+        </component>
+      </Observation>
+    </resource>
+    <request>
+      <method value='POST'/>
+      <url value='Observation'/>
+    </request>
+  </entry>
+  <entry>
+    <fullUrl value='urn:uuid:a96ea433-8a27-4f67-9606-c19b0a4c12fa'/>
+    <resource>
+      <Observation>
+        <meta>
+          <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-kultur-nachweis'/>
+        </meta>
+        <contained>
+          <Observation>
+            <id value='empf-1'/>
+            <meta>
+              <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-empfindlichkeit'/>
+            </meta>
+            <identifier>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </identifier>
+            <status value='final'/>
+            <category>
+              <coding>
+                <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+                <code value='laboratory'/>
+                <display value='Laboratory'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='26436-6'/>
+                <display value='Laboratory studies (set)'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18725-2'/>
+                <display value='Microbiology studies'/>
+              </coding>
+            </category>
+            <code>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18868-0'/>
+                <display value='Aztreonam [Susceptibility]'/>
+              </coding>
+            </code>
+            <subject>
+              <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+            </subject>
+            <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+            <valueQuantity>
+              <value value='32'/>
+              <unit value='mg/L'/>
+              <system value='http://unitsofmeasure.org'/>
+              <code value='mg/L'/>
+            </valueQuantity>
+            <interpretation>
+              <coding>
+                <system value='http://snomed.info/sct'/>
+                <version value='20240301'/>
+                <code value='1306577009'/>
+                <display value='European Committee on Antimicrobial Susceptibility Testing category 2019 Susceptible, standard dosing regimen'/>
+              </coding>
+            </interpretation>
+            <specimen>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </specimen>
+          </Observation>
+        </contained>
+        <contained>
+          <Observation>
+            <id value='mrgn-1'/>
+            <meta>
+              <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-mrgn-klasse'/>
+            </meta>
+            <identifier>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </identifier>
+            <status value='final'/>
+            <category>
+              <coding>
+                <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+                <code value='laboratory'/>
+                <display value='Laboratory'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='26436-6'/>
+                <display value='Laboratory studies (set)'/>
+              </coding>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='18725-2'/>
+                <display value='Microbiology studies'/>
+              </coding>
+            </category>
+            <code>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='99780-9'/>
+                <display value='Multidrug resistant gram-negative organism classification [Type]'/>
+              </coding>
+            </code>
+            <subject>
+              <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+            </subject>
+            <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+            <valueCodeableConcept>
+              <coding>
+                <system value='http://loinc.org'/>
+                <code value='LA33215-7'/>
+                <display value='3MRGN'/>
+              </coding>
+            </valueCodeableConcept>
+            <specimen>
+              <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+                <valueCode value='unsupported'/>
+              </extension>
+            </specimen>
+          </Observation>
+        </contained>
+        <contained>
+          <Specimen>
+            <id value='probe-1'/>
+            <meta>
+              <profile value='http://hl7.org/fhir/StructureDefinition/Specimen'/>
+            </meta>
+            <collection>
+              <collectedDateTime value='2011-08-16T06:15:00Z'/>
+            </collection>
+          </Specimen>
+        </contained>
+        <identifier>
+          <extension url='http://hl7.org/fhir/StructureDefinition/data-absent-reason'>
+            <valueCode value='unsupported'/>
+          </extension>
+        </identifier>
+        <status value='final'/>
+        <category>
+          <coding>
+            <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+            <code value='laboratory'/>
+            <display value='Laboratory'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='26436-6'/>
+            <display value='Laboratory studies (set)'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='18725-2'/>
+            <display value='Microbiology studies'/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='11475-1'/>
+            <display value='Microorganism identified in Specimen by Culture'/>
+          </coding>
+        </code>
+        <subject>
+          <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+        </subject>
+        <encounter>
+          <reference value='urn:uuid:d7f5f52c-ce49-4e2e-8b2a-b5b4a602a6e2'/>
+        </encounter>
+        <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+        <valueCodeableConcept>
+          <coding>
+            <system value='http://snomed.info/sct'/>
+            <code value='260373001'/>
+            <display value='Detected (qualifier value)'/>
+          </coding>
+        </valueCodeableConcept>
+        <specimen>
+          <reference value='#probe-1'/>
+        </specimen>
+        <hasMember>
+          <reference value='#empf-1'/>
+        </hasMember>
+        <hasMember>
+          <reference value='#mrgn-1'/>
+        </hasMember>
+        <component>
+          <code>
+            <coding>
+              <system value='http://loinc.org'/>
+              <code value='89248-9'/>
+            </coding>
+          </code>
+          <valueCodeableConcept>
+            <coding>
+              <system value='http://snomed.info/sct'/>
+              <code value='840533007'/>
+              <display value='Severe acute respiratory syndrome coronavirus 2 (organism)'/>
+            </coding>
+          </valueCodeableConcept>
+        </component>
+      </Observation>
+    </resource>
+    <request>
+      <method value='POST'/>
+      <url value='Observation'/>
+    </request>
+  </entry>
+  <entry>
+    <fullUrl value='urn:uuid:09059c94-cf9e-4d9e-aefd-fff90ebe8873'/>
+    <resource>
+      <Observation>
+        <meta>
+          <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-molekulare-diagnostik'/>
+        </meta>
+        <contained>
+          <Specimen>
+            <id value='probe-1'/>
+            <meta>
+              <profile value='http://hl7.org/fhir/StructureDefinition/Specimen'/>
+            </meta>
+            <collection>
+              <collectedDateTime value='2011-08-16T06:15:00Z'/>
+            </collection>
+          </Specimen>
+        </contained>
+        <identifier>
+          <type>
+            <coding>
+              <system value='http://terminology.hl7.org/CodeSystem/v2-0203'/>
+              <code value='OBI'/>
+            </coding>
+          </type>
+          <system value='https://example.org/fhir/sid/test-lab-results'/>
+          <value value='59826-8_1234567890'/>
+          <assigner>
+            <identifier>
+              <system value='https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier'/>
+              <value value='DIZ-ID'/>
+            </identifier>
+          </assigner>
+        </identifier>
+        <status value='final'/>
+        <category>
+          <coding>
+            <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+            <code value='laboratory'/>
+            <display value='Laboratory'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='26436-6'/>
+            <display value='Laboratory studies (set)'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='18725-2'/>
+            <display value='Microbiology studies'/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='92253-4'/>
+            <display value='Microorganism identified in Isolate or Specimen by Molecular genetics method'/>
+          </coding>
+        </code>
+        <subject>
+          <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+        </subject>
+        <encounter>
+          <reference value='urn:uuid:d7f5f52c-ce49-4e2e-8b2a-b5b4a602a6e2'/>
+        </encounter>
+        <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+        <valueCodeableConcept>
+          <coding>
+            <system value='http://snomed.info/sct'/>
+            <code value='10828004'/>
+            <display value='Positive'/>
+          </coding>
+        </valueCodeableConcept>
+        <specimen>
+          <reference value='#probe-1'/>
+        </specimen>
+        <component>
+          <code>
+            <coding>
+              <system value='http://snomed.info/sct'/>
+              <code value='398545005'/>
+            </coding>
+          </code>
+          <valueQuantity>
+            <value value='25.5'/>
+            <unit value='ng/mL'/>
+            <system value='http://unitsofmeasure.org'/>
+            <code value='ng/mL'/>
+          </valueQuantity>
+        </component>
+        <component>
+          <code>
+            <coding>
+              <system value='http://loinc.org'/>
+              <code value='89248-9'/>
+            </coding>
+          </code>
+          <valueCodeableConcept>
+            <coding>
+              <system value='http://snomed.info/sct'/>
+              <code value='840533007'/>
+              <display value='Severe acute respiratory syndrome coronavirus 2 (organism)'/>
+            </coding>
+          </valueCodeableConcept>
+        </component>
+      </Observation>
+    </resource>
+    <request>
+      <method value='POST'/>
+      <url value='Observation'/>
+    </request>
+  </entry>
+  <entry>
+    <fullUrl value='urn:uuid:7bc9bea7-852f-446e-83f9-9bab165b5c17'/>
+    <resource>
+      <Observation>
+        <meta>
+          <profile value='https://www.medizininformatik-initiative.de/fhir/modul-mikrobio/StructureDefinition/mii-pr-mikrobio-molekulare-diagnostik'/>
+        </meta>
+        <contained>
+          <Specimen>
+            <id value='probe-1'/>
+            <meta>
+              <profile value='http://hl7.org/fhir/StructureDefinition/Specimen'/>
+            </meta>
+            <collection>
+              <collectedDateTime value='2011-08-16T06:15:00Z'/>
+            </collection>
+          </Specimen>
+        </contained>
+        <identifier>
+          <type>
+            <coding>
+              <system value='http://terminology.hl7.org/CodeSystem/v2-0203'/>
+              <code value='OBI'/>
+            </coding>
+          </type>
+          <system value='https://example.org/fhir/sid/test-lab-results'/>
+          <value value='59826-8_1234567890'/>
+          <assigner>
+            <identifier>
+              <system value='https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifier'/>
+              <value value='DIZ-ID'/>
+            </identifier>
+          </assigner>
+        </identifier>
+        <status value='final'/>
+        <category>
+          <coding>
+            <system value='http://terminology.hl7.org/CodeSystem/observation-category'/>
+            <code value='laboratory'/>
+            <display value='Laboratory'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='26436-6'/>
+            <display value='Laboratory studies (set)'/>
+          </coding>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='18725-2'/>
+            <display value='Microbiology studies'/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value='http://loinc.org'/>
+            <code value='92253-4'/>
+            <display value='Microorganism identified in Isolate or Specimen by Molecular genetics method'/>
+          </coding>
+        </code>
+        <subject>
+          <reference value='urn:uuid:1a4cef52-3418-4be7-b1e2-30dd9639f7ba'/>
+        </subject>
+        <encounter>
+          <reference value='urn:uuid:d7f5f52c-ce49-4e2e-8b2a-b5b4a602a6e2'/>
+        </encounter>
+        <effectiveDateTime value='2018-11-20T12:05:00+01:00'/>
+        <performer>
+          <identifier>
+            <system value='https://www.medizininformatik-initiative.de/fhir/core/CodeSystem/core-location-identifiers'/>
+            <value value='Charité'/>
+          </identifier>
+        </performer>
+        <valueCodeableConcept>
+          <coding>
+            <system value='http://snomed.info/sct'/>
+            <code value='10828004'/>
+            <display value='Positive'/>
+          </coding>
+        </valueCodeableConcept>
+        <specimen>
+          <reference value='#probe-1'/>
+        </specimen>
+        <component>
+          <code>
+            <coding>
+              <system value='http://snomed.info/sct'/>
+              <code value='398545005'/>
+            </coding>
+          </code>
+          <valueQuantity>
+            <value value='25.5'/>
+            <unit value='ng/mL'/>
+            <system value='http://unitsofmeasure.org'/>
+            <code value='ng/mL'/>
+          </valueQuantity>
+        </component>
+        <component>
+          <code>
+            <coding>
+              <system value='http://loinc.org'/>
+              <code value='89248-9'/>
+            </coding>
+          </code>
+          <valueCodeableConcept>
+            <coding>
+              <system value='http://snomed.info/sct'/>
+              <code value='840533007'/>
+              <display value='Severe acute respiratory syndrome coronavirus 2 (organism)'/>
+            </coding>
+          </valueCodeableConcept>
+        </component>
+      </Observation>
+    </resource>
+    <request>
+      <method value='POST'/>
+      <url value='Observation'/>
+    </request>
+  </entry>
+</Bundle>

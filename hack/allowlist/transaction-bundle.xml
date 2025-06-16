@@ -1,0 +1,68 @@
+<Bundle xmlns="http://hl7.org/fhir">
+  <type value="transaction"/>
+
+  <!-- DocumentReference entry -->
+  <entry>
+    <fullUrl value="DocumentReference/123e4567-e89b-12d3-a456-426614174000"/>
+    <resource>
+      <DocumentReference xmlns="http://hl7.org/fhir">
+        <id value="123e4567-e89b-12d3-a456-426614174000"/>
+        <masterIdentifier>
+          <system value="http://medizininformatik-initiative.de/sid/project-identifier"/>
+          <value value="test-1"/>
+        </masterIdentifier>
+        <status value="current"/>
+        <docStatus value="final"/>
+        <author>
+          <type value="Organization"/>
+          <identifier>
+            <system value="http://dsf.dev/sid/organization-identifier"/>
+            <value value="Test_DIC"/>
+          </identifier>
+        </author>
+        <date value="2025-06-05T14:30:00+01:00"/>
+        <content>
+          <attachment>
+            <contentType value="application/fhir+xml"/>
+            <url value="Bundle/abcdef12-3456-7890-abcd-ef1234567890"/>
+          </attachment>
+        </content>
+      </DocumentReference>
+    </resource>
+    <request>
+      <method value="PUT"/>
+      <url value="DocumentReference/123e4567-e89b-12d3-a456-426614174000"/>
+    </request>
+  </entry>
+
+  <!-- Referenced Bundle entry -->
+  <entry>
+    <fullUrl value="Bundle/abcdef12-3456-7890-abcd-ef1234567890"/>
+    <resource>
+      <Bundle xmlns="http://hl7.org/fhir">
+        <id value="abcdef12-3456-7890-abcd-ef1234567890"/>
+        <type value="document"/>
+        <timestamp value="2025-06-05T14:30:00+01:00"/>
+        <entry>
+          <fullUrl value="Patient/789a12bc-345d-678e-f901-23456789abcd"/>
+          <resource>
+            <Patient>
+              <id value="789a12bc-345d-678e-f901-23456789abcd"/>
+              <name>
+                <use value="official"/>
+                <family value="Musterfrau"/>
+                <given value="Erika"/>
+              </name>
+              <gender value="female"/>
+              <birthDate value="1985-08-12"/>
+            </Patient>
+          </resource>
+        </entry>
+      </Bundle>
+    </resource>
+    <request>
+      <method value="PUT"/>
+      <url value="Bundle/abcdef12-3456-7890-abcd-ef1234567890"/>
+    </request>
+  </entry>
+</Bundle>

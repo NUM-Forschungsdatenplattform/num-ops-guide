@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/argoproj.io/application_v1alpha1.json
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minio-tenant
+  namespace: {{.Values.global.argoNamespace}}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{.Values.projects.devCluster.name}}
+  source:
+    repoURL: {{.Values.global.repoURL}}
+    path: charts/minio-tenant
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: minio-tenant
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+      - CreateNamespace=true

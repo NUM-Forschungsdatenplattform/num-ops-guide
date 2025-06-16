@@ -1,0 +1,7 @@
+apiVersion: v2
+name: minio-tenant
+version: 1.0.0
+dependencies:
+  - name: tenant
+    version: v7.1.1
+    repository: https://operator.min.io

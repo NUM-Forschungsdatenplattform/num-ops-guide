@@ -8,6 +8,6 @@ tenant:
         size: 1Gi
         storageClassName: ssd
     certificate:
-      requestAutoCert: true
+      requestAutoCert: false
     buckets:
       - name: develop-ehrshow

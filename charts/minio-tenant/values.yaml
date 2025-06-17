@@ -20,7 +20,8 @@ tenant:
       enabled: true
       ingressClassName: nginx
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
+        cert-manager.io/cluster-issuer: letsencrypt-staging
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
       tls: 
         - hosts:
             - ehrshow-minio-api.dev.num-rdp.de
@@ -32,7 +33,8 @@ tenant:
       enabled: true
       ingressClassName: nginx
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
+        cert-manager.io/cluster-issuer: letsencrypt-staging
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
       tls:
         - hosts:
             - ehrshow-minio-api.dev.num-rdp.de

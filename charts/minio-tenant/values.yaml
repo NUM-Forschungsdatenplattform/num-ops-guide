@@ -11,3 +11,33 @@ tenant:
       requestAutoCert: false
     buckets:
       - name: develop-ehrshow
+    configSecret:
+      name: develop-minio-tenant-configuration
+      existingSecret: true
+
+  ingress:
+    api:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      tls: 
+        - hosts:
+            - ehrshow-minio-api.dev.num-rdp.de
+          secretName: ehrshow-minio-api-tls
+      host: ehrshow-minio-api.dev.num-rdp.de
+      path: /
+      pathType: Prefix
+    console:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      tls:
+        - hosts:
+          - ehrshow-minio-api.dev.num-rdp.de
+        secretName: ehrshow-minio-console-tls
+      host: ehrshow-minio-console.dev.num-rdp.de
+      path: /
+      pathType: Prefix
+

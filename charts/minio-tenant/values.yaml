@@ -36,7 +36,7 @@ tenant:
       tls:
         - hosts:
             - ehrshow-minio-api.dev.num-rdp.de
-        secretName: ehrshow-minio-console-tls
+          secretName: ehrshow-minio-console-tls
       host: ehrshow-minio-console.dev.num-rdp.de
       path: /
       pathType: Prefix

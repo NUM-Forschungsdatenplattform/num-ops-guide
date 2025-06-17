@@ -5,12 +5,13 @@ tenant:
       - servers: 2
         name: pool-0
         volumesPerServer: 2
-        size: 1Gi
+        size: 10Gi
         storageClassName: ssd
     certificate:
       requestAutoCert: false
     buckets:
       - name: develop-ehrshow
+      - name: develop-ehrshow-images
     configSecret:
       name: develop-minio-tenant-configuration
       existingSecret: true

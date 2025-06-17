@@ -38,7 +38,7 @@ tenant:
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
       tls:
         - hosts:
-            - ehrshow-minio-api.dev.num-rdp.de
+            - ehrshow-minio-console.dev.num-rdp.de
           secretName: ehrshow-minio-console-tls
       host: ehrshow-minio-console.dev.num-rdp.de
       path: /

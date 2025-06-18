@@ -2,10 +2,10 @@ tenant:
   tenant:
     name: develop-minio-tenant
     additionalVolumes:
-    - name: minio-access-policy
-      emptyDir: {}
-#      configMap:
-#        name: minio-access-policy
+      volumes:
+        - name: minio-access-policy
+          configMap:
+            name: minio-access-policy
     initContainers:
       - name: wait-for-idp
         image: busybox

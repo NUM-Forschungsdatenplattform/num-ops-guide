@@ -19,10 +19,10 @@ tenant:
           - sh
           - -c
           - |
-            mkdir -p minio-binaries
-            wget -O $HOME/minio-binaries/mc https://dl.min.io/client/mc/release/linux-amd64/mc
-            chmod +x minio-binaries/mc
-            export PATH=$PATH:$HOME/minio-binaries/
+            mkdir -p /tmp/minio-binaries
+            wget -O /tmp/minio-binaries/mc https://dl.min.io/client/mc/release/linux-amd64/mc
+            chmod +x /tmp/minio-binaries/mc
+            export PATH=$PATH:/tmp/minio-binaries
                         
             mc alias set myminio https://ehrshow-minio-api.dev.num-rdp.de $MINIO_USERNAME $MINIO_PASSWORD
             mc admin policy add myminio readonly-policy read-only.json

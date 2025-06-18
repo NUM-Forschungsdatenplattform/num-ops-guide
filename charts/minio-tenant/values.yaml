@@ -19,7 +19,7 @@ tenant:
           - sh
           - -c
           - |
-            curl https://dl.min.io/client/mc/release/linux-amd64/mc \
+            wget -O mc https://dl.min.io/client/mc/release/linux-amd64/mc \
             --create-dirs \
             -o $HOME/minio-binaries/mc
             chmod +x $HOME/minio-binaries/mc

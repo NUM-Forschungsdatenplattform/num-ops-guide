@@ -23,6 +23,7 @@ tenant:
             wget -O /tmp/minio-binaries/mc https://dl.min.io/client/mc/release/linux-amd64/mc
             chmod +x /tmp/minio-binaries/mc
             export PATH=$PATH:/tmp/minio-binaries
+            sleep 999
         
             mc -C /tmp/.mc alias set myminio http://minio $MINIO_USERNAME $MINIO_PASSWORD
             mc -C /tmp/.mc admin policy add myminio readonly-policy /tmp/read-only.json

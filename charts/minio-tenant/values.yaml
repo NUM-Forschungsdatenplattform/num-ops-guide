@@ -24,7 +24,7 @@ tenant:
             chmod +x /tmp/minio-binaries/mc
             export PATH=$PATH:/tmp/minio-binaries
                         
-            mc alias set myminio https://ehrshow-minio-api.dev.num-rdp.de $MINIO_USERNAME $MINIO_PASSWORD
+            mc alias set myminio -C "/tmp/.mc" https://ehrshow-minio-api.dev.num-rdp.de $MINIO_USERNAME $MINIO_PASSWORD
             mc admin policy add myminio readonly-policy read-only.json
             mc admin policy set myminio readonly-policy user=anon             
 

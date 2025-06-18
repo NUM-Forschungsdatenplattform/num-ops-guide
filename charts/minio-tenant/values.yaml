@@ -19,10 +19,9 @@ tenant:
             secretKeyRef:
               name: develop-minio-tenant-configuration
               key: secretKey
-        additionalVolumeMounts:
-          volumeMounts:
-          - name: minio-access-policy
-            mountPath: /tmp
+        volumeMounts:
+        - name: minio-access-policy
+          mountPath: /tmp
         command:
           - sh
           - -c

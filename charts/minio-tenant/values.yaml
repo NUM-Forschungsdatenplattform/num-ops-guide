@@ -21,7 +21,7 @@ tenant:
           - |
             mkdir -p minio-binaries
             wget -O $HOME/minio-binaries/mc https://dl.min.io/client/mc/release/linux-amd64/mc
-            chmod +x $HOME/minio-binaries/mc
+            chmod +x minio-binaries/mc
             export PATH=$PATH:$HOME/minio-binaries/
                         
             mc alias set myminio https://ehrshow-minio-api.dev.num-rdp.de $MINIO_USERNAME $MINIO_PASSWORD

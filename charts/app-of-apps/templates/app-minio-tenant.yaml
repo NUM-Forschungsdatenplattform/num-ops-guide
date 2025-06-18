@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: {{.Values.global.repoURL}}
     path: charts/minio-tenant
-    targetRevision: HEAD
+    targetRevision: feature/minio-tenant
   destination:
     server: https://kubernetes.default.svc
     namespace: minio-tenant

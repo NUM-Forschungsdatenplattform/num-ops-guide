@@ -1,10 +1,6 @@
 tenant:
   tenant:
     name: develop-minio-tenant
-    additionalVolumes:
-    - name: minio-access-policy
-      configMap:
-        name: minio-access-policy
     initContainers:
       - name: wait-for-idp
         image: busybox
@@ -19,9 +15,6 @@ tenant:
             secretKeyRef:
               name: develop-minio-tenant-configuration
               key: secretKey
-        volumeMounts:
-        - name: minio-access-policy
-          mountPath: /tmp
         command:
           - sh
           - -c

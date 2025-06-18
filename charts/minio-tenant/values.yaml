@@ -1,6 +1,41 @@
 tenant:
   tenant:
     name: develop-minio-tenant
+    additionalVolumes:
+      - name: minio-access-policy
+        configMap:
+          name: minio-access-policy
+    initContainers:
+      - name: wait-for-idp
+        image: busybox
+        env:
+        - name: MINIO_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: develop-minio-tenant-configuration
+              key: accessKey
+        - name: MINIO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: develop-minio-tenant-configuration
+              key: secretKey
+        additionalVolumeMounts:
+        - name: minio-access-policy
+          mountPath: /tmp
+        command:
+          - sh
+          - -c
+          - |
+            curl https://dl.min.io/client/mc/release/linux-amd64/mc \
+            --create-dirs \
+            -o $HOME/minio-binaries/mc
+            chmod +x $HOME/minio-binaries/mc
+            export PATH=$PATH:$HOME/minio-binaries/
+                        
+            mc alias set myminio https://ehrshow-minio-api.dev.num-rdp.de $MINIO_USERNAME $MINIO_PASSWORD
+            mc admin policy add myminio readonly-policy read-only.json
+            mc admin policy set myminio readonly-policy user=anon             
+
     pools:
       - servers: 2
         name: pool-0

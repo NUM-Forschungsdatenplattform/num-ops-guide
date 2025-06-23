@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: configure-minio
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: setup
+          image: minio/mc
+          env:
+            - name: MINIO_ENDPOINT
+              value: "http://minio"
+            - name: MINIO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: develop-minio-tenant-configuration
+                  key: accessKey
+            - name: MINIO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: develop-minio-tenant-configuration
+                  key: secretKey
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Waiting for MinIO to be ready..."
+              until mc alias set tenant "$MINIO_ENDPOINT" "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY"; do
+                echo "Waiting..."
+                sleep 5
+              done
+              echo "Setting policy..."
+              mc mb tenant/develop-ehrshow-images || true
+              mc anonymous set download tenant/develop-ehrshow-images

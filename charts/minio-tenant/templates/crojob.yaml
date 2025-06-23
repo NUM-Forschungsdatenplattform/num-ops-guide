@@ -31,12 +31,16 @@ spec:
                 - /bin/sh
                 - -c
                 - |
+                  #!/bin/sh
                   set -e
+
                   mc alias set "$MINIO_ALIAS" "$MINIO_URL" "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY"
-                  POLICY=$(mc anonymous get "$MINIO_ALIAS/develop-ehrshow-images")
-                  if [ "$POLICY" != "download" ]; then
-                    echo "Setting public download policy on develop-ehrshow-images"
-                    mc anonymous set download "$MINIO_ALIAS/develop-ehrshow-images"
+
+                  CURRENT_POLICY=$(mc anonymous get "$MINIO_ALIAS/$BUCKET" | awk -F"'" '{ print $4 }')
+
+                  if [ "$CURRENT_POLICY" != "download" ]; then
+                    echo "Policy is '$CURRENT_POLICY'. Setting it to 'download'..."
+                    mc anonymous set download "$MINIO_ALIAS/$BUCKET"
                   else
-                    echo "Policy already set to download"
+                    echo "Policy is already set to 'download'."
                   fi

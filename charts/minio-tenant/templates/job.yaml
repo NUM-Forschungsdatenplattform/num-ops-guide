@@ -12,12 +12,12 @@ spec:
           env:
             - name: MINIO_ENDPOINT
               value: "http://minio"
-            - name: MINIO_USERNAME
+            - name: MINIO_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
                   name: develop-minio-tenant-configuration
                   key: accessKey
-            - name: MINIO_PASSWORD
+            - name: MINIO_SECRET_KEY
               valueFrom:
                 secretKeyRef:
                   name: develop-minio-tenant-configuration

@@ -10,6 +10,8 @@ spec:
         - name: setup
           image: minio/mc
           env:
+            - name: BUCKET
+              value: develop-ehrshow-images
             - name: MINIO_ALIAS
               value: tenant
             - name: MINIO_ENDPOINT
@@ -34,5 +36,5 @@ spec:
                 sleep 5
               done
               echo "Setting policy..."
-              mc mb tenant/develop-ehrshow-images || true
-              mc anonymous set download tenant/develop-ehrshow-images
+              mc mb "$MINIO_ALIAS/$BUCKET" || true
+              mc anonymous set download "$MINIO_ALIAS/$BUCKET"

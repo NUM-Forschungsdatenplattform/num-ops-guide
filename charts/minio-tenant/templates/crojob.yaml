@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: minio-policy-cronjob
+  name: check-minio-bucket-policy
 spec:
   schedule: "*/5 * * * *"
   jobTemplate:
@@ -9,27 +9,27 @@ spec:
       template:
         spec:
           imagePullSecrets:
-          - name: imagepullsecret-github-packages
+          - name: {{ .Values.jobs.container.imagePullSecret }}
           restartPolicy: OnFailure
           containers:
             - name: mc
-              image: ghcr.io/num-forschungsdatenplattform/alpine-mc:latest
+              image: "{{ .Values.jobs.container.repository }}{{ .Values.jobs.container.image }}:{{ .Values.jobs.container.tag }}"
               env:
+                - name: BUCKET
+                  value: {{ .Values.jobs.bucket }}
                 - name: MINIO_ALIAS
                   value: tenant
-                - name: BUCKET
-                  value: develop-ehrshow-images
-                - name: MINIO_URL
-                  value: "http://minio"
+                - name: MINIO_ENDPOINT
+                  value: {{ .Values.jobs.minioEndpoint }}
                 - name: MINIO_ACCESS_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: develop-minio-tenant-configuration
+                      name: {{ .Values.jobs.minioSecretName }}
                       key: accessKey
                 - name: MINIO_SECRET_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: develop-minio-tenant-configuration
+                      name: {{ .Values.jobs.minioSecretName }}
                       key: secretKey
               command:
                 - /bin/sh
@@ -37,7 +37,7 @@ spec:
                 - |
                   set -e
 
-                  mc alias set "$MINIO_ALIAS" "$MINIO_URL" "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY"
+                  mc alias set "$MINIO_ALIAS" "$MINIO_ENDPOINT" "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY"
 
                   if mc anonymous get "$MINIO_ALIAS/$BUCKET" | awk '/download/'; then
                     echo "Policy is already set to download"

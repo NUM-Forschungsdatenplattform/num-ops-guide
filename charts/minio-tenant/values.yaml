@@ -1,3 +1,13 @@
+jobs:
+  bucket: develop-ehrshow-images
+  minioEndpoint: http://minio
+  minioSecretName: develop-minio-tenant-configuration
+  container:
+    image: alpine-mc
+    repository: ghcr.io/num-forschungsdatenplattform/
+    tag: latest
+    imagePullSecret: imagepullsecret-github-packages
+
 tenant:
   tenant:
     name: develop-minio-tenant

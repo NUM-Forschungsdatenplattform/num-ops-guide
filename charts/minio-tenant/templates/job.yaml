@@ -35,6 +35,13 @@ spec:
                 echo "Waiting..."
                 sleep 5
               done
+
               echo "Setting policy..."
               mc mb "$MINIO_ALIAS/$BUCKET" || true
-              mc anonymous set download "$MINIO_ALIAS/$BUCKET"
+
+              if mc anonymous get "$MINIO_ALIAS/$BUCKET" | awk '/download/'; then
+                echo "Policy is already set to download"
+              else
+                echo "Setting policy to download"
+                mc anonymous set download "$MINIO_ALIAS/$BUCKET"
+                  fi

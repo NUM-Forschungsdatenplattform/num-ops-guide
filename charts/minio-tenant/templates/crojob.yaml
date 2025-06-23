@@ -11,7 +11,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: mc
-              image: minio/mc
+              image: ghcr.io/num-forschungsdatenplattform/alpine-mc:latest
               env:
                 - name: MINIO_ALIAS
                   value: tenant
@@ -33,7 +33,6 @@ spec:
                 - /bin/sh
                 - -c
                 - |
-                  #!/bin/sh
                   set -e
 
                   mc alias set "$MINIO_ALIAS" "$MINIO_URL" "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY"

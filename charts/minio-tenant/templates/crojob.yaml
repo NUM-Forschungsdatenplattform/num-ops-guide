@@ -8,6 +8,8 @@ spec:
     spec:
       template:
         spec:
+          imagePullSecrets:
+          - name: imagepullsecret-github-packages
           restartPolicy: OnFailure
           containers:
             - name: mc

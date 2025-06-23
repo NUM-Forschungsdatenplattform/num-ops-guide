@@ -5,10 +5,12 @@ metadata:
 spec:
   template:
     spec:
+      imagePullSecrets:
+      - name: imagepullsecret-github-packages
       restartPolicy: OnFailure
       containers:
         - name: setup
-          image: minio/mc
+          image: ghcr.io/num-forschungsdatenplattform/alpine-mc:latest
           env:
             - name: BUCKET
               value: develop-ehrshow-images

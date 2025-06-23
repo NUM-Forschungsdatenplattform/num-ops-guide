@@ -1,0 +1,47 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: check-minio-bucket-policy
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+          - name: {{ .Values.jobs.container.imagePullSecret }}
+          restartPolicy: OnFailure
+          containers:
+            - name: mc
+              image: "{{ .Values.jobs.container.repository }}{{ .Values.jobs.container.image }}:{{ .Values.jobs.container.tag }}"
+              env:
+                - name: BUCKET
+                  value: {{ .Values.jobs.bucket }}
+                - name: MINIO_ALIAS
+                  value: tenant
+                - name: MINIO_ENDPOINT
+                  value: {{ .Values.jobs.minioEndpoint }}
+                - name: MINIO_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.jobs.minioSecretName }}
+                      key: accessKey
+                - name: MINIO_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.jobs.minioSecretName }}
+                      key: secretKey
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  set -e
+
+                  mc alias set "$MINIO_ALIAS" "$MINIO_ENDPOINT" "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY"
+
+                  if mc anonymous get "$MINIO_ALIAS/$BUCKET" | awk '/download/'; then
+                    echo "Policy is already set to download"
+                  else
+                    echo "Setting policy to download"
+                    mc anonymous set download "$MINIO_ALIAS/$BUCKET"
+                  fi

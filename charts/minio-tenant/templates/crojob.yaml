@@ -36,11 +36,9 @@ spec:
 
                   mc alias set "$MINIO_ALIAS" "$MINIO_URL" "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY"
 
-                  CURRENT_POLICY=$(mc anonymous get "$MINIO_ALIAS/$BUCKET" | awk -F"'" '{ print $4 }')
-
-                  if [ "$CURRENT_POLICY" != "download" ]; then
-                    echo "Policy is '$CURRENT_POLICY'. Setting it to 'download'..."
-                    mc anonymous set download "$MINIO_ALIAS/$BUCKET"
+                  if mc anonymous get "$MINIO_ALIAS/$BUCKET" | grep -q "download"; then
+                    echo "Bucket already has 'download' policy"
                   else
-                    echo "Policy is already set to 'download'."
+                    echo "Setting policy to 'download'"
+                    mc anonymous set download "$MINIO_ALIAS/$BUCKET"
                   fi

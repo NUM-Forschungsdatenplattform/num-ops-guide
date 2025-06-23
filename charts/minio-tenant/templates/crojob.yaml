@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: minio-policy-cronjob
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: mc
+              image: minio/mc
+              env:
+                - name: MINIO_ALIAS
+                  value: tenant
+                - name: MINIO_URL
+                  value: "http://minio"
+                - name: MINIO_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: develop-minio-tenant-configuration
+                      key: accessKey
+                - name: MINIO_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: develop-minio-tenant-configuration
+                      key: secretKey
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  set -e
+                  mc alias set "$MINIO_ALIAS" "$MINIO_URL" "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY"
+                  POLICY=$(mc anonymous get "$MINIO_ALIAS/develop-ehrshow-images")
+                  if [ "$POLICY" != "download" ]; then
+                    echo "Setting public download policy on develop-ehrshow-images"
+                    mc anonymous set download "$MINIO_ALIAS/develop-ehrshow-images"
+                  else
+                    echo "Policy already set to download"
+                  fi

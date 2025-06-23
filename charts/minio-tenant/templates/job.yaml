@@ -10,6 +10,8 @@ spec:
         - name: setup
           image: minio/mc
           env:
+            - name: MINIO_ALIAS
+              value: tenant
             - name: MINIO_ENDPOINT
               value: "http://minio"
             - name: MINIO_ACCESS_KEY
@@ -27,7 +29,7 @@ spec:
             - -c
             - |
               echo "Waiting for MinIO to be ready..."
-              until mc alias set tenant "$MINIO_ENDPOINT" "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY"; do
+              until mc alias set "$MINIO_ALIAS" "$MINIO_ENDPOINT" "$MINIO_ACCESS_KEY" "$MINIO_SECRET_KEY"; do
                 echo "Waiting..."
                 sleep 5
               done

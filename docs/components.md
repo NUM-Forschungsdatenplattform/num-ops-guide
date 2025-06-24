@@ -11,6 +11,7 @@ This guide covers the deployment and configuration of essential components for e
   + [Creating a Sealed-Secret](#creating-a-sealed-secret)
   + [Extracting the main.key from the Cluster](#extracting-the-mainkey-from-the-cluster)
   + [Offline Decryption of a Sealed-Secret](#offline-decryption-of-a-sealed-secret)
+* [MinIO (S3)](#minio-(s3))
 
 ##
 
@@ -116,3 +117,11 @@ kubeseal --recovery-unseal --recovery-private-key master-key.yaml < sealed-secre
 ```
 
 Note: It is important to securely store the main.key as it is needed to decrypt all sealed Secrets in the cluster.
+
+### MinIO (S3)
+
+MinIO is a high-performance, S3-compatible object storage solution designed for cloud-native applications. It supports scalability, strong consistency, and enterprise-grade features like erasure coding and encryption. Ideal for Kubernetes and containerized environments, MinIO is often used for backup, AI/ML, and big data workloads.
+
+We use the [minio-operator](https://min.io/docs/minio/kubernetes/upstream/operations/install-deploy-manage/deploy-operator-helm.html) and [minio-tenant](https://min.io/docs/minio/kubernetes/openshift/operations/install-deploy-manage/deploy-minio-tenant-helm.html) helm-chart.
+
+For the minio-tenant there is no build-in solution to create policies for buckets, so we created a [cronjob](https://raw.githubusercontent.com/NUM-Forschungsdatenplattform/num-ops-guide/refs/heads/main/charts/minio-tenant/templates/cronjob.yaml) and a [job](https://raw.githubusercontent.com/NUM-Forschungsdatenplattform/num-ops-guide/refs/heads/main/charts/minio-tenant/templates/job.yaml) which does this. The cronjob checks every 5 minutes if the policy is still active on the specific bucket.

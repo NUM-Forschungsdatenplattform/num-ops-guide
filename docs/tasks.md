@@ -51,8 +51,8 @@ Follow the step-by-step instructions in the guide to deploy and configure each c
   * [How to renew CRR Client Certificate](#how-to-renew-crr-client-certificate)
     + [Add Certificate to https://allowlist-test.gecko.hs-heilbronn.de/](#add-certificate-to-httpsallowlist-testgeckohs-heilbronnde)
     + [Install new Allowlist](#install-new-allowlist)
-  * [CloudnativePG Backup restore](#cloudnativepg-backup-restore)
-  * [How to list files from GWDG-S3](#how_to_list_files_from_gwdg-s3)
+  * [How to CloudnativePG Backup restore](#how-to-cloudnativepg-backup-restore)
+  * [How to list files from GWDG-S3](#how-to-list-files-from-gwdg-s3)
 - [POC](#poc)
   * [Install & Configure Nginx Ingress Controller](#install--configure-nginx-ingress-controller)
 - [Contributing](#contributing)
@@ -998,7 +998,7 @@ Then click on `Send Request for Approval`.
 
 When your request was approved, follow the instuctions after ckicking on the `Download Allow List` button.
 
-### CloudnativePG Backup restore
+### How to CloudnativePG Backup restore
 
 To restore a backup from cloudnativepg you have to deploy the following Cluster.
 This Example is for the ehrshow postgres-db

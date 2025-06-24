@@ -52,6 +52,7 @@ Follow the step-by-step instructions in the guide to deploy and configure each c
     + [Add Certificate to https://allowlist-test.gecko.hs-heilbronn.de/](#add-certificate-to-httpsallowlist-testgeckohs-heilbronnde)
     + [Install new Allowlist](#install-new-allowlist)
   * [CloudnativePG Backup restore](#cloudnativepg-backup-restore)
+  * [How to list files from GWDG-S3](#how_to_list_files_from_gwdg-s3)
 - [POC](#poc)
   * [Install & Configure Nginx Ingress Controller](#install--configure-nginx-ingress-controller)
 - [Contributing](#contributing)
@@ -1048,6 +1049,28 @@ spec:
           secretAccessKey:
             name: s3-credentials
             key: secretAccessKey
+```
+
+### How to list files from GWDG-S3
+
+The S3 from GWDG is only accessable via VPN.  
+To access the S3 from GWDG and list files, first you need to install the aws [cli-tool](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html):
+
+```bash
+# https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+# For MacOS
+brew install awscli
+```
+
+After the installation you have to set the env variables to your shell and you can access the buckets:
+
+```bash
+# AccessKey and SecretKey you get from Secrets in the Cluster "s3-credentials-dev" in develop namespace
+AWS_ACCESS_KEY_ID=<Accesskey>
+AWS_SECRET_ACCESS_KEY=<SecretKey>
+
+# List files in bucket codex-postgres-backup
+aws --endpoint-url https://s3.fs.gwdg.de s3 ls s3://codex-postgres-backup/cloudnative-pg/develop/
 ```
 
 ## POC

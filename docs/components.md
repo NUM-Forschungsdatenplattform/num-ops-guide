@@ -11,7 +11,7 @@ This guide covers the deployment and configuration of essential components for e
   + [Creating a Sealed-Secret](#creating-a-sealed-secret)
   + [Extracting the main.key from the Cluster](#extracting-the-mainkey-from-the-cluster)
   + [Offline Decryption of a Sealed-Secret](#offline-decryption-of-a-sealed-secret)
-* [MinIO (S3)](#minio-(s3))
+* [MinIO (S3)](#minio-s3)
 
 ##
 

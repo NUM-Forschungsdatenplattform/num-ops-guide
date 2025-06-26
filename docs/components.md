@@ -12,6 +12,8 @@ This guide covers the deployment and configuration of essential components for e
   + [Extracting the main.key from the Cluster](#extracting-the-mainkey-from-the-cluster)
   + [Offline Decryption of a Sealed-Secret](#offline-decryption-of-a-sealed-secret)
 * [MinIO (S3)](#minio-s3)
+* [Apache Airflow](#apache-airflow)
+
 
 ##
 
@@ -125,3 +127,13 @@ MinIO is a high-performance, S3-compatible object storage solution designed for 
 We use the [minio-operator](https://min.io/docs/minio/kubernetes/upstream/operations/install-deploy-manage/deploy-operator-helm.html) and [minio-tenant](https://min.io/docs/minio/kubernetes/openshift/operations/install-deploy-manage/deploy-minio-tenant-helm.html) helm-chart.
 
 For the minio-tenant there is no build-in solution to create policies for buckets, so we created a [cronjob](https://raw.githubusercontent.com/NUM-Forschungsdatenplattform/num-ops-guide/refs/heads/main/charts/minio-tenant/templates/cronjob.yaml) and a [job](https://raw.githubusercontent.com/NUM-Forschungsdatenplattform/num-ops-guide/refs/heads/main/charts/minio-tenant/templates/job.yaml) which does this. The cronjob checks every 5 minutes if the policy is still active on the specific bucket.
+
+### Apache Airflow
+
+Apache Airflow is an open-source platform used to programmatically author, schedule, and monitor data workflows.
+It allows users to define workflows as code using Python, offering flexibility and scalability.
+Airflow excels at orchestrating complex data pipelines across multiple systems.
+
+We use the official [Apache Airflow Helm-Chart](https://airflow.apache.org/docs/helm-chart/stable/index.html)
+
+For DAGs we use the git-sync Side-Car Container from the Helm-Chart, it syncs every 5s and checks the Git-Repo for changes and applies new DAGs to the deployment.

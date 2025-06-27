@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: {{ .Values.projects.ehrshow.repoURL }}
     path: charts/ehrshow
-    targetRevision: feature/pipline-test
+    targetRevision: feature/ehr-explorer-backend
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Values.projects.ehrshow.name }}

@@ -15,7 +15,10 @@ spec:
         initdbScriptsConfigMap: epix-init-db-config-map
         extraEnvVars:
           - name: MYSQL_ROOT_PASSWORD
-            value: "root"
+            valueFrom:
+              secretKeyRef:
+                name: epix-mysql
+                key: mysql-root-password
           - name: TZ
             value: "Europe/Berlin"
   destination:

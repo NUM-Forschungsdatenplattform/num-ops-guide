@@ -13,8 +13,6 @@ spec:
     helm:
       values: |
         initdbScriptsConfigMap: gpas-init-db-config-map
-        auth:
-          rootPassword: "newRootPassword123"
         extraEnvVars:
           - name: MYSQL_ROOT_PASSWORD
             value: "newRootPassword123"

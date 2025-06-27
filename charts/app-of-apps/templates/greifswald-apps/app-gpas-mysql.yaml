@@ -12,6 +12,13 @@ spec:
     targetRevision: 11.1.20
     helm:
       values: |
+        primary:
+          startupProbe: 
+            enabled: false
+          readinessProbe: 
+            enabled: false
+          livenessProbe: 
+            enabled: false
         initdbScriptsConfigMap: gpas-init-db-config-map
         extraEnvVars:
           - name: MYSQL_ROOT_PASSWORD

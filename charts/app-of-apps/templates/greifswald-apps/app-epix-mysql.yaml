@@ -13,12 +13,11 @@ spec:
     helm:
       values: |
         initdbScriptsConfigMap: epix-init-db-config-map
+        auth:
+          rootPassword: "newRootPassword123"
         extraEnvVars:
           - name: MYSQL_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: epix-mysql
-                key: mysql-root-password
+            value: "newRootPassword123"
           - name: TZ
             value: "Europe/Berlin"
   destination:

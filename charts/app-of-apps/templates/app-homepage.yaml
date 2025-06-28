@@ -17,7 +17,7 @@ spec:
     namespace: homepage
   syncPolicy:
     automated:
-      selfHeal: false
-      prune: false
+      selfHeal: true
+      prune: true
     syncOptions:
       - CreateNamespace=true

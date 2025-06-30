@@ -34,7 +34,7 @@ applications:
     enabled: true
     namespace: develop
     helmValueFile: deployment-values/central-research-repository/develop-values.yaml
-    numHelmChartsBranch: feature/MII-Process-Data-Transfer
+    numHelmChartsBranch: rdp-dev
   testEnv:
     enabled: true
     namespace: test

@@ -1,7 +1,7 @@
 global:
   argoNamespace: argo
-  repoURL: https://github.com/NUM-Forschungsdatenplattform/num-ops-guide.git
-  numHelmChartsRepoURL: git@github.com:NUM-Forschungsdatenplattform/num-helm-charts.git
+  repoURL: git@github.com:highmed-eV/hive-ops-guide.git
+  numHelmChartsRepoURL: git@github.com:highmed-eV/hive-helm-charts.git
   numHelmChartsBranch: rdp-dev
 
   sertigo:
